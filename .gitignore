@@ -1,0 +1,29 @@
+.DS_Store
+.idea/
+.vscode/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Downloaded or generated research artifacts
+artifacts/
+external/
+outputs/
+logs/
+checkpoints/
+
+# Large model/data/media files
+*.ckpt
+*.mp4
+*.pth
+*.pth.tar
+*.pt
+*.safetensors
+*.tar
+*.zip
+
+# Local/private research material
+local-notes/
+private/
+references/
+tmp/
