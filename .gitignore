@@ -28,13 +28,10 @@ private/
 references/
 tmp/
 
-# Working notes and internal audit trail — not published
-docs/HANDOFF-*.md
-docs/neel-review-*.md
-docs/PREREG-*
-docs/FINDINGS-*
-docs/STATE.md
-docs/WRITEUP-draft.md
+# Working notes, drafts, and raw records — not published
+docs/internal/
+docs/drafts/
+notes/
 box_sync/
 *.jsonl
 *.npz
