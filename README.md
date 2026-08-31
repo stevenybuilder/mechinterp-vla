@@ -100,10 +100,16 @@ it is *anti*-correlated with causal power across depth.
 in the field, and they are routinely read as explanations. This is a clean, quantitative case where
 reading the attention map gives you the wrong answer with high confidence.
 
-> **Honesty note.** Attention numbers depend on how you normalise them: per *token*, instruction wins
-> 11.4×; per *segment*, the image wins 4.99×, because there are 512 image positions and only ~8 word
-> positions. We report both everywhere. The claim that survives either convention is the depth one:
-> attention to the instruction rises into the band where patching it matters least.
+> **Two honesty notes.**
+> *Normalisation.* Attention numbers depend on how you count them: per *token*, instruction wins
+> 11.4×; per *segment*, the image wins 4.99×, because there are 512 image positions and only ~9 word
+> positions, and raw image mass exceeds raw instruction mass at 18/18 layers. We report both
+> everywhere. The claim that survives either convention is the depth one: attention to the
+> instruction rises 3.3× into exactly the band where patching it matters least.
+> *Which suite.* The "instruction positions are inert" number is a **libero_goal** result, where
+> overwriting them moves behaviour by ≈0.00 across all six comparisons. On **libero_object** the same
+> intervention reaches 0.05–0.48, so the instruction positions there are not inert. The dissociation
+> as stated is a goal-suite result, and we do not generalise it to the model as a whole.
 
 ### 2. A monitor for disobedience that looks excellent and is worthless
 
