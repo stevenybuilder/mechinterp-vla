@@ -1,0 +1,56 @@
+{
+  "config": {
+    "analysis": {
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 60508,
+      "primary_contrast": "matched_full_progress_to_B_minus_norm_matched_mismatched_full_progress_to_B",
+      "primary_unit": "median_within_each_of_12_directed_prompt_pair_cells",
+      "secondary_contrasts": [
+        "matched_full_progress_to_B_minus_matched_attention_only_progress_to_B",
+        "norm_matched_mismatched_full_progress_to_B_minus_norm_matched_random_progress_to_B"
+      ]
+    },
+    "created_on": "2026-09-04",
+    "eval_init_ids": [
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "experiment": "pi05_matched_layer6_8_transform",
+    "fixed": {
+      "action_steps_for_metric": 10,
+      "band_decoder_layers": [
+        6,
+        7,
+        8
+      ],
+      "image_positions": 512,
+      "image_slots": 768,
+      "input_residual_layer": 5,
+      "intervention_residual_layer": 8,
+      "noise_seed_multiplier": 100,
+      "state_layers": [
+        12,
+        17
+      ]
+    },
+    "pairs_file": "artifacts/mediation_pairs.json",
+    "policy": "lerobot/pi05_libero_finetuned_v044",
+    "revision": "8e174154ef5f6c60a8da12ae99c303d8963138c1",
+    "schema_version": 1,
+    "stopping_rule": "Run the fixed layer-6-to-8 band once on all 12 directed Goal contrasts and five new initial states. Do not search layers, positions, doses, prompt pairs, or decision thresholds after observing the result. Report paired cell-level effects, exact sign tests, and bootstrap intervals whether positive or negative.",
+    "suite": "libero_goal"
+  },
+  "created_at": "2026-09-04T23:28:20+0000",
+  "hashes": {
+    "config": "7871727468e6f9d4b3957beea1bc545605835211b56a387b4f10ef75aa3314f2",
+    "hooks": "6ea353dbf62873e0ef05c3a2abe9eb6aebb4043314820ceb3047e0d672a7da16",
+    "pairs": "6ff2654a03b1fc197da06f36304d04406ba5db9ed2168f0f61588d5d15c61ae6",
+    "preregistration": "d72f0be2d5aa088f4e1bde0f56eb3db1e8b2341ccf86f76ffe7a2abffe59d725",
+    "runner": "1a2d0c4e3b9ae7d2d7e5bf8ca40ba7c6f861aee024ceaf5ff90d5d2c83b1dcfd"
+  },
+  "mode": "full",
+  "schema_version": 1
+}

@@ -1,0 +1,27 @@
+model,patched_positions,unit_index,normalized_donor_recovery
+π0.5,Text positions,0,-0.004097126905135774
+π0.5,Text positions,1,0.010667236636474484
+π0.5,Text positions,2,-0.013009778529761623
+π0.5,Text positions,3,0.01389804608985112
+π0.5,Text positions,4,0.03835334360752323
+π0.5,Text positions,5,0.010437008128643203
+π0.5,Image positions,0,0.948259171825841
+π0.5,Image positions,1,1.0253428422787523
+π0.5,Image positions,2,0.9767748417604316
+π0.5,Image positions,3,0.9794042148842049
+π0.5,Image positions,4,0.916738994058548
+π0.5,Image positions,5,0.9206888192339013
+OpenVLA-OFT,Text positions,0,0.9865017825490687
+OpenVLA-OFT,Text positions,1,0.9860262012863736
+OpenVLA-OFT,Text positions,2,0.9910916412105627
+OpenVLA-OFT,Text positions,3,0.989240995705955
+OpenVLA-OFT,Text positions,4,0.9899493656600726
+OpenVLA-OFT,Text positions,5,0.9931932016850518
+OpenVLA-OFT,Text positions,6,0.9906990537033822
+OpenVLA-OFT,Image positions,0,0.07253734932944972
+OpenVLA-OFT,Image positions,1,0.05323891290931643
+OpenVLA-OFT,Image positions,2,0.053330027495222365
+OpenVLA-OFT,Image positions,3,0.03555526827204947
+OpenVLA-OFT,Image positions,4,0.042574193266273375
+OpenVLA-OFT,Image positions,5,0.028073507155464084
+OpenVLA-OFT,Image positions,6,0.021859296601074885

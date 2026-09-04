@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "sealed_date": "2026-09-04",
+  "question": "Does broad late image-associated state contain a compact, source-specific instruction component that is sufficient and necessary on held-out initial states?",
+  "model": {
+    "policy": "lerobot/pi05_libero_finetuned_v044",
+    "revision": "8e174154ef5f6c60a8da12ae99c303d8963138c1",
+    "dtype": "float32"
+  },
+  "stimulus": {
+    "suite": "libero_goal",
+    "timepoint": 0,
+    "pairs_file": "artifacts/mediation_pairs.json",
+    "directed_cells": 12,
+    "unordered_prompt_pairs": 6,
+    "valid_image_positions": 512
+  },
+  "splits": {
+    "calibration_fit_init_ids": [0, 1, 2, 3, 4, 5],
+    "representation_selection_init_ids": [6, 7],
+    "causal_screen_init_ids": [8, 9],
+    "conditional_confirmation_init_ids": [10, 11, 12, 13, 14, 15],
+    "globally_pristine_claim": false
+  },
+  "operator": {
+    "paired_delta": "H_B[IMG] - H_A[IMG] on the identical observation",
+    "candidate_layers": [12, 13, 14, 15, 16, 17],
+    "candidate_matrix_ranks": [1, 2, 4, 8, 16, 32],
+    "max_fit_rank": 32,
+    "nuisance_shrinkage": "component signal^2 / (signal^2 + across-calibration-init coefficient variance)",
+    "norm_contract": "renormalize shrunken coefficients to the unshrunk rank-k Frobenius norm",
+    "dose": 1.0,
+    "evaluation_donor_activation": false
+  },
+  "selection": {
+    "behavior_blind": true,
+    "layer_rule": "At rank 32 maximize median cell-level cos(fit, heldout_delta) - max(0, cos(wrong_pair, heldout_delta)); ties within 0.005 choose later layer.",
+    "rank_rule": "At the selected layer choose the smallest rank reaching 95% of rank-32 selectivity.",
+    "gate": {
+      "median_fitted_cosine_min": 0.10,
+      "median_source_specific_selectivity_min": 0.05,
+      "fit_beats_wrong_pair_cells_min": 8,
+      "required_directed_cells": 12
+    }
+  },
+  "causal_conditions": [
+    "clean_A",
+    "clean_B",
+    "insert_fit",
+    "remove_fit",
+    "insert_reverse",
+    "remove_reverse",
+    "insert_wrong",
+    "remove_wrong",
+    "insert_random",
+    "remove_random",
+    "insert_ceiling",
+    "remove_ceiling"
+  ],
+  "screen_gate": {
+    "target_distance_max": 0.75,
+    "fit_joint_landing_cells_min": 8,
+    "fit_unordered_pair_coverage_required": 6,
+    "wrong_joint_landing_cells_max": 2,
+    "random_joint_landing_cells_max": 2,
+    "ceiling_joint_landing_cells_min": 10
+  },
+  "confirmation_gate": {
+    "target_distance_max": 0.50,
+    "fit_joint_landing_cells_min": 10,
+    "fit_unordered_pair_coverage_required": 6,
+    "wrong_joint_landing_cells_max": 2,
+    "random_joint_landing_cells_max": 2
+  },
+  "stop_rule": "A failed geometry or causal screen is a completed negative. Do not search more ranks, layers, doses, token subsets, nonlinear operators, or thresholds on IDs 8-15.",
+  "runtime": {
+    "minimum_free_disk_gib": 2.0,
+    "raw_calibration_activations_saved": false
+  },
+  "implementation_hashes_at_seal": {
+    "scripts/vla/sonar_lite_geometry.py": "9b5fb49c582e9700e80ad882d3481ad1118a89d78d5237aefe1e6f11ba6691a3",
+    "scripts/vla/pi05_sonar_lite_mediator.py": "a29ec99afc652635cac718c40edb64d732288c71b5f48fef7b7b5d6287efdf76",
+    "scripts/vla/analyze_pi05_sonar_lite_mediator.py": "5c24bdb3b12fd7a7972969a49a4e64a84e920e2b8e1082c9f1491d141838cea5",
+    "scripts/vla/hooks.py": "37ef2a6ed2d6c2057d83c5aba43de83ae8a11ce4d8cdf5e7b87181786d762b6f",
+    "artifacts/mediation_pairs.json": "6ff2654a03b1fc197da06f36304d04406ba5db9ed2168f0f61588d5d15c61ae6"
+  }
+}

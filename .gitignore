@@ -35,3 +35,15 @@ notes/
 box_sync/
 *.jsonl
 *.npz
+
+# Small, publication-facing evidence included intentionally.
+!artifacts/
+artifacts/*
+!artifacts/numbers-audit-derived.json
+!artifacts/pi05_matched_band_transform_2026-09-04_v1/
+!artifacts/pi05_matched_band_transform_2026-09-04_v1/manifest.json
+!artifacts/pi05_matched_band_transform_2026-09-04_v1/summary.json
+!artifacts/pi05_matched_band_transform_2026-09-04_v1/rows.jsonl
+!logs/
+logs/*
+!logs/pi05_matched_band_transform_2026-09-04_v1.log

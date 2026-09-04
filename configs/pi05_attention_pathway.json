@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "experiment": "pi05_attention_pathway_block_rescue",
+  "created_on": "2026-09-04",
+  "policy": "lerobot/pi05_libero_finetuned_v044",
+  "revision": "8e174154ef5f6c60a8da12ae99c303d8963138c1",
+  "suite": "libero_goal",
+  "pairs_file": "artifacts/mediation_pairs.json",
+  "fixed": {
+    "prefix_layers": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+    "reader_layers": [12, 13, 14, 15, 16, 17],
+    "late_state_layers": [12, 13, 14, 15, 16, 17],
+    "writer_receiver": "valid_image_positions",
+    "writer_source": "instruction_positions",
+    "reader_receiver": "all_action_queries",
+    "reader_source": "valid_image_prefix_positions",
+    "action_steps_for_metric": 10,
+    "denoise_steps": 10,
+    "writer_energy_fraction": 0.90,
+    "writer_compact_max_heads": 4,
+    "reader_energy_fraction": 0.90,
+    "reader_compact_max_edges": 8,
+    "random_seed": 20260904
+  },
+  "splits": {
+    "preflight_ids": [0],
+    "writer_select_ids": [0, 1, 2, 3, 4, 5],
+    "reader_select_ids": [6, 7, 8, 9],
+    "causal_screen_ids": [16, 17, 18, 19],
+    "confirmation_ids": [20, 21, 22, 23, 24]
+  },
+  "gates": {
+    "preflight": {
+      "identity_bitwise_exact": true,
+      "valid_image_positions": 512,
+      "prefix_layers_observed": 18,
+      "expert_layers_observed": 18
+    },
+    "writer": {
+      "block_all_noninstruction_median_preference_for_A_min": 0.60,
+      "selected_rescue_median_preference_for_B_min": 0.60,
+      "selected_rescue_beats_random_cell_directions_min": 8,
+      "selected_rescue_internal_state_preference_for_B_min": 0.60
+    },
+    "reader": {
+      "block_median_preference_for_A_min": 0.60,
+      "selected_rescue_median_preference_for_B_min": 0.60,
+      "selected_rescue_beats_random_cell_directions_min": 8
+    },
+    "confirmation": {
+      "required_cell_directions": 12,
+      "writer_block_A_like_fraction_min": 0.75,
+      "writer_rescue_B_like_fraction_min": 0.75,
+      "reader_block_A_like_fraction_min": 0.75,
+      "reader_rescue_B_like_fraction_min": 0.75,
+      "downstream_path_rescue_B_like_fraction_min": 0.75,
+      "selected_controls_win_fraction_min": 0.67
+    }
+  },
+  "stopping_rule": "Do not open confirmation states unless both causal screen gates pass. Do not run closed-loop behavior unless immediate-action confirmation passes."
+}

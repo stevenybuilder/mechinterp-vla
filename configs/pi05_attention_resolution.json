@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "experiment": "pi05_attention_pathway_resolution",
+  "created_on": "2026-09-04",
+  "policy": "lerobot/pi05_libero_finetuned_v044",
+  "revision": "8e174154ef5f6c60a8da12ae99c303d8963138c1",
+  "development": {
+    "suite": "libero_goal",
+    "pairs_file": "artifacts/mediation_pairs.json",
+    "init_ids": [25, 26, 27]
+  },
+  "holdout": {
+    "suite": "libero_object",
+    "pairs_file": "configs/pi05_attention_resolution_holdout_pairs.json",
+    "init_ids": [25, 26, 27, 28, 29],
+    "pair_status": "new to all attention-pathway selection; initial states are later than the historical object run's 0-24 range"
+  },
+  "fixed": {
+    "writer_layers": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+    "reader_layers": [12, 13, 14, 15, 16, 17],
+    "action_steps_for_metric": 10,
+    "denoise_steps": 10,
+    "reader_top_k": [1, 2, 4, 8, 13],
+    "reader_ranking_source": "artifacts/pi05_attention_pathway_2026-09-04_v1/reader_selection.json",
+    "reader_ranked_edges": [[14, 1], [16, 3], [14, 0], [14, 3], [12, 3], [15, 2], [13, 3], [13, 2], [12, 4], [15, 1], [13, 1], [14, 4], [15, 4]],
+    "reader_random_edges": {
+      "1": [[15, 7]],
+      "2": [[15, 7], [12, 5]],
+      "4": [[15, 7], [12, 5], [16, 0], [17, 6]],
+      "8": [[15, 7], [12, 5], [16, 0], [17, 6], [14, 6], [13, 6], [13, 0], [15, 6]],
+      "13": [[15, 7], [12, 5], [16, 0], [17, 6], [14, 6], [13, 6], [13, 0], [15, 6], [16, 4], [12, 7], [12, 1], [12, 2], [13, 7]]
+    },
+    "reader_random_control_rule": "one seed-20260904 permutation of the 35 edges outside the full selected top-13 set; each control is its nested length-k prefix",
+    "random_seed": 20260904
+  },
+  "development_gates": {
+    "writer": {
+      "curve_endpoint_range_min": 1.0,
+      "localized_transition_width_max": 3,
+      "localized_max_step_fraction_min": 0.5,
+      "localized_critical_layer_tolerance": 2,
+      "distributed_transition_width_min": 6,
+      "distributed_max_step_fraction_max": 0.4,
+      "distributed_monotonic_rho_min": 0.8
+    },
+    "reader": {
+      "maximum_passing_k": 8,
+      "rescue_median_D_B_max": 0.25,
+      "rescue_B_like_state_fraction_min": 0.75,
+      "removal_median_D_A_max": 0.35,
+      "removal_A_like_state_fraction_min": 0.75,
+      "joint_endpoint_cell_directions_min": 8,
+      "selected_beats_random_joint_cell_directions_min": 8
+    }
+  },
+  "holdout_gates": {
+    "writer": {
+      "development_curve_correlation_min": 0.75,
+      "replicated_cell_directions_min": 6,
+      "selected_block_median_preference_for_A_min": 0.5,
+      "selected_rescue_median_preference_for_B_min": 0.5,
+      "selected_beats_matched_control_cell_directions_min": 6
+    },
+    "reader": {
+      "selected_rescue_median_D_B_max": 0.25,
+      "selected_removal_median_D_A_max": 0.35,
+      "selected_joint_endpoint_cell_directions_min": 6,
+      "selected_beats_random_joint_cell_directions_min": 6
+    }
+  },
+  "stopping_rule": "Freeze writer classification and minimum reader k from development before opening held-out pairs. A failed or ambiguous development gate leaves its corresponding holdout stage unopened. No threshold or candidate changes after development."
+}

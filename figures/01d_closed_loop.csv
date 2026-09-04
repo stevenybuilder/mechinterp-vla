@@ -1,0 +1,9 @@
+condition,metric,successes,episodes,rate
+correct,correct_target_first_touched,19,20,0.95
+conflict,correct_target_first_touched,0,20,0.0
+state_early,correct_target_first_touched,0,20,0.0
+state_live,correct_target_first_touched,18,20,0.9
+correct,success,19,20,0.95
+conflict,success,0,20,0.0
+state_early,success,0,20,0.0
+state_live,success,18,20,0.9

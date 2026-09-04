@@ -1,0 +1,287 @@
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+WARNING:robosuite_logs:No private macro file found!
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+WARNING:robosuite_logs:It is recommended to use a private macro file
+[robosuite WARNING] To setup, run: python /opt/conda/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+WARNING:robosuite_logs:To setup, run: python /opt/conda/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py
+WARNING:root:Vision embedding key might need handling: model.paligemma_with_expert.paligemma.model.vision_tower.vision_model.embeddings.patch_embedding.bias
+WARNING:root:Vision embedding key might need handling: model.paligemma_with_expert.paligemma.model.vision_tower.vision_model.embeddings.patch_embedding.weight
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+The PI05 model is a direct port of the OpenPI implementation. 
+This implementation follows the original OpenPI structure for compatibility. 
+Original implementation: https://github.com/Physical-Intelligence/openpi
+Loading model from: lerobot/pi05_libero_finetuned_v044
+✓ Loaded state dict from model.safetensors
+Warning: Could not remap state dict keys: Error(s) in loading state_dict for PI05Policy:
+	Missing key(s) in state_dict: "model.paligemma_with_expert.paligemma.model.language_model.embed_tokens.weight". 
+Local assets not found. Downloading from HuggingFace Hub...
+Assets already downloaded at /root/.cache/libero/assets
+[matched-transform] libero_goal_t0_vs_t6 (1/12)
+[matched-transform] libero_goal_t0_vs_t9 (2/12)
+[matched-transform] libero_goal_t2_vs_t3 (3/12)
+[matched-transform] libero_goal_t2_vs_t5 (4/12)
+[matched-transform] libero_goal_t3_vs_t2 (5/12)
+[matched-transform] libero_goal_t3_vs_t5 (6/12)
+[matched-transform] libero_goal_t5_vs_t2 (7/12)
+[matched-transform] libero_goal_t5_vs_t3 (8/12)
+[matched-transform] libero_goal_t6_vs_t0 (9/12)
+[matched-transform] libero_goal_t6_vs_t9 (10/12)
+[matched-transform] libero_goal_t9_vs_t0 (11/12)
+[matched-transform] libero_goal_t9_vs_t6 (12/12)
+{
+  "status": "complete",
+  "interpretation_flags": {
+    "evidence_for_scene_conditioning": true,
+    "evidence_for_cross_scene_reuse": true,
+    "evidence_that_mlp_improves_over_attention_only": true
+  },
+  "conditions": {
+    "clean_A": {
+      "median_cell_progress_to_B": 0.0,
+      "bootstrap_95pct_interval": [
+        0.0,
+        0.0
+      ],
+      "cells_with_positive_progress": 0,
+      "cell_values": {
+        "libero_goal_t0_vs_t6": 0.0,
+        "libero_goal_t0_vs_t9": 0.0,
+        "libero_goal_t2_vs_t3": 0.0,
+        "libero_goal_t2_vs_t5": 0.0,
+        "libero_goal_t3_vs_t2": 0.0,
+        "libero_goal_t3_vs_t5": 0.0,
+        "libero_goal_t5_vs_t2": 0.0,
+        "libero_goal_t5_vs_t3": 0.0,
+        "libero_goal_t6_vs_t0": 0.0,
+        "libero_goal_t6_vs_t9": 0.0,
+        "libero_goal_t9_vs_t0": 0.0,
+        "libero_goal_t9_vs_t6": 0.0
+      }
+    },
+    "clean_B": {
+      "median_cell_progress_to_B": 1.0,
+      "bootstrap_95pct_interval": [
+        1.0,
+        1.0
+      ],
+      "cells_with_positive_progress": 12,
+      "cell_values": {
+        "libero_goal_t0_vs_t6": 1.0,
+        "libero_goal_t0_vs_t9": 1.0,
+        "libero_goal_t2_vs_t3": 1.0,
+        "libero_goal_t2_vs_t5": 1.0,
+        "libero_goal_t3_vs_t2": 1.0,
+        "libero_goal_t3_vs_t5": 1.0,
+        "libero_goal_t5_vs_t2": 1.0,
+        "libero_goal_t5_vs_t3": 1.0,
+        "libero_goal_t6_vs_t0": 1.0,
+        "libero_goal_t6_vs_t9": 1.0,
+        "libero_goal_t9_vs_t0": 1.0,
+        "libero_goal_t9_vs_t6": 1.0
+      }
+    },
+    "matched_full": {
+      "median_cell_progress_to_B": 0.3399905391152666,
+      "bootstrap_95pct_interval": [
+        0.13946180517556483,
+        0.4748736702837994
+      ],
+      "cells_with_positive_progress": 12,
+      "cell_values": {
+        "libero_goal_t0_vs_t6": 0.10394186717647846,
+        "libero_goal_t0_vs_t9": 0.16783028845867926,
+        "libero_goal_t2_vs_t3": 0.6572772634126579,
+        "libero_goal_t2_vs_t5": 0.6536860591046537,
+        "libero_goal_t3_vs_t2": 0.19002285813761607,
+        "libero_goal_t3_vs_t5": 0.2959080613521321,
+        "libero_goal_t5_vs_t2": 0.11109332189245039,
+        "libero_goal_t5_vs_t3": 0.38710924441076505,
+        "libero_goal_t6_vs_t0": 0.4655730939710707,
+        "libero_goal_t6_vs_t9": 0.06760745825773652,
+        "libero_goal_t9_vs_t0": 0.3840730168784011,
+        "libero_goal_t9_vs_t6": 0.4841742465965281
+      }
+    },
+    "mismatched_full_norm_matched": {
+      "median_cell_progress_to_B": 0.2107821229147958,
+      "bootstrap_95pct_interval": [
+        0.11241428363077081,
+        0.2669934880427626
+      ],
+      "cells_with_positive_progress": 12,
+      "cell_values": {
+        "libero_goal_t0_vs_t6": 0.11033899246965614,
+        "libero_goal_t0_vs_t9": 0.11448957479188548,
+        "libero_goal_t2_vs_t3": 0.4722526485071842,
+        "libero_goal_t2_vs_t5": 0.672457445561438,
+        "libero_goal_t3_vs_t2": 0.22466112077550104,
+        "libero_goal_t3_vs_t5": 0.23247966530813682,
+        "libero_goal_t5_vs_t2": 0.09491617019617753,
+        "libero_goal_t5_vs_t3": 0.1969031250540906,
+        "libero_goal_t6_vs_t0": 0.2758029318590529,
+        "libero_goal_t6_vs_t9": 0.029996797521557123,
+        "libero_goal_t9_vs_t0": 0.25818404422647223,
+        "libero_goal_t9_vs_t6": 0.15739577551642084
+      }
+    },
+    "matched_attention_only": {
+      "median_cell_progress_to_B": 0.04022345164233035,
+      "bootstrap_95pct_interval": [
+        0.012178369237435337,
+        0.10199363864619862
+      ],
+      "cells_with_positive_progress": 10,
+      "cell_values": {
+        "libero_goal_t0_vs_t6": -0.011090688170577189,
+        "libero_goal_t0_vs_t9": 0.01605100587515982,
+        "libero_goal_t2_vs_t3": 0.10150484983317552,
+        "libero_goal_t2_vs_t5": 0.1105132578874954,
+        "libero_goal_t3_vs_t2": 0.04175489442273873,
+        "libero_goal_t3_vs_t5": 0.13036993774209044,
+        "libero_goal_t5_vs_t2": 0.008305732599710855,
+        "libero_goal_t5_vs_t3": 0.07677808962667497,
+        "libero_goal_t6_vs_t0": 0.02945092653848117,
+        "libero_goal_t6_vs_t9": -0.004929698421906532,
+        "libero_goal_t9_vs_t0": 0.10248242745922172,
+        "libero_goal_t9_vs_t6": 0.038692008861921964
+      }
+    },
+    "mismatched_attention_only_norm_matched": {
+      "median_cell_progress_to_B": 0.03555421761674193,
+      "bootstrap_95pct_interval": [
+        0.01298409625168883,
+        0.10798625160855393
+      ],
+      "cells_with_positive_progress": 12,
+      "cell_values": {
+        "libero_goal_t0_vs_t6": 0.015006297321420477,
+        "libero_goal_t0_vs_t9": 0.026608051592060002,
+        "libero_goal_t2_vs_t3": 0.11512550844248735,
+        "libero_goal_t2_vs_t5": 0.11296406262099284,
+        "libero_goal_t3_vs_t2": 0.044500383641423856,
+        "libero_goal_t3_vs_t5": 0.10977279540664239,
+        "libero_goal_t5_vs_t2": 0.015407838472861451,
+        "libero_goal_t5_vs_t3": 0.09054965046182259,
+        "libero_goal_t6_vs_t0": 0.010961895181957185,
+        "libero_goal_t6_vs_t9": 0.0026301596964727306,
+        "libero_goal_t9_vs_t0": 0.10619970781046549,
+        "libero_goal_t9_vs_t6": 0.008985390243300658
+      }
+    },
+    "random_norm_matched": {
+      "median_cell_progress_to_B": 0.005783176853251961,
+      "bootstrap_95pct_interval": [
+        -0.004035513451294447,
+        0.016874173292683668
+      ],
+      "cells_with_positive_progress": 9,
+      "cell_values": {
+        "libero_goal_t0_vs_t6": -0.015458801164878617,
+        "libero_goal_t0_vs_t9": -0.010295370554147225,
+        "libero_goal_t2_vs_t3": 0.03860816962016185,
+        "libero_goal_t2_vs_t5": 0.06221623668835629,
+        "libero_goal_t3_vs_t2": 0.01952153486472639,
+        "libero_goal_t3_vs_t5": 0.014226811720640949,
+        "libero_goal_t5_vs_t2": 0.00898317572166771,
+        "libero_goal_t5_vs_t3": 0.00222434365155833,
+        "libero_goal_t6_vs_t0": 0.0061241944112175265,
+        "libero_goal_t6_vs_t9": 0.005442159295286396,
+        "libero_goal_t9_vs_t0": -0.024003433079452418,
+        "libero_goal_t9_vs_t6": 0.0025834398147912083
+      }
+    }
+  },
+  "contrasts": {
+    "matched_minus_mismatched_full": {
+      "median_cell_effect": 0.058384554855394524,
+      "bootstrap_95pct_interval": [
+        0.00489001320154759,
+        0.18739738850874577
+      ],
+      "exact_two_sided_sign_test": {
+        "positive": 9,
+        "negative": 3,
+        "ties": 0,
+        "p_two_sided": 0.14599609375
+      },
+      "cell_effects": {
+        "libero_goal_t0_vs_t6": -0.00639712529317768,
+        "libero_goal_t0_vs_t9": 0.05334071366679377,
+        "libero_goal_t2_vs_t3": 0.18502461490547373,
+        "libero_goal_t2_vs_t5": -0.018771386456784334,
+        "libero_goal_t3_vs_t2": -0.03463826263788497,
+        "libero_goal_t3_vs_t5": 0.06342839604399528,
+        "libero_goal_t5_vs_t2": 0.01617715169627286,
+        "libero_goal_t5_vs_t3": 0.19020611935667445,
+        "libero_goal_t6_vs_t0": 0.1897701621120178,
+        "libero_goal_t6_vs_t9": 0.0376106607361794,
+        "libero_goal_t9_vs_t0": 0.1258889726519289,
+        "libero_goal_t9_vs_t6": 0.32677847108010727
+      }
+    },
+    "matched_full_minus_matched_attention_only": {
+      "median_cell_effect": 0.22356435651461054,
+      "bootstrap_95pct_interval": [
+        0.1316502595309665,
+        0.4408022025835978
+      ],
+      "exact_two_sided_sign_test": {
+        "positive": 12,
+        "negative": 0,
+        "ties": 0,
+        "p_two_sided": 0.00048828125
+      },
+      "cell_effects": {
+        "libero_goal_t0_vs_t6": 0.11503255534705566,
+        "libero_goal_t0_vs_t9": 0.15177928258351944,
+        "libero_goal_t2_vs_t3": 0.5557724135794824,
+        "libero_goal_t2_vs_t5": 0.5431728012171583,
+        "libero_goal_t3_vs_t2": 0.14826796371487735,
+        "libero_goal_t3_vs_t5": 0.16553812361004167,
+        "libero_goal_t5_vs_t2": 0.10278758929273953,
+        "libero_goal_t5_vs_t3": 0.31033115478409007,
+        "libero_goal_t6_vs_t0": 0.4361221674325895,
+        "libero_goal_t6_vs_t9": 0.07253715667964306,
+        "libero_goal_t9_vs_t0": 0.2815905894191794,
+        "libero_goal_t9_vs_t6": 0.4454822377346061
+      }
+    },
+    "mismatched_full_minus_random": {
+      "median_cell_effect": 0.19990918365665347,
+      "bootstrap_95pct_interval": [
+        0.12529136949028374,
+        0.27593310737688004
+      ],
+      "exact_two_sided_sign_test": {
+        "positive": 12,
+        "negative": 0,
+        "ties": 0,
+        "p_two_sided": 0.00048828125
+      },
+      "cell_effects": {
+        "libero_goal_t0_vs_t6": 0.12579779363453475,
+        "libero_goal_t0_vs_t9": 0.12478494534603271,
+        "libero_goal_t2_vs_t3": 0.43364447888702234,
+        "libero_goal_t2_vs_t5": 0.6102412088730818,
+        "libero_goal_t3_vs_t2": 0.20513958591077466,
+        "libero_goal_t3_vs_t5": 0.21825285358749588,
+        "libero_goal_t5_vs_t2": 0.08593299447450982,
+        "libero_goal_t5_vs_t3": 0.19467878140253228,
+        "libero_goal_t6_vs_t0": 0.2696787374478354,
+        "libero_goal_t6_vs_t9": 0.024554638226270728,
+        "libero_goal_t9_vs_t0": 0.28218747730592464,
+        "libero_goal_t9_vs_t6": 0.15481233570162964
+      }
+    }
+  },
+  "rows": 420,
+  "expected_rows": 420,
+  "directed_prompt_pair_cells": 12,
+  "initial_states_per_cell": 5,
+  "rows_sha256": "c3f38266fe998593b05ad0a6b36ecbaa31cc63f474c232c49872fee673467993",
+  "claim_limits": [
+    "The intervention is an additive full-image-field message measured from paired runs, not a discovered low-dimensional manifold.",
+    "A matching-scene effect alone is not a portable causal rule.",
+    "Immediate action chunks are not closed-loop task-success measurements."
+  ]
+}

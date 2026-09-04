@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "experiment_id": "pi05_donor_free_low_rank_repair_2026-09-02",
+  "suite": "libero_object",
+  "policy": "lerobot/pi05_libero_finetuned_v044",
+  "revision": "8e174154ef5f6c60a8da12ae99c303d8963138c1",
+  "dtype": "float32",
+  "base_seed": 20260902,
+  "num_task_codes": 10,
+  "live_layers": [12, 13, 14, 15, 16, 17],
+  "early_layers": [0, 1, 2, 3, 4, 5],
+  "rank": 8,
+  "ridge": 0.01,
+  "alpha": 1.0,
+  "image_position_stride": 8,
+  "calibration_max_replans": 12,
+  "calibration_init_ids": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  "confirmation_init_ids": [40, 41, 42, 43, 44, 45, 46, 47, 48, 49],
+  "training_edges": {
+    "1": [0, 6, 7, 9],
+    "2": [0, 1, 5, 7],
+    "3": [0, 1, 2, 8],
+    "5": [3, 7, 8, 9],
+    "8": [0, 2, 3, 4]
+  },
+  "heldout_pairs": [
+    {"target_task_id": 1, "source_task_id": 5, "wrong_control_target_task_id": 6},
+    {"target_task_id": 2, "source_task_id": 4, "wrong_control_target_task_id": 1},
+    {"target_task_id": 3, "source_task_id": 4, "wrong_control_target_task_id": 8},
+    {"target_task_id": 5, "source_task_id": 6, "wrong_control_target_task_id": 8},
+    {"target_task_id": 8, "source_task_id": 9, "wrong_control_target_task_id": 3}
+  ],
+  "calibration_sentinel": {
+    "target_task_id": 1,
+    "source_task_id": 0,
+    "wrong_control_target_task_id": 6,
+    "init_ids": [0]
+  },
+  "confirmation_conditions": [
+    "conflict",
+    "correct",
+    "repair",
+    "random_matched",
+    "orthogonal_matched",
+    "wrong_instruction",
+    "early_matched",
+    "preserve_correct"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "experiment": "pi05_curvature_removal_rescue_action",
+  "created_on": "2026-09-04",
+  "policy": "lerobot/pi05_libero_finetuned_v044",
+  "revision": "8e174154ef5f6c60a8da12ae99c303d8963138c1",
+  "suite": "libero_goal",
+  "pairs_file": "artifacts/mediation_pairs.json",
+  "eval_init_ids": [28, 29, 30, 31, 32],
+  "fixed": {
+    "input_residual_layer": 5,
+    "output_residual_layer": 8,
+    "image_positions": 512,
+    "image_slots": 768,
+    "interpolation_alpha": 0.5,
+    "action_steps_for_metric": 10,
+    "noise_seed_multiplier": 100
+  },
+  "gates": {
+    "median_action_change_over_endpoint_distance_min": 0.1,
+    "directed_pairs_with_median_ratio_at_least_0_1_min": 8,
+    "rescue_must_be_bitwise_exact": true
+  },
+  "stopping_rule": "One fixed removal/rescue test. No layer, alpha, position, dose, threshold, or action metric search follows the result."
+}

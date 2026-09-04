@@ -1,0 +1,27 @@
+{
+  "schema_version": 2,
+  "experiment": "pi05_writer_band_6_8_confirmation",
+  "created_on": "2026-09-04",
+  "policy": "lerobot/pi05_libero_finetuned_v044",
+  "revision": "8e174154ef5f6c60a8da12ae99c303d8963138c1",
+  "holdout": {
+    "suite": "libero_object",
+    "pairs_file": "configs/pi05_attention_resolution_holdout_pairs_v2.json",
+    "init_ids": [25, 26, 27, 28, 29]
+  },
+  "fixed": {
+    "all_writer_layers": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+    "selected_band": [6, 7, 8],
+    "control_band": [14, 15, 16],
+    "state_layers": [5, 6, 7, 8, 9, 12, 13, 14, 15, 16, 17],
+    "action_steps_for_metric": 10
+  },
+  "gates": {
+    "selected_block_median_preference_for_A_min": 0.5,
+    "selected_rescue_median_preference_for_B_min": 0.5,
+    "joint_endpoint_cell_directions_min": 6,
+    "selected_beats_control_joint_cell_directions_min": 6
+  },
+  "stopping_rule": "This is a separate post-development confirmation of the fixed layer-6-8 band. No layer, band, threshold, state substitution, or result-informed prompt selection is allowed. Failure authorizes only the separately preregistered lean nonlinear diagnostic, not another band search.",
+  "panel_correction": "See docs/ADDENDUM-pi05-writer-band-pair-panel-correction-2026-09-04.md"
+}
