@@ -1,0 +1,13 @@
+cell,offline_matched_action_progress_to_B,matched_rollout_B_target_first_touched,matched_rollout_success_B
+libero_goal_t6_vs_t9,0.06760745825773652,0,0
+libero_goal_t0_vs_t6,0.10394186717647846,0,0
+libero_goal_t5_vs_t2,0.11109332189245039,0,0
+libero_goal_t0_vs_t9,0.16783028845867926,0,0
+libero_goal_t3_vs_t2,0.19002285813761607,0,0
+libero_goal_t3_vs_t5,0.2959080613521321,0,0
+libero_goal_t9_vs_t0,0.3840730168784011,0,0
+libero_goal_t5_vs_t3,0.38710924441076505,1,0
+libero_goal_t6_vs_t0,0.4655730939710707,1,0
+libero_goal_t9_vs_t6,0.4841742465965281,0,0
+libero_goal_t2_vs_t5,0.6536860591046537,0,0
+libero_goal_t2_vs_t3,0.6572772634126579,1,0

@@ -506,6 +506,96 @@ def matched_band_transform() -> dict:
     }
 
 
+def matched_band_rollout_screen() -> dict:
+    """Recompute the exploratory closed-loop screen from episode records."""
+    rel = "artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/episodes.jsonl"
+    summary_rel = "artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/summary.json"
+    rows = list(jsonl(ROOT / rel))
+    stored = json.loads((ROOT / summary_rel).read_text())
+    conditions = ("clean_A", "clean_B", "matched_full")
+    outcomes = (
+        "success_B",
+        "B_target_first_touched",
+        "A_target_first_touched",
+        "touched_anything",
+    )
+    keys = [(row["cell"], int(row["init"]), row["condition"]) for row in rows]
+    counts = {
+        outcome: {
+            condition: sum(bool(row[outcome]) for row in rows if row["condition"] == condition)
+            for condition in conditions
+        }
+        for outcome in outcomes
+    }
+    med_steps = {
+        condition: median(row["n_steps"] for row in rows if row["condition"] == condition)
+        for condition in conditions
+    }
+    cells = sorted({row["cell"] for row in rows})
+    cell_rows = {(row["cell"], row["condition"]): row for row in rows}
+    b_first_differences = [
+        int(bool(cell_rows[(cell, "matched_full")]["B_target_first_touched"]))
+        - int(bool(cell_rows[(cell, "clean_A")]["B_target_first_touched"]))
+        for cell in cells
+    ]
+    success_differences = [
+        int(bool(cell_rows[(cell, "matched_full")]["success_B"]))
+        - int(bool(cell_rows[(cell, "clean_A")]["success_B"]))
+        for cell in cells
+    ]
+
+    def sign_test(values):
+        nonzero = [value for value in values if value != 0]
+        positives = sum(value > 0 for value in nonzero)
+        lower = min(positives, len(nonzero) - positives)
+        p_value = min(
+            1.0,
+            2.0 * sum(math.comb(len(nonzero), k) for k in range(lower + 1)) / (2 ** len(nonzero)),
+        ) if nonzero else 1.0
+        return {"positive": positives, "negative": len(nonzero) - positives, "p_two_sided": p_value}
+
+    matched_rows = [row for row in rows if row["condition"] == "matched_full"]
+    clean_rows = [row for row in rows if row["condition"] != "matched_full"]
+    recomputed = {
+        "rows": len(rows),
+        "counts": counts,
+        "median_steps": med_steps,
+    }
+    stored_errors = [
+        abs(counts[outcome][condition] - stored["counts"][outcome][condition])
+        for outcome in outcomes
+        for condition in conditions
+    ] + [
+        abs(med_steps[condition] - stored["median_steps"][condition])
+        for condition in conditions
+    ]
+    return {
+        "file": file_record(rel, 36),
+        "summary_file": file_record(summary_rel),
+        "directed_prompt_pair_cells": len(cells),
+        "initial_states_per_cell": len({int(row["init"]) for row in rows}),
+        "conditions": Counter(row["condition"] for row in rows),
+        "duplicate_keys": [list(key) for key, n in Counter(keys).items() if n > 1],
+        "counts": counts,
+        "median_steps": med_steps,
+        "matched_cells_with_B_first_touch": [
+            row["cell"] for row in matched_rows if bool(row["B_target_first_touched"])
+        ],
+        "B_first_touch_sign_test_matched_vs_clean_A": sign_test(b_first_differences),
+        "success_sign_test_matched_vs_clean_A": sign_test(success_differences),
+        "all_matched_replans_have_nonzero_message": all(
+            all(float(replan["message_frobenius_norm"]) > 0 for replan in row["replans"])
+            for row in matched_rows
+        ),
+        "all_clean_replans_have_zero_message": all(
+            all(float(replan["message_frobenius_norm"]) == 0 for replan in row["replans"])
+            for row in clean_rows
+        ),
+        "maximum_error_against_stored_summary": max(stored_errors),
+        "recomputed_summary_subset": recomputed,
+    }
+
+
 def oft() -> dict:
     rel = "artifacts/oft_downstream_kv/v2_20260831/rows.jsonl"
     rows = list(jsonl(ROOT / rel))
@@ -666,6 +756,7 @@ def main() -> None:
         "attention_pathway": attention_pathway(),
         "curvature": curvature(),
         "matched_band_transform": matched_band_transform(),
+        "matched_band_rollout_screen": matched_band_rollout_screen(),
         "openvla_oft": oft(),
         "monitor": monitor(),
     }
@@ -681,6 +772,9 @@ def main() -> None:
             "curvature_action_cells": audit["curvature"]["action"]["cell_medians_at_least_0_1"],
             "matched_transform_rows": audit["matched_band_transform"]["file"]["jsonl_rows"],
             "matched_transform_progress": audit["matched_band_transform"]["condition_median_cell_progress_to_B"]["matched_full"],
+            "matched_rollout_rows": audit["matched_band_rollout_screen"]["file"]["jsonl_rows"],
+            "matched_rollout_B_first": audit["matched_band_rollout_screen"]["counts"]["B_target_first_touched"]["matched_full"],
+            "matched_rollout_success_B": audit["matched_band_rollout_screen"]["counts"]["success_B"]["matched_full"],
         },
     }, indent=2))
 

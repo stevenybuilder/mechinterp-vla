@@ -1,0 +1,62 @@
+{
+  "config": {
+    "analysis": {
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 60808,
+      "mechanistic_contrast": "matched_full_minus_matched_attention_only",
+      "primary_contrasts": [
+        "matched_full_minus_clean_A",
+        "matched_full_minus_random_norm_matched"
+      ],
+      "primary_outcome": "libero_task_B_success",
+      "primary_unit": "mean_binary_outcome_within_each_of_12_directed_prompt_pair_cells",
+      "secondary_outcome": "B_target_in_first_touch_set"
+    },
+    "conditions": [
+      "clean_A",
+      "clean_B",
+      "matched_full",
+      "matched_attention_only",
+      "random_norm_matched"
+    ],
+    "created_on": "2026-09-04",
+    "eval_init_ids": [
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "experiment": "pi05_matched_layer6_8_closed_loop",
+    "fixed": {
+      "actions_per_replan": 10,
+      "band_decoder_layers": [
+        6,
+        7,
+        8
+      ],
+      "image_positions": 512,
+      "image_slots": 768,
+      "input_residual_layer": 5,
+      "intervention_residual_layer": 8,
+      "seed_base": 2600000
+    },
+    "pairs_file": "artifacts/mediation_pairs.json",
+    "policy": "lerobot/pi05_libero_finetuned_v044",
+    "revision": "8e174154ef5f6c60a8da12ae99c303d8963138c1",
+    "schema_version": 1,
+    "stopping_rule": "Run all five fixed conditions on all 12 directed Goal pairs and initial states 33-37. Do not search layers, doses, prompt pairs, or rollout thresholds after observing outcomes.",
+    "suite": "libero_goal"
+  },
+  "created_at": "2026-09-05T00:16:34+0000",
+  "hashes": {
+    "config": "f8f98fd92ba6f202a218008b647a81cf47a97f43d6bfc53fa905991e003d0f02",
+    "hooks": "6ea353dbf62873e0ef05c3a2abe9eb6aebb4043314820ceb3047e0d672a7da16",
+    "pairs": "6ff2654a03b1fc197da06f36304d04406ba5db9ed2168f0f61588d5d15c61ae6",
+    "preregistration": "2103071981970d00ec390e5c46a9ef2c54ed8559b554d298ef77095731049449",
+    "runner": "1e275ee99445f6b056a77cba40a50861e0437e951c91c8c17f7c0a83cf6e05af",
+    "transform_runner": "1a2d0c4e3b9ae7d2d7e5bf8ca40ba7c6f861aee024ceaf5ff90d5d2c83b1dcfd"
+  },
+  "mode": "smoke",
+  "schema_version": 1
+}

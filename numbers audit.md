@@ -9,7 +9,7 @@
 
 The core raw evidence is present and internally consistent. The strongest results survive recomputation: π0.5's instruction is used during prefill; after prefill, swapping the tested instruction-token state has almost no immediate action effect; broad late image-position state can transfer the action and closed-loop behavior; and every tested attempt to compress that effect into a small portable intervention failed its frozen causal gate.
 
-The final matched-transformation test adds a qualified positive result. A full 512-position instruction-induced update across layers 6–8 transferred between initial scenes within the same directed prompt pair: other-scene progress toward B was `0.21078` versus `0.00578` for random, and it beat random in all `12/12` cells (`p=0.000488`). Clamping the image-position MLP outputs reduced matching-scene progress from `0.33999` to `0.04022`; full beat attention-only in `12/12` cells (`p=0.000488`). This is evidence for a reusable multi-block transformation, not a compact, donor-free, or semantically held-out mechanism.
+The final matched-transformation tests add a qualified result. A full 512-position instruction-induced update across layers 6–8 transferred between initial scenes within the same directed prompt pair: other-scene progress toward B was `0.21078` versus `0.00578` for random, and it beat random in all `12/12` cells (`p=0.000488`). Clamping the image-position MLP outputs reduced matching-scene progress from `0.33999` to `0.04022`; full beat attention-only in `12/12` cells (`p=0.000488`). But the 36-episode simulator screen found only `3/12` B-first contacts and `0/12` task-B successes under the edit, versus `0/12` and `0/12` for clean A and `9/12` and `12/12` for clean B. This is evidence for local causal leverage by a broad multi-block transformation, not policy transfer or a compact, donor-free, semantically held-out mechanism.
 
 ## What was checked
 
@@ -20,6 +20,7 @@ I independently parsed the primary JSON/JSONL records, checked expected row coun
 - the OpenVLA-OFT analyzer reproduced its canonical `results.json` exactly in a temporary environment with NumPy;
 - the Sonar-lite partial-effect analyzer reproduced its canonical output exactly, while an independent raw-table recomputation reproduced the full headline numbers;
 - the matched layer-6→8 audit reconstructed every stored action-axis metric from the raw first-ten-action vectors, reproduced all condition/contrast medians and sign-test probabilities exactly, checked norm matching, and found no duplicate keys;
+- the rollout-screen audit parsed all 36 episodes, found no duplicate cell/init/condition keys, reproduced every stored count and median episode length exactly, and verified nonzero intervention-message norms only in the edited condition;
 - the full Sonar-lite analyzer was not rerun because the local Python environment lacks PyTorch. This is an environment limitation, not a positive validation claim.
 
 The audit does not pretend to re-create training or GPU inference from scratch. It validates preserved inference records against the analysis code and canonical reports. Sealed preregistrations and configs were not edited.
@@ -48,6 +49,7 @@ The audit does not pretend to re-create training or GPU inference from scratch. 
 | Does that curvature materially control action? | Median normalized action change 0.09729, just below the frozen ≥0.1 gate; only 5/12 direction medians met ≥0.1 versus the required 8/12; range 0.00844–0.52012; rescue identities exact | `artifacts/pi05_curvature_action_2026-09-04_v2/rows.jsonl` | The follow-up **failed**. The representation diagnostic did not earn a causal-action claim. No post-hoc threshold change is justified. |
 | Does the full layer-6→8 instruction transformation transfer across initial scenes? | Matching-scene full progress `0.33999` `[0.13946, 0.47487]`; norm-matched other-scene progress `0.21078` `[0.11241, 0.26699]`; random `0.00578` `[-0.00404, 0.01687]`. Other-scene minus random median `0.19991`, positive in `12/12`, exact sign `p=0.000488` | `artifacts/pi05_matched_band_transform_2026-09-04_v1/rows.jsonl` | A broad instruction-induced update has a reusable component across initial states within known prompt pairs. This is not held-out instruction semantics or a compact representation. |
 | Does attention alone produce the useful layer-6→8 update? | Matching attention-only progress `0.04022` versus full `0.33999`; full-minus-attention median `0.22356` `[0.13165, 0.44080]`, positive in `12/12`, exact sign `p=0.000488` | same 420-row table | No. Token-wise MLP processing inside the three blocks materially contributes after attention mixes the state. This does not localize a particular MLP feature. |
+| Does the matched layer-6→8 edit change closed-loop behavior? | Clean A: B-first `0/12`, success `0/12`; edit: B-first `3/12`, success `0/12`; clean B: B-first `9/12`, success `12/12`. B-first matched-versus-clean-A exact sign `p=0.25`; success `p=1` | `artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/episodes.jsonl` | The edit sometimes redirects the initial target but does not transfer the task policy. This was a one-initial-state-per-pair exploratory screen, not confirmation. |
 | Does the result transfer to OpenVLA-OFT? | Persistent image K/V patch L8–31 had median `D_src=0.96875`, only 0.03073 better than a single-residual control; same sign in 10/10 tasks (two-sided sign probability 0.001953) but 0/10 beat all controls by 0.2. Equal-token panel: image 0.95743, instruction 0.01005, both 0.00698 | `artifacts/oft_downstream_kv/v2_20260831/rows.jsonl` | It did **not** replicate the π0.5 image-carrier result. In this checkpoint the direct text route dominates; whole-image patching resembles a weak state transplant. |
 | Does a simple activation monitor generalize? | F1: development 0.9093; held-out instruction 0.6810; held-out scene 0.7454. An always-positive baseline has F1 0.8006 | `artifacts/pi05_monitor/monitor_cost.json` | A seemingly good in-distribution monitor failed both held-out splits. This supports the scene-bound/generalization warning. |
 
@@ -75,9 +77,10 @@ Distances use the archived convention: `D_A=0` means the intervention matches cl
 | Midpoint curvature | 60 | `d40d84603ac0c8f5149f29d6525902f7b5efc23ada8a95d2d27aa565379a861c` |
 | Curvature action follow-up | 60 | `dd9eb961cc23a306930d0b742a291b8eacaed862b0d467e7e578afdf14d193e3` |
 | Matched layer-6→8 transformation | 420 | `c3f38266fe998593b05ad0a6b36ecbaa31cc63f474c232c49872fee673467993` |
+| Matched-transform rollout breadth screen | 36 | `8f7022a0b5db6bad967faf570ee76f9e86e40dfa6b2e4af93da04a1e8233f549` |
 | OpenVLA-OFT downstream comparison | 3,440 | `82a3e51036b79e1231d80fd31a7192cfd91272ad91643c7cb5bec8d50ae7de26` |
 
-All listed JSONL files parse, have the expected row count, and passed the duplicate-cell checks implemented by their experiment harnesses or this audit where applicable. In the complete local archive, the checksum boundary is `PROVENANCE-SHA256SUMS`; this GitHub copy preserves that inventory as `FULL-ARCHIVE-SHA256SUMS` and verifies its published subset with `PUBLIC-SHA256SUMS`.
+All listed JSONL files parse, have the expected row count, and passed the duplicate-cell checks implemented by their experiment harnesses or this audit where applicable. The full archive checksum boundary is in `PROVENANCE-SHA256SUMS`.
 
 ## Corrections to older notes
 
@@ -89,6 +92,7 @@ All listed JSONL files parse, have the expected row count, and passed the duplic
 | “The low-rank donor-free test failed on five held-out edges” | Only three edges completed. They failed strongly, but 250/400 planned rows were collected and the last two edges were incomplete/not begun. |
 | “Layers 6–8 contain a nonlinear causal mechanism” | They show non-affinity along one tested synthetic chord. The preregistered action-sensitivity gate failed (median 0.0973; 5/12 cells). |
 | “Everything is scene-local” | Too strong. A full layer-6→8 message measured in another initial state for the same prompt pair retained substantial causal effect (`0.21078`) and beat random in `12/12` cells. Matching-scene messages were somewhat stronger, but the exact sign test for matched minus mismatched was `p=0.146`. |
+| “The matched layer-6→8 action shift changes robot behavior” | In a limited sense: B became the first target in `3/12` edited rollouts versus `0/12` clean-A rollouts. But task-B success remained `0/12`; the result is initial redirection, not task repair or policy transfer. |
 | “π0.5 has an image pathway; OpenVLA confirms it” | OpenVLA-OFT is a boundary condition, not confirmation: its direct instruction K/V route dominates under the equal-token intervention. |
 | “Attention is on language, therefore language drives action” | Language receives 11.4× more attention per token, while post-prefill instruction-state swaps barely affect action. Attention weight is not causal attribution. |
 | “A compact direction was found because it beat random controls” | Sonar-lite beat matched controls but never reached the donor endpoint. Relative selectivity is not causal sufficiency. |
@@ -108,6 +112,7 @@ All listed JSONL files parse, have the expected row count, and passed the duplic
 7. **Immediate action and task success were sometimes conflated.** The static-vector pilot demonstrates why both are required: it could improve first touch while leaving success at zero.
 8. **Cross-model comparison was framed too strongly.** The OFT result is evidence of architecture/checkpoint dependence, not a replication.
 9. **“Scene transfer” was allowed to sound like semantic transfer.** The matched-transform donor changes the initial scene but preserves the directed instruction pair. It does not establish new-task or new-language generalization.
+10. **A predicted-action shift was allowed to sound like behavioral control.** The simulator screen showed why both levels matter: the edit produced three B-first contacts but zero completed B tasks.
 
 ## What this audit may still have missed
 
@@ -116,6 +121,7 @@ All listed JSONL files parse, have the expected row count, and passed the duplic
 - Some historical receipts use absolute source-machine paths. The curated runtime snapshots and raw hashes are the authoritative local provenance.
 - Large per-example activation `.npz` intermediates were intentionally excluded; their tabular outputs, analyzers, manifests, and runtime snapshots are retained.
 - The donor-free experiment is incomplete, and the reader has no valid held-out prompt-pair confirmation. Neither should be described as a completed confirmation.
+- The matched-transform rollout screen has only one initial state per prompt pair and omits attention-only and random rollout controls. Its `3/12` first-contact result is exploratory; its `0/12` success result is a clear screen failure but not a precise zero-effect estimate.
 - Safety/Othello, COAST, Cosmos, and robotics-performance steering are not part of this archive's primary claim set. They can be discussed as historical context only when clearly labeled as source-only evidence.
 
 ## Reproduce the audit
@@ -129,6 +135,6 @@ sha256sum artifacts/numbers-audit-derived.json
 
 The current derived audit SHA-256 is:
 
-`85393be183763cae6ac8f59a5bb60994b9b1ac84d1bb2e3fbab30267384919a0`
+`47003b52f0a76595553991803f6dbf0765e43aaa7febca569c1dfe1d867820df`
 
 The derived JSON is deliberately not a frozen preregistration. If the script or evidence boundary changes, rerun it, review the diff, and regenerate the archive checksum inventory.

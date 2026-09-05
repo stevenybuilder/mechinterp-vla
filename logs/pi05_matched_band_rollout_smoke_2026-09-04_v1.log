@@ -1,0 +1,24 @@
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+WARNING:robosuite_logs:No private macro file found!
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+WARNING:robosuite_logs:It is recommended to use a private macro file
+[robosuite WARNING] To setup, run: python /opt/conda/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+WARNING:robosuite_logs:To setup, run: python /opt/conda/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py
+WARNING:root:Vision embedding key might need handling: model.paligemma_with_expert.paligemma.model.vision_tower.vision_model.embeddings.patch_embedding.bias
+WARNING:root:Vision embedding key might need handling: model.paligemma_with_expert.paligemma.model.vision_tower.vision_model.embeddings.patch_embedding.weight
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+The PI05 model is a direct port of the OpenPI implementation. 
+This implementation follows the original OpenPI structure for compatibility. 
+Original implementation: https://github.com/Physical-Intelligence/openpi
+Loading model from: lerobot/pi05_libero_finetuned_v044
+✓ Loaded state dict from model.safetensors
+Warning: Could not remap state dict keys: Error(s) in loading state_dict for PI05Policy:
+	Missing key(s) in state_dict: "model.paligemma_with_expert.paligemma.model.language_model.embed_tokens.weight". 
+Local assets not found. Downloading from HuggingFace Hub...
+Assets already downloaded at /root/.cache/libero/assets
+[rollout] pair=1/1 cell=libero_goal_t0_vs_t6 init=33 condition=clean_A success_B=0 B_first=0 A_first=1 steps=300 wall=24.6s
+[rollout] pair=1/1 cell=libero_goal_t0_vs_t6 init=33 condition=clean_B success_B=1 B_first=0 A_first=0 steps=84 wall=8.0s
+[rollout] pair=1/1 cell=libero_goal_t0_vs_t6 init=33 condition=matched_full success_B=0 B_first=0 A_first=1 steps=300 wall=32.2s
+{
+  "smoke_rows": 3
+}

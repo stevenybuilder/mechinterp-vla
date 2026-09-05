@@ -6,11 +6,11 @@ We held the camera observation and robot state fixed, changed only the instructi
 
 ## The answer in one paragraph
 
-In the tested π0.5 checkpoint, the instruction is used while the image-and-text prefix is built. After that, instruction identity remains readable at the text positions, but editing those positions barely changes the Goal action. Broad image-position state at late layers has much more causal leverage: transplanting it on every replan repaired `18/20` conflicted rollouts, while the same intervention at an early control band repaired `0/20`. Static directions, object-local patches, low-rank subspaces, donor-free operators, and compact writer rescues did not reproduce that effect. A final test found that the **full instruction-dependent update across layers 6–8 transfers partly between initial scenes and depends strongly on the MLP sublayers**. The best current description is therefore a broad multi-block handoff with a reusable component—not a discovered instruction neuron or portable steering vector.
+In the tested π0.5 checkpoint, the instruction is used while the image-and-text prefix is built. After that, instruction identity remains readable at the text positions, but editing those positions barely changes the Goal action. Broad image-position state at late layers has much more causal leverage: transplanting it on every replan repaired `18/20` conflicted rollouts, while the same intervention at an early control band repaired `0/20`. Static directions, object-local patches, low-rank subspaces, donor-free operators, and compact writer rescues did not reproduce that effect. The **full instruction-dependent update across layers 6–8 transfers partly between initial scenes and depends strongly on the MLP sublayers**, but a simulator screen found only `3/12` B-first contacts and `0/12` B-task completions. The best current description is a broad multi-block handoff with local causal leverage—not a discovered instruction neuron, portable steering vector, or transferred policy.
 
-![A broad layer-6→8 transformation transfers across scenes, but its attention-only component does not](figures/07_matched_band_transform.png)
+![The layer-6→8 edit sometimes redirects first contact but does not transfer the task policy](figures/08_action_to_behavior.png)
 
-## Four results worth remembering
+## Five results worth remembering
 
 | Result | Evidence | Why it matters |
 |---|---:|---|
@@ -18,6 +18,7 @@ In the tested π0.5 checkpoint, the instruction is used while the image-and-text
 | Late image-associated state can control behavior | Live L12–17 image-state repair: `18/20` successes; early L0–5 control: `0/20` | The intervention changed complete rollouts, not just an activation or one action vector. |
 | The broad state resisted compression | Object-local: `0/8`; Sonar joint endpoints: `0/12`; fixed L6–8 writer block/rescue: `0/8` | Causal leverage over a whole state is not yet a selective mechanism. |
 | A full transformation transfers where compact pieces failed | Other-scene full L6→8 update: `0.2108` A→B progress; random: `0.0058`; full beat attention-only in `12/12` | The useful unit is a multi-block attention+MLP computation, not just a routed attention message. |
+| Immediate steering is not policy transfer | L6→8 edit: B-first `3/12`, task success `0/12`; clean B: `9/12`, `12/12` | A linear activation displacement can alter the start of behavior without supplying coherent closed-loop control. |
 
 One geometric follow-up found a real non-affine change across layers 6–8: median midpoint curvature divided by endpoint chord was `0.188`, with all `12/12` directed-pair medians above `0.1`. Removing that curvature did not pass the preregistered action-effect test (`0.0973` median normalized change; `5/12` cells above `0.1`). The later positive result came from testing the natural full transformation, not relabeling the failed curvature metric.
 
@@ -35,6 +36,7 @@ The experiment ladder was:
 6. block and rescue instruction→image and image→action communication;
 7. test the proposed nonlinear layers-6–8 explanation directly;
 8. compare the natural full layer-6→8 update across scenes with MLP-clamped attention-only and equal-norm random controls.
+9. run that update in the simulator and separately score first contact and complete task success.
 
 The statistical unit is the prompt-pair or scene-condition cell, not every repeated rollout. Interventions use identical action noise and retain distances to both clean endpoints so a destructive edit is not mistaken for a task switch.
 
@@ -43,25 +45,28 @@ The statistical unit is the prompt-pair or scene-condition cell, not every repea
 - [`Research Direction.md`](Research%20Direction.md) — the question, project lineage, all experiment families, five main findings, methods, literature, limitations, and future directions.
 - [`numbers audit.md`](numbers%20audit.md) — independently recomputed headline values, corrections to older notes, raw-row counts, and hashes.
 - [`figures/README.md`](figures/README.md) — claim-first figures with adjacent source CSVs and exact metric definitions.
-- [`VLA Model Biology - Plain English Research Report.docx`](VLA%20Model%20Biology%20-%20Plain%20English%20Research%20Report.docx) — a five-page, plain-English walkthrough.
 - [`PROVENANCE.md`](PROVENANCE.md) and [`SOURCE-MANIFEST.md`](SOURCE-MANIFEST.md) — what was preserved, what was excluded, and how the archive maps back to the runtime environments.
-- [`PUBLIC-ARCHIVE.md`](PUBLIC-ARCHIVE.md) — the exact boundary between this compact GitHub release and the complete local evidence archive.
 - [`docs/FINDINGS-pi05-mechanism-guided-instruction-repair-2026-08-31.md`](docs/FINDINGS-pi05-mechanism-guided-instruction-repair-2026-08-31.md) — the strongest closed-loop result.
 - [`docs/FINDINGS-pi05-prefill-instruction-mediation-2026-08-31.md`](docs/FINDINGS-pi05-prefill-instruction-mediation-2026-08-31.md) — the causal handoff during prefill.
 - [`docs/FINDINGS-pi05-writer-band-and-nonlinear-followups-2026-09-04.md`](docs/FINDINGS-pi05-writer-band-and-nonlinear-followups-2026-09-04.md) — the failed compact writer and nonlinear follow-ups.
 - [`docs/FINDINGS-pi05-matched-layer6-8-transform-2026-09-04.md`](docs/FINDINGS-pi05-matched-layer6-8-transform-2026-09-04.md) — the positive cross-scene full-transform result and MLP ablation.
+- [`docs/FINDINGS-pi05-matched-layer6-8-closed-loop-2026-09-04.md`](docs/FINDINGS-pi05-matched-layer6-8-closed-loop-2026-09-04.md) — the exploratory simulator result: partial first-contact redirection, no task transfer.
 
-## Verify this release
+## Reproduce the numerical audit
+
+The command below works in the complete local archive. This public copy includes the audit script and derived JSON, but intentionally omits several large historical raw tables; see [`PUBLIC-ARCHIVE.md`](PUBLIC-ARCHIVE.md).
 
 ```bash
-sha256sum -c PUBLIC-SHA256SUMS
+python3 scripts/audit_research_numbers.py
+sha256sum artifacts/numbers-audit-derived.json
+sha256sum -c PROVENANCE-SHA256SUMS
 ```
 
-The full local archive can rerun the independent numerical audit with `python3 scripts/audit_research_numbers.py`. This compact GitHub release includes that audit's derived output and the final experiment's 420 raw rows, but excludes earlier multi-hundred-megabyte tables and runtime snapshots. Their hashes and local paths remain recorded in [`FULL-ARCHIVE-SHA256SUMS`](FULL-ARCHIVE-SHA256SUMS). The released model checkpoints and simulators are required to rerun GPU inference; model weights and activation arrays are not duplicated here.
+The released model checkpoints and simulators are required to rerun GPU inference. Large activation arrays and model weights are not duplicated in this repository; raw tabular outputs, frozen configs, preregistrations, analyzers, findings, logs, and runtime snapshots are preserved.
 
 ## Scope and limits
 
-The strongest closed-loop result is **donor-assisted and state-conditioned**. The layer-6→8 update transfers only across initial states within known prompt pairs, spans all 512 image positions, and has immediate-action rather than rollout validation. The work does not establish an autonomous correction method, a compact instruction circuit, or a mechanism shared by all VLAs. The small reader result is development-only, and the donor-free run was paused at `250/400` planned rows after `0/30` repair successes on the three completed edges.
+The strongest closed-loop result is **donor-assisted and state-conditioned**. The layer-6→8 update transfers only across initial states within known prompt pairs, spans all 512 image positions, and failed task-level rollout validation (`0/12`), despite changing first contact in `3/12` pairs. That screen used one initial state per pair and omitted rollout random and attention-only controls. The work does not establish an autonomous correction method, a compact instruction circuit, or a mechanism shared by all VLAs. The small reader result is development-only, and the donor-free run was paused at `250/400` planned rows after `0/30` repair successes on the three completed edges.
 
 This repository is the MATS-scoped model-biology project. Separate COAST, safety-steering, Cosmos, and robotics-performance experiments are not part of its claim set.
 

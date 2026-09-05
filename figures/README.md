@@ -16,6 +16,7 @@ The PNG files are for Markdown and slides; PDFs are vector versions. Every quant
 | Low-rank geometry is specific but not sufficient | cosine fit and endpoint distance | fit > wrong `12/12`; causal target `0/12` | 12 directed cells |
 | L6–8 path is non-affine but not a confirmed action bottleneck | curvature/chord and normalized action change | curvature `0.1880`; action `0.0973`, `5/12` pass | 12 directed cells × five states |
 | Full L6–8 update transfers across initial scenes and needs MLP processing | action-axis progress, prompt-pair-cell median | other-scene full `0.2108` vs random `0.0058`; full > attention-only `12/12` | 12 directed cells × five states |
+| The L6–8 edit changes some initial choices but not task success | B-first contact and task-B completion | edit `3/12` B-first, `0/12` success; clean B `9/12`, `12/12` | exploratory screen, one state × 12 directed cells |
 | Dominant route is architecture-dependent | normalized donor recovery | π0.5: image; OpenVLA-OFT: text | π0.5 six directions; OFT seven tasks |
 
 ## 1. Stimulus, intervention, and behavior
@@ -102,9 +103,23 @@ The PNG files are for Markdown and slides; PDFs are vector versions. Every quant
 
 **Metric and unit:** progress along the clean A→B action axis over the first ten actions, where A is `0` and B is `1`. Each dot is the median over five initial states within one directed prompt-pair cell (`n=12` cells). Diamonds are medians across cells and error bars are deterministic 10,000-resample bootstrap intervals. The paired exact sign tests are `p=0.000488` for other-scene full versus random and full versus matching attention-only.
 
-**Limits:** this is cross-initial-state transfer within known prompt pairs, not held-out task semantics. The message spans all 512 image positions, is measured from paired A/B runs, and has immediate-action rather than closed-loop validation.
+**Limits:** this is cross-initial-state transfer within known prompt pairs, not held-out task semantics. The message spans all 512 image positions and is measured from paired A/B runs. Figure 8 gives its exploratory closed-loop result.
 
 **Data:** [`07b_matched_transform_cells.csv`](07b_matched_transform_cells.csv), [`07c_mlp_ablation_cells.csv`](07c_mlp_ablation_cells.csv); raw `../artifacts/pi05_matched_band_transform_2026-09-04_v1/rows.jsonl`.
+
+## 8. Immediate action versus closed-loop behavior
+
+![Immediate action versus behavior](08_action_to_behavior.png)
+
+**What to notice:** the layer-6→8 edit was not behaviorally inert. It made B the first contacted target in three directed prompt pairs, compared with none under clean A. But it completed B in none of the 12 pairs, while clean B completed all 12. The clearest interpretation is initial redirection without policy transfer.
+
+**Stimuli:** one previously unused official initial state (`33`) for each of the same 12 directed, token-position-matched LIBERO Goal prompt pairs. Pixels and robot state are identical within each clean-A, clean-B, and edited comparison.
+
+**Intervention:** recompute the matching-observation B-minus-A layer-6→8 image-field update at every replan, then add it to the clean-A host at all 512 image positions. The runner executes ten actions before replanning, up to 300 simulator steps.
+
+**Metrics and unit:** panel a joins each prompt pair's five-state offline median action-axis progress to its one-state rollout outcome. Panel b reports binary B-first contact and simulator task-B success. The B-first matched-versus-clean-A exact sign test has only three nonzero cells (`p=0.25`). This is an exploratory breadth screen, not a confirmatory effect estimate.
+
+**Data:** [`08a_action_behavior_cells.csv`](08a_action_behavior_cells.csv), [`08b_rollout_outcomes.csv`](08b_rollout_outcomes.csv); raw `../artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/episodes.jsonl`.
 
 ## Regenerate
 
@@ -115,4 +130,4 @@ python3 scripts/audit_research_numbers.py
 uv run --with numpy --with matplotlib python scripts/make_research_figures.py
 ```
 
-The numerical audit reproduced SHA-256 `85393be183763cae6ac8f59a5bb60994b9b1ac84d1bb2e3fbab30267384919a0` immediately before these figures were rendered and visually inspected on 2026-09-04.
+The numerical audit reproduced SHA-256 `47003b52f0a76595553991803f6dbf0765e43aaa7febca569c1dfe1d867820df` immediately before these figures were rendered and visually inspected on 2026-09-04.

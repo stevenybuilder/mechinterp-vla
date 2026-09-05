@@ -1,7 +1,5 @@
 # Source manifest
 
-> This manifest describes the complete local MATS archive. The smaller GitHub publication boundary is documented in `PUBLIC-ARCHIVE.md`.
-
 Created on 2026-09-02 from:
 
 `/Users/stevenyang/Documents/mechinterp-vla`
@@ -10,7 +8,7 @@ This is a non-destructive, curated copy for MATS application writing. It became 
 subsequent MATS-only experiments on 2026-09-04.
 
 The initial curated copy was provenance-audited and expanded on 2026-09-04. See `PROVENANCE.md` and
-`FULL-ARCHIVE-SHA256SUMS` for the complete local boundary; `PUBLIC-SHA256SUMS` covers this GitHub subset.
+`PROVENANCE-SHA256SUMS` for the current exact boundary and integrity inventory.
 
 ## Copied evidence groups
 
@@ -118,6 +116,20 @@ The fixed layers-6–8 writer band failed. The midpoint representation-curvature
 
 This final panel contains 420 rows and compares the full natural attention-plus-MLP update with matching-scene, other-scene, attention-only, and equal-norm random controls. It supports cross-initial-state transfer within known prompt pairs, not held-out instruction semantics or a compact donor-free intervention.
 
+### MATS-only matched-transform rollout screen (2026-09-04)
+
+- `docs/PREREG-pi05-matched-layer6-8-closed-loop-2026-09-04.md`
+- `docs/ADDENDUM-pi05-matched-layer6-8-rollout-screen-2026-09-04.md`
+- `configs/pi05_matched_band_rollout.json`
+- `configs/pi05_matched_band_rollout_screen.json`
+- `scripts/vla/pi05_matched_band_rollout.py`
+- `tests/test_pi05_matched_band_rollout.py`
+- `artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/`
+- `logs/pi05_matched_band_rollout_screen_2026-09-04_v1.log`
+- `docs/FINDINGS-pi05-matched-layer6-8-closed-loop-2026-09-04.md`
+
+The complete exploratory screen contains 36 unique episode rows. The edit produced `3/12` B-first contacts but `0/12` task-B successes. The stopped 12-row large panel and three-row smoke test remain separately preserved and must not be pooled into the breadth-screen estimate.
+
 ### Consolidated audit and research map (2026-09-04)
 
 - `numbers audit.md`
@@ -125,7 +137,7 @@ This final panel contains 420 rows and compares the full natural attention-plus-
 - `scripts/audit_research_numbers.py`
 - `artifacts/numbers-audit-derived.json`
 - `scripts/make_research_figures.py`
-- `figures/` (seven current claim-first PNG/PDF figures, 15 current source CSVs, the superseded earlier figure set, and a figure README)
+- `figures/` (eight current claim-first PNG/PDF figures, 17 current source CSVs, the superseded earlier figure set, and a figure README)
 - `VLA Model Biology - Plain English Research Report.docx` and its reproducible builder `scripts/build_plain_english_report.py`
 
 These are derived synthesis artifacts, not new model evidence. The audit independently parses the preserved raw rows and records material corrections to earlier prose.

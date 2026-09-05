@@ -20,17 +20,17 @@ The project began with the same concern in a JEPA-style world model: could a lea
 
 ### What conclusions have you reached about this research problem?
 
-π0.5 uses the instruction during multimodal prefill, but the readable copy left at text positions later has little causal control over the tested Goal actions. The instruction's consequence becomes part of broad image-position state. Replacing that late state can redirect full closed-loop behavior (`18/20` successes versus `0/20` for the early-layer control), so the handoff is real and behaviorally important. Every completed attempt to compress it into a static direction, small image region, low-rank component, or compact writer failed its stronger causal endpoint. A final within-prompt-pair test did isolate a **broad layer-6→8 transformation** that transferred between initial scenes and depended strongly on MLP processing, but it still edited all 512 image positions and was measured from paired A/B runs. The honest conclusion is model-biological: **decodability, causal use, and token provenance come apart after modalities mix, while the first reproducibly transferable computation we found is broad and only partially scene-invariant—not a compact feature.**
+π0.5 uses the instruction during multimodal prefill, but the readable copy left at text positions later has little causal control over the tested Goal actions. The instruction's consequence becomes part of broad image-position state. Replacing the entire late state can redirect full closed-loop behavior (`18/20` successes versus `0/20` for the early-layer control), so the handoff is real and behaviorally important. Every completed attempt to compress it into a static direction, small image region, low-rank component, or compact writer failed its stronger causal endpoint. A final within-prompt-pair test isolated a **broad layer-6→8 transformation** that transferred between initial scenes and depended strongly on MLP processing. In a 36-episode simulator screen, that edit changed the first target toward B in `3/12` prompt pairs but completed B in `0/12`; clean B completed `12/12`. The honest conclusion is model-biological: **decodability, local causal leverage, and coherent behavioral control come apart after modalities mix. The first partly transferable computation we found is broad and can redirect an initial choice without installing the new policy.**
 
 ## The short version
 
 The original hope was that a robot policy would contain a clean internal variable for “which instruction should I follow”—something like the single refusal direction found in language models. The experiments found a messier biology.
 
-In the tested π0.5 policy, language matters when the model first processes the instruction and image together. After that, a readable copy of the instruction remains at the text tokens, but editing that copy barely changes the next action. The instruction's consequence has become embedded in a broad state attached to image positions and the current motor plan. Replacing that late state can redirect full rollouts. Compact directions, small token sets, low-rank operators, and compact writers failed, but the full instruction-dependent update across layers 6–8 transferred partially between new initial scenes within the same prompt pair.
+In the tested π0.5 policy, language matters when the model first processes the instruction and image together. After that, a readable copy of the instruction remains at the text tokens, but editing that copy barely changes the next action. The instruction's consequence has become embedded in a broad state attached to image positions and the current motor plan. Replacing the full late state can redirect complete rollouts. Compact directions, small token sets, low-rank operators, and compact writers failed. The full instruction-dependent update across layers 6–8 transferred partially between new initial scenes within the same prompt pair, but in the simulator it redirected first contact in only `3/12` pairs and achieved `0/12` task success.
 
 The best research claim is therefore not “we found the instruction circuit.” It is:
 
-> **π0.5 preserves a readable instruction at text positions after those positions become largely redundant for action. Its action-relevant consequence is carried by broad image-associated state. A full layer-6→8 instruction update transfers partly across initial scenes and requires the MLP computation, but it still resists the compact linear and small-pathway descriptions we tested.**
+> **π0.5 preserves a readable instruction at text positions after those positions become largely redundant for action. Its action-relevant consequence is carried by broad image-associated state. A full layer-6→8 instruction update transfers partly across initial scenes and requires the MLP computation, but it only sometimes redirects initial contact and does not transfer the complete task policy.**
 
 This is useful model biology because it separates three things that are often collapsed: where information entered, where it can be decoded, and where the state controlling behavior currently lives.
 
@@ -40,7 +40,7 @@ This is useful model biology because it separates three things that are often co
 
 **Counting rule:** an experiment family is one separately executed scientific question with its own intervention or analysis target. Seeds, initial states, prompt directions, ablation conditions, and rollouts are repeated units inside an experiment, not separate experiments.
 
-By that rule, **19 computational experiment families produced real measurements**: **18 in the main VLA investigation** and **one earlier world-model feasibility pilot**. This is not “19 successes.” One donor-free run stopped at `250/400` planned rows, one reader result is development-only, and the world-model pilot never reached its intended false-belief test. The substantive CAFT fine-tune is not counted because it never ran. The main raw-integrity table alone contains `71,160` JSONL records, before several earlier behavioral, monitor, and CAFT-screen records.
+By that rule, **20 computational experiment families produced real measurements**: **19 in the main VLA investigation** and **one earlier world-model feasibility pilot**. This is not “20 successes.” One donor-free run stopped at `250/400` planned rows, one reader result is development-only, and the world-model pilot never reached its intended false-belief test. The substantive CAFT fine-tune is not counted because it never ran. The main completed raw-integrity table contains `71,196` JSONL records, before several earlier behavioral, monitor, and CAFT-screen records. The stopped oversized rollout panel's 12 partial rows and the three-row smoke test are preserved but excluded from that completed-experiment total.
 
 The overall hypothesis, in plain English, was:
 
@@ -69,6 +69,7 @@ The answer was: **we found where broad causal control moves and one partly reusa
 | 17 | Midpoint representation-curvature test | Is the natural L6→8 transformation affine along the tested A/B path? | No. Median curvature/chord was `0.1880`, and all `12/12` direction medians exceeded `0.1`. This established path-specific non-affinity, not a nonlinear causal mechanism. | Complete diagnostic; `artifacts/pi05_lean_midpoint_curvature_2026-09-04_v1/rows.jsonl` |
 | 18 | Curvature removal/rescue action test | Does that measured bend materially control the action? | It failed the frozen gate: median action change was `0.0973`, below `0.100`, and only `5/12` directions passed rather than the required `8/12`. | Complete negative follow-up; `artifacts/pi05_curvature_action_2026-09-04_v2/rows.jsonl` |
 | 19 | Matched layer-6→8 transformation | Does the natural three-block instruction update transfer to another initial scene, and is attention alone sufficient? | A full message from another scene moved action `0.2108` along the A→B axis versus `0.0058` for random and beat random in `12/12` cells (`p=0.00049`). Matching full messages reached `0.3400`; matching attention-only reached `0.0402`, and full beat attention-only in `12/12` (`p=0.00049`). | Complete; `artifacts/pi05_matched_band_transform_2026-09-04_v1/rows.jsonl` |
+| 20 | Matched-transform closed-loop breadth screen | Does that action-vector shift change what the simulated robot does? | The edit made B the first target in `3/12` prompt pairs versus `0/12` for clean A, but completed B in `0/12`; clean B completed `12/12`. This is initial redirection, not policy transfer. | Complete exploratory screen; `artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/episodes.jsonl` |
 
 The substantive CAFT fine-tune is deliberately **not** added to this count because it was cancelled before it ran. Instrumentation checks are also not scientific experiments.
 
@@ -112,17 +113,21 @@ Blocking instruction-source attention messages into image receivers throughout t
 
 Plain English: the direct language-to-image route matters, but the first message is not a little packet that can be put back to restore the behavior. The model may rewrite, transform, combine, or overwrite the signal across layers.
 
-### 5. The useful layer-6→8 computation is more than attention, and part of it transfers across scenes
+### 5. The useful layer-6→8 computation is more than attention, but its behavioral effect is incomplete
 
 Holding the entering image state fixed, we measured the B-minus-A image update produced by layers 6–8 and added it to a clean-A host at layer 8. The matching-scene full update moved the action `0.3400` of the way toward clean B. A norm-matched full update from a different initial scene still moved it `0.2108`, versus `0.0058` for random; it beat random in all `12/12` prompt-pair cells. When the image-position MLP outputs in layers 6, 7, and 8 were clamped to their A values, the matching update moved action only `0.0402`. Full attention+MLP beat attention-only in all `12/12` cells.
 
-Plain English: the model does reuse something across camera states, but it is a large transformation of the mixed state, not a little attention message. The token-wise MLP sublayers do much of the useful rewriting after attention has brought the information together.
+In the simulator breadth screen, the same edit made B the first contacted target in `3/12` prompt pairs, compared with `0/12` for clean A, but it completed B in `0/12`; clean B completed `12/12`. The three-cell exact sign test was `p=0.25`, so this is exploratory evidence rather than confirmation.
 
-This does not erase the earlier warning: the Sonar and curvature results still show that attractive geometry can fail causal tests. The new result succeeds because it tests the natural multi-block transformation rather than a compressed approximation to it.
+Plain English: the model reuses something across camera states, but it is a large transformation of the mixed state, not a little attention message. That transformation can sometimes change the robot's initial target without supplying the continuing computation needed to perform the new task.
+
+![Immediate action effect versus closed-loop behavior](figures/08_action_to_behavior.png)
+
+This does not erase the earlier warning: the Sonar and curvature results still show that attractive geometry can fail causal tests. The natural multi-block transformation passes the immediate-action comparison that compressed approximations failed, but the simulator result shows that even this broader success is not sufficient for policy transfer.
 
 ## What those findings add up to
 
-The positive result is now a **causal handoff plus a partial transformation-level explanation**. Language enters through text, participates in prefill, and changes broad non-text state. That late state can control both the immediate action and the complete rollout. Within the fixed layer-6→8 band, the full instruction-induced update transfers across initial scenes within a prompt pair, while an attention-only version is much weaker.
+The positive result is now a **causal handoff plus a partial transformation-level explanation**. Language enters through text, participates in prefill, and changes broad non-text state. The complete late-state transplant can control both immediate action and the full rollout. The smaller layer-6→8 update transfers across initial scenes within a prompt pair and is much stronger with the MLP computation than with attention alone, but its closed-loop effect stops at occasional initial target redirection.
 
 The negative result is a **failure of compression**. We repeatedly tried to turn the handoff into a small, portable object:
 
@@ -231,7 +236,13 @@ The correct conclusion is not “we found the nonlinear manifold.” It is “on
 
 The final test stopped trying to isolate one layer output or one geometric feature. It held the entering image field fixed at layer 5, ran layers 6–8 under instructions A and B, and treated their layer-8 image-field difference as the instruction-induced transformation. Adding the matching full transformation to a clean-A host moved the action `0.3400` toward B. A norm-matched transformation measured in another initial scene still moved it `0.2108`, far above the `0.0058` random control and better in all `12/12` cells.
 
-Clamping the image-position MLP outputs in layers 6, 7, and 8 to their clean-A values reduced matching-scene progress to `0.0402`. The full transformation beat this attention-only ablation in all `12/12` cells. This is the first positive evidence that the relevant unit is a multi-block transformation rather than a single attention message. It remains broad, paired-run-derived, immediate-action-only, and untested on held-out prompt semantics.
+Clamping the image-position MLP outputs in layers 6, 7, and 8 to their clean-A values reduced matching-scene progress to `0.0402`. The full transformation beat this attention-only ablation in all `12/12` cells. This is the first positive evidence that the relevant unit is a multi-block transformation rather than a single attention message. At this stage it remained broad, paired-run-derived, immediate-action-only, and untested on held-out prompt semantics; Phase 9 tested its behavioral consequence.
+
+### Phase 9: ask whether the action shift survives contact with the simulator
+
+The first rollout plan—five conditions, 12 prompt pairs, and five initial states—would have required 300 episodes and roughly two hours. That was excessive for the first question, so it was stopped after 12 preserved rows and replaced by a frozen breadth screen: one untouched initial state for all 12 pairs under clean A, clean B, and the full edit.
+
+The edit made B the first contacted target in `3/12` pairs, compared with `0/12` under clean A. But it completed B in `0/12`, while clean B completed `12/12`. This resolves the ambiguity in the immediate-action result: the transformation has real but incomplete behavioral leverage. It can sometimes redirect the beginning of a trajectory without generating the sequence of state-dependent decisions required to finish the task.
 
 ## Why VLAs rather than another LLM project
 
@@ -286,6 +297,8 @@ A linear direction is a powerful object: it can be measured with a dot product, 
 Superposition gives one reason. A model may represent more features than it has dimensions by overlapping them. Sparsity makes this possible because most features are inactive on most examples, allowing them to share representational capacity. The “V2 brain region” inspiration from Trenton Bricken's work should be stated more carefully: the relevant lineage is Anthropic's work on superposition, sparse feature dictionaries, and later circuit tracing—not evidence that a VLA literally has a visual-cortex-like V2 region.
 
 The so-called linear representation hypothesis is best treated as a useful working assumption: concepts often correspond to directions or low-dimensional subspaces. It should not be attributed as a universal theorem of Anthropic's work. [Not All Language Model Features Are One-Dimensionally Linear](https://arxiv.org/abs/2405.14860) gives explicit multidimensional circular features and causal interventions in language models. Othello-GPT originally reported a nonlinear board representation. Even when individual features are linear, the computation that binds several features can be nonlinear and context-dependent.
+
+Our results do not disprove linear representation. They show a stricter limitation: a linear displacement can be causally real yet insufficient for a temporally extended behavior. The layer-6→8 B−A update moved predicted actions and occasionally changed the first target, but it never completed B in the breadth screen. A direction may therefore describe one local relation in activation space without being a portable coordinate for the entire policy. The missing ingredient could be a changing direction at later replans, scene-conditioned computation, redundant routes, off-manifold effects, or all of these. The evidence does not distinguish them yet.
 
 For our project, geometry mattered in two ways:
 
@@ -468,6 +481,7 @@ This is the compact map. The exact definitions, hashes, and caveats are in [`num
 | Representation curvature | median `0.18797`; `12/12` direction medians ≥0.1 | `artifacts/pi05_lean_midpoint_curvature_2026-09-04_v1/rows.jsonl` |
 | Curvature action test | median `0.09729`; `5/12` ≥0.1; preregistered fail | `artifacts/pi05_curvature_action_2026-09-04_v2/rows.jsonl` |
 | Matched L6→8 transformation | matching full `0.33999`; other-scene full `0.21078`; random `0.00578`; attention-only `0.04022`; both key contrasts `12/12`, `p=0.000488` | `artifacts/pi05_matched_band_transform_2026-09-04_v1/rows.jsonl` |
+| Matched-transform rollout screen | B first: edit `3/12`, clean A `0/12`, clean B `9/12`; task-B success: edit `0/12`, clean B `12/12`; exploratory B-first sign `p=0.25` | `artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/episodes.jsonl` |
 | OpenVLA-OFT boundary | instruction `D_src=0.01005`; image `0.95743` | `artifacts/oft_downstream_kv/v2_20260831/rows.jsonl` |
 | Monitor generalization | F1 dev `0.9093`; held instruction `0.6810`; held scene `0.7454`; baseline `0.8006` | `artifacts/pi05_monitor/monitor_cost.json` |
 
@@ -542,11 +556,12 @@ The most defensible contribution is the combined empirical chain in this particu
 4. targeted attempts to compress that state repeatedly fail, including local patches, static vectors, a held-out rank-16 component, a donor-free rank-8 operator, and compact writer rescues;
 5. direct instruction→image communication across the prefix is necessary, while the exact writer remains unresolved;
 6. a full layer-6→8 instruction-induced update transfers between initial scenes within a prompt pair, while clamping the three image-position MLP outputs removes most of its causal effect;
-7. a second architecture shows the opposite direct-route balance.
+7. that edit sometimes changes the first target (`3/12`) but does not complete the new task (`0/12`), separating local steering from policy transfer;
+8. a second architecture shows the opposite direct-route balance.
 
 That is more specific than a generic layer map. It is evidence that **monitor location, causal state, compact representation, and transferable computation can come apart inside an embodied policy**. The negative compression ladder plus the positive full-transformation ablation is arguably the distinctive part.
 
-The novelty remains bounded because the new transformation still spans all 512 image positions, is derived from paired A/B runs, transfers only across initial states inside known prompt pairs, and has immediate-action rather than closed-loop validation. A strong paper would need to learn the transformation on calibration prompt pairs, confirm it on genuinely new prompt semantics, compress or structurally explain it, and validate both task success and preservation.
+The novelty remains bounded because the new transformation still spans all 512 image positions, is derived from paired A/B runs, and transfers only across initial states inside known prompt pairs. It now has exploratory closed-loop validation, but that validation is mostly negative: `3/12` B-first contacts and `0/12` task successes. A strong paper would need to learn the transformation on calibration prompt pairs, confirm it on genuinely new prompt semantics, compress or structurally explain it, and achieve task success with preservation controls.
 
 ## Limitations
 
@@ -557,7 +572,7 @@ The novelty remains bounded because the new transformation still spans all 512 i
 5. **Reader not fully confirmed.** The 8-edge reader passed development initial states, but the original held-out prompt-pair panel was invalid and the corrected panel was never run.
 6. **Writer only partly resolved.** The full layers-6–8 update is causal and the MLP ablation is strong, but this does not identify which MLP features, attention heads, or interactions compute the transferable component.
 7. **Synthetic nonlinear path.** Midpoint interpolation may traverse states the model never naturally visits. Curvature there need not describe the natural activation manifold.
-8. **Behavioral coverage.** Closed-loop validation measured two Object tasks, not the six Goal pairs used for most mechanistic tests.
+8. **Behavioral coverage.** The strong full-state repair measured two Object tasks. The layer-6→8 Goal breadth screen covered 12 directed pairs but only one initial state per pair, omitted random and attention-only rollout controls, and achieved no task-B successes.
 9. **No clean collateral-damage suite.** We observed downstream failure in the static-vector pilot but did not run a broad unrelated-task preservation battery for every intervention.
 10. **Archive boundary.** Large activation intermediates and unrelated safety/robotics branches are excluded, though raw rows, analyzers, manifests, and runtime snapshots for the core claims are retained.
 11. **Restricted transformation generalization.** “Other scene” means a different LIBERO initial state for the same directed instruction pair. It is not held-out task language, a different suite, or another checkpoint.
@@ -576,6 +591,7 @@ The novelty remains bounded because the new transformation still spans all 512 i
 - Do not retroactively loosen `0.100` to make the `0.0973` curvature-action result pass.
 - Do not call the route “repeated direct writing.” The block data establish necessity across the prefix; the failed rescues leave several mechanisms possible.
 - Do not call the matched layer-6→8 message a compact or universal feature. It is a full 512-position paired-run difference that transfers across initial states within known prompt pairs.
+- Do not call `3/12` B-first contacts a task repair. The same intervention achieved `0/12` task-B success, and the three nonzero cells give only `p=0.25` in the exploratory sign test.
 
 ## Future directions
 
@@ -629,9 +645,9 @@ That standard is harder than making a good activation plot. It is also the stand
 
 ## Current honest conclusion
 
-The results are bad for the original compact-direction hypothesis and substantially better for a transformation-level model-biology story. We found a causal handoff, a behaviorally powerful downstream state, and a broad layer-6→8 instruction update that transfers across initial scenes within a prompt pair. The MLP-clamp ablation shows that attention-only routing explains little of this effect. We still did not find a compact, donor-free representation or complete writer-reader circuit.
+The results are bad for the original compact-direction hypothesis and informative for a transformation-level model-biology story. We found a causal handoff, a behaviorally powerful downstream state, and a broad layer-6→8 instruction update that transfers across initial scenes within a prompt pair. The MLP-clamp ablation shows that attention-only routing explains little of its immediate-action effect. The rollout screen then showed the limit: `3/12` initial target redirections but `0/12` task completions. We did not find a compact, donor-free representation or complete writer-reader circuit.
 
-For a MATS application, this is stronger than the earlier high-end-borderline version because the final experiment distinguishes cross-scene transfer, scene modulation, attention routing, and MLP transformation with a frozen causal test. It is still not an automatic accept: the central positive object is broad, paired-run-derived, and not confirmed on new prompt semantics or closed-loop behavior. The application should lead with the surprising mechanistic update—**the reusable part is a multi-block transformation, not the most readable token state or a low-rank direction**—and state those limits without euphemism.
+For a MATS application, this remains high-end borderline rather than a clean accept. The final experiments distinguish cross-scene transfer, attention routing, MLP transformation, immediate action, first contact, and complete task success with frozen tests. But the central positive object is broad and paired-run-derived; its closed-loop effect is incomplete and not confirmed on new prompt semantics. The application should lead with the surprising mechanistic update—**a locally effective linear displacement can redirect the start of behavior without transferring the policy**—and state the `0/12` success result without euphemism.
 
 ## Reproducibility map
 
@@ -639,13 +655,14 @@ For a MATS application, this is stronger than the earlier high-end-borderline ve
 - Audit script: [`scripts/audit_research_numbers.py`](scripts/audit_research_numbers.py)
 - Provenance boundary: [`SOURCE-MANIFEST.md`](SOURCE-MANIFEST.md)
 - Provenance audit: [`PROVENANCE.md`](PROVENANCE.md)
-- Full application notes are retained in the local archive but deliberately omitted from this research-facing GitHub copy.
+- Full application notes: [`MATS Application Writeup - Notes.md`](MATS%20Application%20Writeup%20-%20Notes.md)
 - Canonical prefill findings: [`docs/FINDINGS-pi05-prefill-instruction-mediation-2026-08-31.md`](docs/FINDINGS-pi05-prefill-instruction-mediation-2026-08-31.md)
 - Closed-loop repair findings: [`docs/FINDINGS-pi05-mechanism-guided-instruction-repair-2026-08-31.md`](docs/FINDINGS-pi05-mechanism-guided-instruction-repair-2026-08-31.md)
 - Sonar-lite findings: [`docs/FINDINGS-pi05-sonar-lite-source-mediator-2026-09-04.md`](docs/FINDINGS-pi05-sonar-lite-source-mediator-2026-09-04.md)
 - Attention-pathway findings: [`docs/FINDINGS-pi05-attention-pathway-block-rescue-2026-09-04.md`](docs/FINDINGS-pi05-attention-pathway-block-rescue-2026-09-04.md)
 - Writer-band and nonlinear follow-ups: [`docs/FINDINGS-pi05-writer-band-and-nonlinear-followups-2026-09-04.md`](docs/FINDINGS-pi05-writer-band-and-nonlinear-followups-2026-09-04.md)
 - Matched layer-6→8 transformation: [`docs/FINDINGS-pi05-matched-layer6-8-transform-2026-09-04.md`](docs/FINDINGS-pi05-matched-layer6-8-transform-2026-09-04.md)
+- Matched-transform rollout screen: [`docs/FINDINGS-pi05-matched-layer6-8-closed-loop-2026-09-04.md`](docs/FINDINGS-pi05-matched-layer6-8-closed-loop-2026-09-04.md)
 - Donor-free pause record: [`docs/PAUSE-pi05-donor-free-low-rank-repair-2026-09-04.md`](docs/PAUSE-pi05-donor-free-low-rank-repair-2026-09-04.md)
 - Figure suite: [`figures/README.md`](figures/README.md)
 

@@ -1,0 +1,7 @@
+condition,metric,count,episodes,rate
+clean_A,B_target_first_touched,0,12,0.0
+matched_full,B_target_first_touched,3,12,0.25
+clean_B,B_target_first_touched,9,12,0.75
+clean_A,success_B,0,12,0.0
+matched_full,success_B,0,12,0.0
+clean_B,success_B,12,12,1.0

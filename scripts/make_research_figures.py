@@ -672,6 +672,112 @@ def figure_7_matched_band_transform() -> None:
     save(fig, "07_matched_band_transform")
 
 
+def figure_8_action_to_behavior() -> None:
+    action_rows = load_jsonl("artifacts/pi05_matched_band_transform_2026-09-04_v1/rows.jsonl")
+    rollout_rows = load_jsonl("artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/episodes.jsonl")
+    cells = sorted({row["cell"] for row in rollout_rows})
+    action_progress = {
+        cell: float(np.median([
+            row["progress_to_B"] for row in action_rows
+            if row["cell"] == cell and row["condition"] == "matched_full"
+        ]))
+        for cell in cells
+    }
+    rollout = {(row["cell"], row["condition"]): row for row in rollout_rows}
+
+    fig, (ax_cells, ax_behavior) = plt.subplots(
+        1, 2, figsize=(14.8, 6.5), gridspec_kw={"width_ratios": [1.25, 0.9]}
+    )
+    claim_title(
+        fig,
+        "The edit sometimes changes the first target—but never completes the new task",
+        "Exploratory breadth screen: one held-back initial state for each of 12 directed Goal prompt pairs.",
+    )
+
+    ordered = sorted(cells, key=lambda cell: action_progress[cell])
+    export_cells = []
+    for y, cell in enumerate(ordered):
+        b_first = bool(rollout[(cell, "matched_full")]["B_target_first_touched"])
+        color = TEAL if b_first else MID
+        marker = "D" if b_first else "o"
+        ax_cells.scatter(action_progress[cell], y, s=74 if b_first else 48, color=color, marker=marker,
+                         edgecolor=WHITE, linewidth=0.7, zorder=3)
+        export_cells.append({
+            "cell": cell,
+            "offline_matched_action_progress_to_B": action_progress[cell],
+            "matched_rollout_B_target_first_touched": int(b_first),
+            "matched_rollout_success_B": int(bool(rollout[(cell, "matched_full")]["success_B"])),
+        })
+    ax_cells.axvline(0, color=GRAY, lw=1)
+    ax_cells.set_yticks(range(len(ordered)), [cell.replace("libero_goal_", "") for cell in ordered])
+    ax_cells.set_xlabel("Offline progress along clean A→B action axis")
+    ax_cells.set_ylabel("Directed prompt pair")
+    ax_cells.set_title("Three initial trajectories touch B first", loc="left")
+    ax_cells.grid(axis="x", color=LIGHT, lw=0.8)
+    ax_cells.text(
+        0.98, 0.03, "◆ B target first\n● not B target first",
+        transform=ax_cells.transAxes, ha="right", va="bottom", color=GRAY, fontsize=9.3,
+    )
+    panel_label(ax_cells, "a")
+    write_csv("08a_action_behavior_cells.csv", export_cells)
+
+    condition_order = ["clean_A", "matched_full", "clean_B"]
+    labels = ["Clean A\n(conflict)", "Layer-6→8\nedit", "Clean B\n(ceiling)"]
+    metrics = [
+        ("B_target_first_touched", "B target first", BLUE),
+        ("success_B", "Task-B success", TEAL),
+    ]
+    x = np.arange(len(condition_order))
+    width = 0.34
+    export_behavior = []
+    for offset, (metric, label, color) in zip([-width / 2, width / 2], metrics):
+        counts = []
+        for condition in condition_order:
+            values = [int(bool(row[metric])) for row in rollout_rows if row["condition"] == condition]
+            counts.append(sum(values))
+            export_behavior.append({
+                "condition": condition,
+                "metric": metric,
+                "count": sum(values),
+                "episodes": len(values),
+                "rate": float(np.mean(values)),
+            })
+        bars = ax_behavior.bar(x + offset, np.asarray(counts) / 12.0, width, color=color, label=label, zorder=2)
+        for bar, count in zip(bars, counts):
+            ax_behavior.text(
+                bar.get_x() + bar.get_width() / 2,
+                bar.get_height() + 0.035,
+                f"{count}/12",
+                ha="center",
+                fontsize=9.5,
+                weight="bold",
+            )
+    ax_behavior.set_ylim(0, 1.12)
+    ax_behavior.set_xticks(x, labels)
+    ax_behavior.set_ylabel("Fraction of prompt-pair rollouts")
+    ax_behavior.set_title("Initial redirection does not become task execution", loc="left")
+    ax_behavior.legend(frameon=False, loc="upper left")
+    ax_behavior.grid(axis="y", color=LIGHT, lw=0.8, zorder=0)
+    ax_behavior.annotate(
+        "partial causal effect\nnot policy transfer",
+        xy=(1 - width / 2, 0.25),
+        xytext=(0.25, 0.58),
+        arrowprops=dict(arrowstyle="->", color=ORANGE),
+        color=ORANGE,
+        weight="bold",
+    )
+    panel_label(ax_behavior, "b")
+    write_csv("08b_rollout_outcomes.csv", export_behavior)
+
+    fig.text(
+        0.99, 0.02,
+        "Screening result, not confirmation: n=1 initial state per pair; B-first exact sign p=0.25.",
+        ha="right", fontsize=8.7, color=GRAY,
+    )
+    fig.subplots_adjust(top=0.79, left=0.14, right=0.98, bottom=0.14, wspace=0.34)
+    save(fig, "08_action_to_behavior")
+
+
 def main() -> None:
     OUT.mkdir(exist_ok=True)
     style()
@@ -682,7 +788,8 @@ def main() -> None:
     figure_5_route_and_reader()
     figure_6_architecture_boundary()
     figure_7_matched_band_transform()
-    print("Wrote seven claim-first figures and source CSVs to", OUT)
+    figure_8_action_to_behavior()
+    print("Wrote eight claim-first figures and source CSVs to", OUT)
 
 
 if __name__ == "__main__":

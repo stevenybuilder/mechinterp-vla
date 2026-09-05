@@ -5,9 +5,10 @@ This GitHub repository is the publication copy of a larger local research archiv
 ## Included here
 
 - the concise README, full research map, numbers audit, and five-page plain-English report;
-- seven claim-first figures, their vector PDFs, and the 15 CSV files plotted in them;
+- eight claim-first figures, their vector PDFs, and the 17 CSV files plotted in them;
 - canonical findings, preregistrations, frozen configs, analysis code, intervention code, and tests;
 - all 420 raw rows, manifest, summary, and runtime log from the final matched layer-6→8 experiment;
+- all 36 episode rows from its exploratory closed-loop breadth screen, plus the separately labeled stopped-panel and smoke-test records;
 - the independently derived numerical-audit JSON;
 - `FULL-ARCHIVE-SHA256SUMS`, which records the complete local archive boundary;
 - `PUBLIC-SHA256SUMS`, which verifies the files actually published here.

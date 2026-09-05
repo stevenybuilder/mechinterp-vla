@@ -1,0 +1,54 @@
+{
+  "config": {
+    "analysis": {
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 60808,
+      "primary_contrasts": [
+        "matched_full_minus_clean_A"
+      ],
+      "primary_outcome": "libero_task_B_success",
+      "primary_unit": "one_episode_in_each_of_12_directed_prompt_pair_cells",
+      "secondary_outcome": "B_target_in_first_touch_set"
+    },
+    "conditions": [
+      "clean_A",
+      "clean_B",
+      "matched_full"
+    ],
+    "created_on": "2026-09-04",
+    "eval_init_ids": [
+      33
+    ],
+    "experiment": "pi05_matched_layer6_8_closed_loop_breadth_screen",
+    "fixed": {
+      "actions_per_replan": 10,
+      "band_decoder_layers": [
+        6,
+        7,
+        8
+      ],
+      "image_positions": 512,
+      "image_slots": 768,
+      "input_residual_layer": 5,
+      "intervention_residual_layer": 8,
+      "seed_base": 2600000
+    },
+    "pairs_file": "artifacts/mediation_pairs.json",
+    "policy": "lerobot/pi05_libero_finetuned_v044",
+    "revision": "8e174154ef5f6c60a8da12ae99c303d8963138c1",
+    "schema_version": 1,
+    "stopping_rule": "Run clean A, clean B, and matching full intervention once across all 12 fixed directed Goal pairs. Expand to replicated controls only if the intervention produces at least one intended B behavioral outcome while clean A does not. Treat this as an exploratory breadth/futility screen, not confirmatory inference.",
+    "suite": "libero_goal"
+  },
+  "created_at": "2026-09-05T00:27:50+0000",
+  "hashes": {
+    "config": "91095e0d9000ad44b16f070ce0091196f71ca588bf08887913ce7f9624549a7a",
+    "hooks": "6ea353dbf62873e0ef05c3a2abe9eb6aebb4043314820ceb3047e0d672a7da16",
+    "pairs": "6ff2654a03b1fc197da06f36304d04406ba5db9ed2168f0f61588d5d15c61ae6",
+    "preregistration": "e14477b1a6c2390940b72146a59a684b74cf6eca174bf41d6839684d09192bb0",
+    "runner": "1312de6bf00e109b988b2fba947331b37f901b734219831e7dca7d6df9472aee",
+    "transform_runner": "1a2d0c4e3b9ae7d2d7e5bf8ca40ba7c6f861aee024ceaf5ff90d5d2c83b1dcfd"
+  },
+  "mode": "full",
+  "schema_version": 1
+}

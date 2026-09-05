@@ -1,7 +1,5 @@
 # Provenance audit
 
-> This document describes the complete local MATS archive. The GitHub repository is a compact publication copy; see `PUBLIC-ARCHIVE.md` and `PUBLIC-SHA256SUMS` for its exact contents. `FULL-ARCHIVE-SHA256SUMS` preserves the complete archive inventory.
-
 **Audit date:** 2026-09-04  
 **MATS archive root:** `/Users/stevenyang/Documents/mats-mech-interp`  
 **Historical source root:** `/Users/stevenyang/Documents/mechinterp-vla`
@@ -10,7 +8,7 @@
 
 The earlier local-evidence gap is closed for the records needed to substantiate the MATS model-biology narrative. The MATS archive now contains the previously missing 60,000 raw Stage-2 localization rows, early negative-result artifacts, raw Stage-1 records, historical runtime logs, and snapshots of the exact 4090 and OpenVLA-OFT runtime code trees that accompanied those runs.
 
-The 2026-09-04 MATS-only follow-ups are also local: attention writer/reader development, the fixed layers-6–8 writer-band confirmation, the lean midpoint-curvature diagnostic, the curvature action follow-up, and the final matched layer-6→8 transformation experiment. The final experiment contains 420 valid rows. It found that a broad transformation transfers across initial scenes within known prompt pairs and that the full attention-plus-MLP update is much stronger than the attention-only version. `numbers audit.md` and `artifacts/numbers-audit-derived.json` consolidate the checked claims and correct earlier overstatements about repeated writing, reader confirmation, and universal scene specificity.
+The 2026-09-04 MATS-only follow-ups are also local: attention writer/reader development, the fixed layers-6–8 writer-band confirmation, the lean midpoint-curvature diagnostic, the curvature action follow-up, the 420-row matched layer-6→8 transformation experiment, and its 36-episode closed-loop breadth screen. The transformation transfers across initial scenes within known prompt pairs and the full attention-plus-MLP update is much stronger than the attention-only version. In the simulator it produced `3/12` B-first contacts but `0/12` task-B successes. `numbers audit.md` and `artifacts/numbers-audit-derived.json` consolidate the checked claims and correct earlier overstatements about repeated writing, reader confirmation, universal scene specificity, and action-vector movement as behavioral repair.
 
 The copy was additive and non-destructive. Existing MATS files were never replaced. The source robotics project was not modified.
 
@@ -80,11 +78,26 @@ The final experiment was preregistered and executed only under this MATS project
 
 The panel contains 12 directed LIBERO Goal prompt-pair cells, five new initial states per cell, and seven conditions: 420 rows total. The audit reconstructs the action-axis metric from the stored first-ten-action arrays with maximum absolute error `1.26e-7`; other-scene message norms match their targets within maximum relative error `2.99e-6`. Other-scene full progress was `0.21078` versus `0.00578` for the equal-norm random control, with the paired difference positive in `12/12` cells (exact sign `p=0.000488`). Matching full progress was `0.33999` versus `0.04022` for the MLP-clamped attention-only transformation, again positive in `12/12` cells (`p=0.000488`). The local and remote artifact hashes matched after transfer.
 
+## Matched-transform closed-loop breadth screen
+
+The original 300-episode confirmation design is frozen in `docs/PREREG-pi05-matched-layer6-8-closed-loop-2026-09-04.md` and `configs/pi05_matched_band_rollout.json`. It was stopped after 12 preserved rows because it was unnecessarily expensive for the first behavioral question. No partial row was deleted or relabeled.
+
+Before examining the remaining prompt pairs, `docs/ADDENDUM-pi05-matched-layer6-8-rollout-screen-2026-09-04.md` froze a 36-episode breadth screen: 12 directed Goal pairs × one initial state × clean A, clean B, and matching full intervention. Its provenance is:
+
+- implementation: `scripts/vla/pi05_matched_band_rollout.py`;
+- test: `tests/test_pi05_matched_band_rollout.py`;
+- screen config: `configs/pi05_matched_band_rollout_screen.json`;
+- complete raw screen: `artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/`;
+- runtime log: `logs/pi05_matched_band_rollout_screen_2026-09-04_v1.log`;
+- canonical interpretation: `docs/FINDINGS-pi05-matched-layer6-8-closed-loop-2026-09-04.md`.
+
+The complete table has 36 unique rows. The audit reproduces all stored counts and median episode lengths exactly and verifies nonzero message norms in every edited replan. The edit produced B-first contact in `3/12` pairs and task-B success in `0/12`; clean B produced `9/12` and `12/12`. The 12-row stopped panel and three-row smoke test are retained in their separately named artifact directories and excluded from the complete-screen count.
+
 ## Derived audit, synthesis, and figures
 
 `scripts/audit_research_numbers.py` independently parses the primary raw tables, checks row counts and hashes, and recomputes the headline values in `artifacts/numbers-audit-derived.json`. The human-readable audit is `numbers audit.md`; `Research Direction.md` is the consolidated narrative based on that ledger.
 
-`scripts/make_research_figures.py` reads the preserved raw JSONL records, canonical Stage-2 `results.json`, and the derived audit JSON. It creates seven current claim-first figures under `figures/`, with 15 adjacent current source CSVs and both PNG and PDF output. The earlier seven-figure set remains present but is explicitly marked superseded in `figures/README.md`. The current figures were visually inspected after generation. These files summarize existing evidence and do not create new experimental claims.
+`scripts/make_research_figures.py` reads the preserved raw JSONL records, canonical Stage-2 `results.json`, and the derived audit JSON. It creates eight current claim-first figures under `figures/`, with 17 adjacent current source CSVs and both PNG and PDF output. The earlier seven-figure set remains present but is explicitly marked superseded in `figures/README.md`. The current figures were visually inspected after generation. These files summarize existing evidence and do not create new experimental claims.
 
 ## Deliberately excluded
 
@@ -100,7 +113,7 @@ Those remain part of the separate robotics-performance project and must not be u
 
 ## Integrity inventory
 
-`FULL-ARCHIVE-SHA256SUMS` is the unified local-archive inventory. The 2026-09-04 inventory contains 967 entries. It hashes every regular file in the curated project except itself, temporary files, macOS metadata, Python bytecode, cache directories, and `tmp/`. It supplements rather than rewrites the older frozen checksum receipts, some of which use historical absolute or source-root paths.
+`PROVENANCE-SHA256SUMS` is the unified archive inventory. The 2026-09-04 release inventory contains 988 entries. It hashes every regular file in the curated project except itself, temporary files, macOS metadata, Python bytecode, cache directories, and `tmp/`. It supplements rather than rewrites the older frozen checksum receipts, some of which use historical absolute or source-root paths.
 
 To verify from the archive root:
 
@@ -108,4 +121,4 @@ To verify from the archive root:
 sha256sum -c PROVENANCE-SHA256SUMS
 ```
 
-That command applies from the complete local archive, where the file retains its original name. In the GitHub publication copy, use `sha256sum -c PUBLIC-SHA256SUMS` to verify the released subset. Any intentional future edit requires regenerating the relevant inventory and recording a new audit date. Frozen preregistration/config checksum files should never be silently changed.
+Any intentional future edit requires regenerating the inventory and recording a new audit date. Frozen preregistration/config checksum files should never be silently changed.

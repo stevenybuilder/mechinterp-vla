@@ -1,0 +1,286 @@
+{
+  "cell_rates": {
+    "A_target_first_touched": {
+      "clean_A": {
+        "libero_goal_t0_vs_t6": 1.0,
+        "libero_goal_t0_vs_t9": 1.0,
+        "libero_goal_t2_vs_t3": 1.0,
+        "libero_goal_t2_vs_t5": 1.0,
+        "libero_goal_t3_vs_t2": 1.0,
+        "libero_goal_t3_vs_t5": 1.0,
+        "libero_goal_t5_vs_t2": 1.0,
+        "libero_goal_t5_vs_t3": 1.0,
+        "libero_goal_t6_vs_t0": 0.0,
+        "libero_goal_t6_vs_t9": 0.0,
+        "libero_goal_t9_vs_t0": 1.0,
+        "libero_goal_t9_vs_t6": 1.0
+      },
+      "clean_B": {
+        "libero_goal_t0_vs_t6": 0.0,
+        "libero_goal_t0_vs_t9": 0.0,
+        "libero_goal_t2_vs_t3": 0.0,
+        "libero_goal_t2_vs_t5": 0.0,
+        "libero_goal_t3_vs_t2": 0.0,
+        "libero_goal_t3_vs_t5": 0.0,
+        "libero_goal_t5_vs_t2": 0.0,
+        "libero_goal_t5_vs_t3": 0.0,
+        "libero_goal_t6_vs_t0": 0.0,
+        "libero_goal_t6_vs_t9": 0.0,
+        "libero_goal_t9_vs_t0": 0.0,
+        "libero_goal_t9_vs_t6": 0.0
+      },
+      "matched_full": {
+        "libero_goal_t0_vs_t6": 1.0,
+        "libero_goal_t0_vs_t9": 1.0,
+        "libero_goal_t2_vs_t3": 0.0,
+        "libero_goal_t2_vs_t5": 1.0,
+        "libero_goal_t3_vs_t2": 1.0,
+        "libero_goal_t3_vs_t5": 1.0,
+        "libero_goal_t5_vs_t2": 1.0,
+        "libero_goal_t5_vs_t3": 0.0,
+        "libero_goal_t6_vs_t0": 0.0,
+        "libero_goal_t6_vs_t9": 0.0,
+        "libero_goal_t9_vs_t0": 1.0,
+        "libero_goal_t9_vs_t6": 1.0
+      }
+    },
+    "B_target_first_touched": {
+      "clean_A": {
+        "libero_goal_t0_vs_t6": 0.0,
+        "libero_goal_t0_vs_t9": 0.0,
+        "libero_goal_t2_vs_t3": 0.0,
+        "libero_goal_t2_vs_t5": 0.0,
+        "libero_goal_t3_vs_t2": 0.0,
+        "libero_goal_t3_vs_t5": 0.0,
+        "libero_goal_t5_vs_t2": 0.0,
+        "libero_goal_t5_vs_t3": 0.0,
+        "libero_goal_t6_vs_t0": 0.0,
+        "libero_goal_t6_vs_t9": 0.0,
+        "libero_goal_t9_vs_t0": 0.0,
+        "libero_goal_t9_vs_t6": 0.0
+      },
+      "clean_B": {
+        "libero_goal_t0_vs_t6": 0.0,
+        "libero_goal_t0_vs_t9": 1.0,
+        "libero_goal_t2_vs_t3": 1.0,
+        "libero_goal_t2_vs_t5": 1.0,
+        "libero_goal_t3_vs_t2": 0.0,
+        "libero_goal_t3_vs_t5": 1.0,
+        "libero_goal_t5_vs_t2": 1.0,
+        "libero_goal_t5_vs_t3": 1.0,
+        "libero_goal_t6_vs_t0": 1.0,
+        "libero_goal_t6_vs_t9": 1.0,
+        "libero_goal_t9_vs_t0": 1.0,
+        "libero_goal_t9_vs_t6": 0.0
+      },
+      "matched_full": {
+        "libero_goal_t0_vs_t6": 0.0,
+        "libero_goal_t0_vs_t9": 0.0,
+        "libero_goal_t2_vs_t3": 1.0,
+        "libero_goal_t2_vs_t5": 0.0,
+        "libero_goal_t3_vs_t2": 0.0,
+        "libero_goal_t3_vs_t5": 0.0,
+        "libero_goal_t5_vs_t2": 0.0,
+        "libero_goal_t5_vs_t3": 1.0,
+        "libero_goal_t6_vs_t0": 1.0,
+        "libero_goal_t6_vs_t9": 0.0,
+        "libero_goal_t9_vs_t0": 0.0,
+        "libero_goal_t9_vs_t6": 0.0
+      }
+    },
+    "success_B": {
+      "clean_A": {
+        "libero_goal_t0_vs_t6": 0.0,
+        "libero_goal_t0_vs_t9": 0.0,
+        "libero_goal_t2_vs_t3": 0.0,
+        "libero_goal_t2_vs_t5": 0.0,
+        "libero_goal_t3_vs_t2": 0.0,
+        "libero_goal_t3_vs_t5": 0.0,
+        "libero_goal_t5_vs_t2": 0.0,
+        "libero_goal_t5_vs_t3": 0.0,
+        "libero_goal_t6_vs_t0": 0.0,
+        "libero_goal_t6_vs_t9": 0.0,
+        "libero_goal_t9_vs_t0": 0.0,
+        "libero_goal_t9_vs_t6": 0.0
+      },
+      "clean_B": {
+        "libero_goal_t0_vs_t6": 1.0,
+        "libero_goal_t0_vs_t9": 1.0,
+        "libero_goal_t2_vs_t3": 1.0,
+        "libero_goal_t2_vs_t5": 1.0,
+        "libero_goal_t3_vs_t2": 1.0,
+        "libero_goal_t3_vs_t5": 1.0,
+        "libero_goal_t5_vs_t2": 1.0,
+        "libero_goal_t5_vs_t3": 1.0,
+        "libero_goal_t6_vs_t0": 1.0,
+        "libero_goal_t6_vs_t9": 1.0,
+        "libero_goal_t9_vs_t0": 1.0,
+        "libero_goal_t9_vs_t6": 1.0
+      },
+      "matched_full": {
+        "libero_goal_t0_vs_t6": 0.0,
+        "libero_goal_t0_vs_t9": 0.0,
+        "libero_goal_t2_vs_t3": 0.0,
+        "libero_goal_t2_vs_t5": 0.0,
+        "libero_goal_t3_vs_t2": 0.0,
+        "libero_goal_t3_vs_t5": 0.0,
+        "libero_goal_t5_vs_t2": 0.0,
+        "libero_goal_t5_vs_t3": 0.0,
+        "libero_goal_t6_vs_t0": 0.0,
+        "libero_goal_t6_vs_t9": 0.0,
+        "libero_goal_t9_vs_t0": 0.0,
+        "libero_goal_t9_vs_t6": 0.0
+      }
+    },
+    "touched_anything": {
+      "clean_A": {
+        "libero_goal_t0_vs_t6": 1.0,
+        "libero_goal_t0_vs_t9": 1.0,
+        "libero_goal_t2_vs_t3": 1.0,
+        "libero_goal_t2_vs_t5": 1.0,
+        "libero_goal_t3_vs_t2": 1.0,
+        "libero_goal_t3_vs_t5": 1.0,
+        "libero_goal_t5_vs_t2": 1.0,
+        "libero_goal_t5_vs_t3": 1.0,
+        "libero_goal_t6_vs_t0": 1.0,
+        "libero_goal_t6_vs_t9": 1.0,
+        "libero_goal_t9_vs_t0": 1.0,
+        "libero_goal_t9_vs_t6": 1.0
+      },
+      "clean_B": {
+        "libero_goal_t0_vs_t6": 1.0,
+        "libero_goal_t0_vs_t9": 1.0,
+        "libero_goal_t2_vs_t3": 1.0,
+        "libero_goal_t2_vs_t5": 1.0,
+        "libero_goal_t3_vs_t2": 1.0,
+        "libero_goal_t3_vs_t5": 1.0,
+        "libero_goal_t5_vs_t2": 1.0,
+        "libero_goal_t5_vs_t3": 1.0,
+        "libero_goal_t6_vs_t0": 1.0,
+        "libero_goal_t6_vs_t9": 1.0,
+        "libero_goal_t9_vs_t0": 1.0,
+        "libero_goal_t9_vs_t6": 1.0
+      },
+      "matched_full": {
+        "libero_goal_t0_vs_t6": 1.0,
+        "libero_goal_t0_vs_t9": 1.0,
+        "libero_goal_t2_vs_t3": 1.0,
+        "libero_goal_t2_vs_t5": 1.0,
+        "libero_goal_t3_vs_t2": 1.0,
+        "libero_goal_t3_vs_t5": 1.0,
+        "libero_goal_t5_vs_t2": 1.0,
+        "libero_goal_t5_vs_t3": 1.0,
+        "libero_goal_t6_vs_t0": 1.0,
+        "libero_goal_t6_vs_t9": 1.0,
+        "libero_goal_t9_vs_t0": 1.0,
+        "libero_goal_t9_vs_t6": 1.0
+      }
+    }
+  },
+  "cells": [
+    "libero_goal_t0_vs_t6",
+    "libero_goal_t0_vs_t9",
+    "libero_goal_t2_vs_t3",
+    "libero_goal_t2_vs_t5",
+    "libero_goal_t3_vs_t2",
+    "libero_goal_t3_vs_t5",
+    "libero_goal_t5_vs_t2",
+    "libero_goal_t5_vs_t3",
+    "libero_goal_t6_vs_t0",
+    "libero_goal_t6_vs_t9",
+    "libero_goal_t9_vs_t0",
+    "libero_goal_t9_vs_t6"
+  ],
+  "comparisons": {
+    "B_target_first_touched": {
+      "matched_full_minus_clean_A": {
+        "bootstrap_95pct_interval_for_median": [
+          0.0,
+          0.5
+        ],
+        "cell_differences": {
+          "libero_goal_t0_vs_t6": 0.0,
+          "libero_goal_t0_vs_t9": 0.0,
+          "libero_goal_t2_vs_t3": 1.0,
+          "libero_goal_t2_vs_t5": 0.0,
+          "libero_goal_t3_vs_t2": 0.0,
+          "libero_goal_t3_vs_t5": 0.0,
+          "libero_goal_t5_vs_t2": 0.0,
+          "libero_goal_t5_vs_t3": 1.0,
+          "libero_goal_t6_vs_t0": 1.0,
+          "libero_goal_t6_vs_t9": 0.0,
+          "libero_goal_t9_vs_t0": 0.0,
+          "libero_goal_t9_vs_t6": 0.0
+        },
+        "exact_two_sided_sign_test_nonzero_cells": {
+          "negative": 0,
+          "p_two_sided": 0.25,
+          "positive": 3,
+          "ties": 0
+        },
+        "mean_cell_difference": 0.25,
+        "median_cell_difference": 0.0
+      }
+    },
+    "success_B": {
+      "matched_full_minus_clean_A": {
+        "bootstrap_95pct_interval_for_median": [
+          0.0,
+          0.0
+        ],
+        "cell_differences": {
+          "libero_goal_t0_vs_t6": 0.0,
+          "libero_goal_t0_vs_t9": 0.0,
+          "libero_goal_t2_vs_t3": 0.0,
+          "libero_goal_t2_vs_t5": 0.0,
+          "libero_goal_t3_vs_t2": 0.0,
+          "libero_goal_t3_vs_t5": 0.0,
+          "libero_goal_t5_vs_t2": 0.0,
+          "libero_goal_t5_vs_t3": 0.0,
+          "libero_goal_t6_vs_t0": 0.0,
+          "libero_goal_t6_vs_t9": 0.0,
+          "libero_goal_t9_vs_t0": 0.0,
+          "libero_goal_t9_vs_t6": 0.0
+        },
+        "exact_two_sided_sign_test_nonzero_cells": {
+          "negative": 0,
+          "p_two_sided": 1.0,
+          "positive": 0,
+          "ties": 0
+        },
+        "mean_cell_difference": 0.0,
+        "median_cell_difference": 0.0
+      }
+    }
+  },
+  "counts": {
+    "A_target_first_touched": {
+      "clean_A": 10,
+      "clean_B": 0,
+      "matched_full": 8
+    },
+    "B_target_first_touched": {
+      "clean_A": 0,
+      "clean_B": 9,
+      "matched_full": 3
+    },
+    "success_B": {
+      "clean_A": 0,
+      "clean_B": 12,
+      "matched_full": 0
+    },
+    "touched_anything": {
+      "clean_A": 12,
+      "clean_B": 12,
+      "matched_full": 12
+    }
+  },
+  "episodes_per_condition": 12,
+  "median_steps": {
+    "clean_A": 300.0,
+    "clean_B": 130.0,
+    "matched_full": 300.0
+  },
+  "rows": 36,
+  "schema_version": 1
+}

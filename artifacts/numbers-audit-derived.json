@@ -538,6 +538,105 @@
     }
   },
   "generated_by": "scripts/audit_research_numbers.py",
+  "matched_band_rollout_screen": {
+    "B_first_touch_sign_test_matched_vs_clean_A": {
+      "negative": 0,
+      "p_two_sided": 0.25,
+      "positive": 3
+    },
+    "all_clean_replans_have_zero_message": true,
+    "all_matched_replans_have_nonzero_message": true,
+    "conditions": {
+      "clean_A": 12,
+      "clean_B": 12,
+      "matched_full": 12
+    },
+    "counts": {
+      "A_target_first_touched": {
+        "clean_A": 10,
+        "clean_B": 0,
+        "matched_full": 8
+      },
+      "B_target_first_touched": {
+        "clean_A": 0,
+        "clean_B": 9,
+        "matched_full": 3
+      },
+      "success_B": {
+        "clean_A": 0,
+        "clean_B": 12,
+        "matched_full": 0
+      },
+      "touched_anything": {
+        "clean_A": 12,
+        "clean_B": 12,
+        "matched_full": 12
+      }
+    },
+    "directed_prompt_pair_cells": 12,
+    "duplicate_keys": [],
+    "file": {
+      "bytes": 285527,
+      "expected_rows": 36,
+      "jsonl_rows": 36,
+      "path": "artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/episodes.jsonl",
+      "row_count_matches": true,
+      "sha256": "8f7022a0b5db6bad967faf570ee76f9e86e40dfa6b2e4af93da04a1e8233f549"
+    },
+    "initial_states_per_cell": 1,
+    "matched_cells_with_B_first_touch": [
+      "libero_goal_t2_vs_t3",
+      "libero_goal_t5_vs_t3",
+      "libero_goal_t6_vs_t0"
+    ],
+    "maximum_error_against_stored_summary": 0,
+    "median_steps": {
+      "clean_A": 300.0,
+      "clean_B": 130.0,
+      "matched_full": 300.0
+    },
+    "recomputed_summary_subset": {
+      "counts": {
+        "A_target_first_touched": {
+          "clean_A": 10,
+          "clean_B": 0,
+          "matched_full": 8
+        },
+        "B_target_first_touched": {
+          "clean_A": 0,
+          "clean_B": 9,
+          "matched_full": 3
+        },
+        "success_B": {
+          "clean_A": 0,
+          "clean_B": 12,
+          "matched_full": 0
+        },
+        "touched_anything": {
+          "clean_A": 12,
+          "clean_B": 12,
+          "matched_full": 12
+        }
+      },
+      "median_steps": {
+        "clean_A": 300.0,
+        "clean_B": 130.0,
+        "matched_full": 300.0
+      },
+      "rows": 36
+    },
+    "success_sign_test_matched_vs_clean_A": {
+      "negative": 0,
+      "p_two_sided": 1.0,
+      "positive": 0
+    },
+    "summary_file": {
+      "bytes": 8617,
+      "jsonl_rows": null,
+      "path": "artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/summary.json",
+      "sha256": "b653fd24eea2f2800fca54dd1c4711a0cbd25d25918dcf1d26deccf440205778"
+    }
+  },
   "matched_band_transform": {
     "canonical_bootstrap_intervals": {
       "matched_attention_only": [

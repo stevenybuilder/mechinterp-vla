@@ -22,6 +22,7 @@ from docx.shared import Inches, Pt, RGBColor
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "VLA Model Biology - Plain English Research Report.docx"
 MATCHED = ROOT / "artifacts/pi05_matched_band_transform_2026-09-04_v1/summary.json"
+ROLLOUT = ROOT / "artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/summary.json"
 
 NAVY = "102447"
 BLUE = "1D4ED8"
@@ -237,9 +238,16 @@ def matched_result_text() -> tuple[str, str]:
     reuse = con["mismatched_full_minus_random"]
     mlp = con["matched_full_minus_matched_attention_only"]
     flags = data["interpretation_flags"]
+    rollout = json.loads(ROLLOUT.read_text()) if ROLLOUT.exists() else None
+    behavior = ""
+    if rollout is not None:
+        behavior = (
+            " In the 36-episode simulator screen, the edit made B the first target in 3/12 pairs "
+            "but completed B in 0/12; clean B completed 12/12. This is initial redirection, not policy transfer."
+        )
     return (
         "Matched layer-6→8 test",
-        f"Across 12 directed prompt-pair cells, median A→B action-axis progress was {mf:.3f} for the matching full attention+MLP message, {mm:.3f} for the norm-matched message from another scene, and {ao:.3f} for the matching attention-only message. Other-scene full beat random in 12/12 cells (exact sign p=0.00049), and full beat attention-only in 12/12 (p=0.00049). Matching-scene messages were somewhat stronger than other-scene messages, but only 9/12 signs agreed (p=0.146): shared computation with suggestive scene modulation, not clean scene specificity.",
+        f"Across 12 directed prompt-pair cells, median A→B action-axis progress was {mf:.3f} for the matching full attention+MLP message, {mm:.3f} for the norm-matched message from another scene, and {ao:.3f} for the matching attention-only message. Other-scene full beat random in 12/12 cells (exact sign p=0.00049), and full beat attention-only in 12/12 (p=0.00049)." + behavior,
     )
 
 
@@ -309,7 +317,7 @@ def build() -> None:
     add_para(doc, "A five-page plain-English report on the project's lineage, experiments, evidence, failures, and safety relevance.", size=10.2, color=MUTED, italic=True, after=7)
     add_box(doc, "What question did you try to answer?", "When π0.5 turns a sentence and camera view into a movement, where does the instruction's causal influence go? We looked for a small internal object—a direction, token-local code, low-rank subspace, or compact pathway—that could be changed without replacing the rest of the scene and motor state.")
     add_box(doc, "Why is the question interesting?", "Language-model interpretability often starts with semantic tokens. A robot must mix language with pixels, pose, and control constraints before it acts. Its decision may live in a private coordinate system that is not readable as words. The setting also supplies unusually hard validation: same scene, different valid command, followed by action distance, first object touched, and task success.", fill=PALE_TEAL, accent=TEAL)
-    add_box(doc, "What conclusions did you reach?", "The instruction is used during multimodal prefill. Later, its text-token copy remains readable but has little control over the tested Goal actions. Broad late image-position state can redirect behavior, including 18/20 closed-loop successes versus 0/20 for an early-layer control. Compact descriptions failed, but a full layer-6→8 update transferred across initial scenes and required the MLP sublayers. Decoding, causal use, and token provenance separate after modalities mix.", fill="FFF3E8", accent=ORANGE)
+    add_box(doc, "What conclusions did you reach?", "The instruction is used during multimodal prefill. Later, its text-token copy remains readable but has little control over the tested Goal actions. Broad late image-position state can redirect behavior, including 18/20 closed-loop successes versus 0/20 for an early-layer control. Compact descriptions failed. A full layer-6→8 update transferred across initial scenes and required the MLP sublayers, but it produced only 3/12 B-first contacts and 0/12 B-task successes in a simulator screen. Local causal leverage is not policy transfer.", fill="FFF3E8", accent=ORANGE)
     add_table(doc, ["Headline", "Verified result", "Plain-English meaning"], [
         ("Causal handoff", "Text K/V R=0.0106; late image K/V R=0.8321", "The readable instruction and the action-controlling state are not in the same place."),
         ("Behavior", "Late live repair 18/20; early control 0/20", "The broad state changes complete robot behavior, not only one vector."),
@@ -359,6 +367,7 @@ def build() -> None:
         ("Compression", "Patch object tokens, position doses, directions, subspaces", "No small portable representation matched the whole-state effect."),
         ("Communication", "Block and rescue instruction→image and image→action edges", "The broad route was necessary; compact writer rescue failed."),
         ("L6–8 computation", "Curvature, then full/attention-only matched-scene tests", "The path bent; only the natural full-block update transferred across scenes."),
+        ("Rollout screen", "Run the L6–8 edit through 12 Goal simulations", "It redirected first contact in 3/12 but completed the task in 0/12."),
     ], widths=[1.0, 2.65, 3.4], font_size=7.05)
     add_para(doc, "Stimuli and controls.", bold_lead="Stimuli and controls.", size=8.4, before=3, after=1)
     add_bullets(doc, [
@@ -376,7 +385,7 @@ def build() -> None:
         ("Probe accuracy", "10-way multinomial logistic regression; 5 folds grouped by initial state", "Text 1.000 at L0–16; image 0.113 at L0 → 0.993 at L1."),
         ("Repair R", "Progress from source toward donor action, with endpoint distance checks", "Text K/V 0.0106; late image K/V 0.8321."),
         ("Endpoint distance", "D_A and D_B are L2 distance divided by clean A–B distance", "Broad carrier D_B=0.2349; dose-256 D_B=0.9260; dose-512 D_B=0.2564."),
-        ("Behavior", "First intended object touched; simulator task success", "Conflict 0/20; late repair 18/20; early repair 0/20."),
+        ("Behavior", "First intended object touched; simulator task success", "Full late repair 18/20; L6–8 edit: 3/12 B-first, 0/12 success."),
         ("Attention mass", "Action-query mass per prefix segment; both total and per-token", "Text/image 11.41× per token; image/text 4.99× in total."),
         ("Monitor F1", "Outcome classifier versus constant positive baseline", "Dev 0.909; held instruction 0.681; held scene 0.745; baseline 0.801."),
         ("Curvature/chord", "Midpoint deviation divided by endpoint-output chord", "Median 0.188; 12/12 cell medians ≥0.1."),
@@ -390,8 +399,8 @@ def build() -> None:
     add_page_title(doc, "What survived", "A real handoff—and strong evidence against the simple story", "The project is most informative when the positive and negative evidence are kept together.")
     title, body = matched_result_text()
     add_box(doc, title, body, fill="FFF3E8", accent=ORANGE)
-    doc.add_picture(str(ROOT / "figures/07_matched_band_transform.png"), width=Inches(6.9))
-    add_caption(doc, "Figure 3. A full instruction-induced update transfers across initial scenes within a prompt pair, while MLP-clamped attention-only updates are weak. Dots are 12 directed cell medians.")
+    doc.add_picture(str(ROOT / "figures/08_action_to_behavior.png"), width=Inches(6.9))
+    add_caption(doc, "Figure 3. The broad L6→8 edit moves offline actions and sometimes redirects first contact, but it completes 0/12 new tasks. The rollout screen uses one initial state per directed pair.")
     add_table(doc, ["Hypothesis", "Evidence against it"], [
         ("The instruction stays causally at text positions", "Text remains decodable, but post-prefill text repair is near zero; prefill swaps show it was used earlier."),
         ("The causal state is object-local", "Object-local replacement worked in 0/8 directions; 4–256 image positions were weak relative to all 512."),
@@ -399,6 +408,7 @@ def build() -> None:
         ("A low-rank subspace is the mechanism", "Rank-16 Sonar fit beat controls in 12/12 cells but reached 0/12 joint endpoints; donor-free repair was 0/30."),
         ("One compact writer seeds the state", "Full instruction→image blocking was A-like in 12/12, but block-0 rescue and fixed L6–8 rescue failed."),
         ("Observed nonlinearity controls action", "Curvature was real, yet removing it missed the frozen causal gate."),
+        ("A local linear shift transfers the policy", "The L6→8 edit changed first contact in 3/12 Goal pairs but completed the new task in 0/12."),
     ], widths=[2.2, 4.85], font_size=7.25)
     add_para(doc, "Why this matters for safety.", bold_lead="Why this matters for safety.", size=8.7, before=4, after=1)
     add_para(doc, "A monitor can read a stale copy of the instruction while missing the state that controls motion. A broad edit can make a robot touch the intended object while damaging the later trajectory. As learned policies and world models move into robots and vehicles, interpretability needs external behavioral validation and collateral-damage tests—not only probes, attention maps, or attractive latent-space plots.", size=8.6)
@@ -409,7 +419,7 @@ def build() -> None:
         "Two checkpoints do not establish a VLA taxonomy. More models, training regimes, embodiments, and naturally occurring failure modes are needed.",
         "A future world-model study should begin with a released checkpoint and validated behavioral error before searching latent coordinates.",
     ], size=8.0)
-    add_para(doc, "Bottom line: π0.5 contains a causally important language→multimodal-state→action handoff. We localized the broad state and changed behavior, but did not isolate a small reusable mechanism. That negative boundary is scientifically useful because it shows exactly where standard linear-feature and token-local stories stopped predicting causal control.", size=8.8, color=NAVY, before=3)
+    add_para(doc, "Bottom line: π0.5 contains a causally important language→multimodal-state→action handoff. We localized the broad state and changed behavior, but did not isolate a small reusable mechanism. A linear edit can have local causal leverage while failing to transfer a coherent policy. That boundary shows where standard linear-feature and token-local stories stop predicting closed-loop control.", size=8.8, color=NAVY, before=3)
 
     core = doc.core_properties
     core.title = "Where does π0.5 keep the instruction it is following?"

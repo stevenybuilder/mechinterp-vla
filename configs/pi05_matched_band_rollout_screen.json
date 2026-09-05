@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "experiment": "pi05_matched_layer6_8_closed_loop_breadth_screen",
+  "created_on": "2026-09-04",
+  "policy": "lerobot/pi05_libero_finetuned_v044",
+  "revision": "8e174154ef5f6c60a8da12ae99c303d8963138c1",
+  "suite": "libero_goal",
+  "pairs_file": "artifacts/mediation_pairs.json",
+  "eval_init_ids": [33],
+  "conditions": ["clean_A", "clean_B", "matched_full"],
+  "fixed": {
+    "input_residual_layer": 5,
+    "band_decoder_layers": [6, 7, 8],
+    "intervention_residual_layer": 8,
+    "image_positions": 512,
+    "image_slots": 768,
+    "actions_per_replan": 10,
+    "seed_base": 2600000
+  },
+  "analysis": {
+    "primary_unit": "one_episode_in_each_of_12_directed_prompt_pair_cells",
+    "primary_outcome": "libero_task_B_success",
+    "secondary_outcome": "B_target_in_first_touch_set",
+    "primary_contrasts": ["matched_full_minus_clean_A"],
+    "bootstrap_resamples": 10000,
+    "bootstrap_seed": 60808
+  },
+  "stopping_rule": "Run clean A, clean B, and matching full intervention once across all 12 fixed directed Goal pairs. Expand to replicated controls only if the intervention produces at least one intended B behavioral outcome while clean A does not. Treat this as an exploratory breadth/futility screen, not confirmatory inference."
+}
