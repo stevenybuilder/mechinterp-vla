@@ -381,7 +381,7 @@ def figure_0c_readable_not_causal_hero() -> None:
     claim_title(
         fig,
         "The instruction stays readable after text stops controlling the action",
-        "π0.5 · 10-way grouped probes on 300 Goal units · causal K/V tests on six directed prompt-pair cells.",
+        "π0.5 · 300 held-out paired forward passes · 18,000 intervention records · no simulator rollouts.",
     )
 
     ax_probe.plot(layers, image_probe, color=BLUE, lw=2.7, marker="s", ms=5.2, label="image-token state")
@@ -400,7 +400,7 @@ def figure_0c_readable_not_causal_hero() -> None:
     )
     ax_probe.axhline(0.10, color=MID, lw=1.0, ls=":", label="10-way chance")
     ax_probe.annotate(
-        "text: 1.000 through L16",
+        "text: 1.000 through L16 · 0.9987 at L17",
         xy=(10, text_probe[10]),
         xytext=(7.3, 0.77),
         arrowprops={"arrowstyle": "-", "color": ORANGE, "lw": 1.2},
