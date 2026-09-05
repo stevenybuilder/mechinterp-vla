@@ -130,6 +130,18 @@ This final panel contains 420 rows and compares the full natural attention-plus-
 
 The complete exploratory screen contains 36 unique episode rows. The edit produced `3/12` B-first contacts but `0/12` task-B successes. The stopped 12-row large panel and three-row smoke test remain separately preserved and must not be pooled into the breadth-screen estimate.
 
+### MATS-only broad-repair side-effect screen (2026-09-04)
+
+- `docs/PREREG-pi05-state-repair-side-effects-2026-09-04.md`
+- `configs/pi05_state_repair_side_effects.json`
+- `scripts/vla/pi05_state_repair_side_effects.py`
+- `tests/test_pi05_state_repair_side_effects.py`
+- `artifacts/pi05_state_repair_side_effects_2026-09-04_v1/`
+- `logs/pi05_state_repair_side_effects_2026-09-04_v1.log`
+- `docs/FINDINGS-pi05-state-repair-side-effects-2026-09-04.md`
+
+This complete preregistered panel contains 50 unique rows: two Object tasks, five new initial states, and five conditions. It compares the successful late repair against paired clean behavior, an exact correct→correct preservation arm, the early site, and a valid wrong-object donor while recording contacts, grasps, steps, and end-effector path length.
+
 ### Consolidated audit and research map (2026-09-04)
 
 - `numbers audit.md`
@@ -137,7 +149,8 @@ The complete exploratory screen contains 36 unique episode rows. The edit produc
 - `scripts/audit_research_numbers.py`
 - `artifacts/numbers-audit-derived.json`
 - `scripts/make_research_figures.py`
-- `figures/` (eight current claim-first PNG/PDF figures, 17 current source CSVs, the superseded earlier figure set, and a figure README)
+- `figures/` (ten current claim-first PNG/PDF figures, 19 current source CSVs, the superseded earlier figure set, and a figure README)
+- `media/videos/state-confirmation/` (canonical four-way simulator recapture; MP4, WebM, GIF, poster, and metadata; every recaptured outcome matches the archived episode record)
 - `VLA Model Biology - Plain English Research Report.docx` and its reproducible builder `scripts/build_plain_english_report.py`
 
 These are derived synthesis artifacts, not new model evidence. The audit independently parses the preserved raw rows and records material corrections to earlier prose.

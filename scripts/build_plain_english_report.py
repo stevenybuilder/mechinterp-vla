@@ -317,10 +317,10 @@ def build() -> None:
     add_para(doc, "A five-page plain-English report on the project's lineage, experiments, evidence, failures, and safety relevance.", size=10.2, color=MUTED, italic=True, after=7)
     add_box(doc, "What question did you try to answer?", "When π0.5 turns a sentence and camera view into a movement, where does the instruction's causal influence go? We looked for a small internal object—a direction, token-local code, low-rank subspace, or compact pathway—that could be changed without replacing the rest of the scene and motor state.")
     add_box(doc, "Why is the question interesting?", "Language-model interpretability often starts with semantic tokens. A robot must mix language with pixels, pose, and control constraints before it acts. Its decision may live in a private coordinate system that is not readable as words. The setting also supplies unusually hard validation: same scene, different valid command, followed by action distance, first object touched, and task success.", fill=PALE_TEAL, accent=TEAL)
-    add_box(doc, "What conclusions did you reach?", "The instruction is used during multimodal prefill. Later, its text-token copy remains readable but has little control over the tested Goal actions. Broad late image-position state can redirect behavior, including 18/20 closed-loop successes versus 0/20 for an early-layer control. Compact descriptions failed. A full layer-6→8 update transferred across initial scenes and required the MLP sublayers, but it produced only 3/12 B-first contacts and 0/12 B-task successes in a simulator screen. Local causal leverage is not policy transfer.", fill="FFF3E8", accent=ORANGE)
+    add_box(doc, "What conclusions did you reach?", "The instruction is used during multimodal prefill. Later, its text-token copy remains readable but has little control over the tested Goal actions. Broad late image-position state redirected 18/20 closed-loop rollouts, but a new preservation screen found 9/10 successes versus clean 10/10, one wrong-first contact, one separate failure, and generally longer trajectories. Compact descriptions failed. A full layer-6→8 update transferred across scenes and required the MLP sublayers, but produced only 3/12 B-first contacts and 0/12 task successes. Causal leverage is not selective policy control.", fill="FFF3E8", accent=ORANGE)
     add_table(doc, ["Headline", "Verified result", "Plain-English meaning"], [
         ("Causal handoff", "Text K/V R=0.0106; late image K/V R=0.8321", "The readable instruction and the action-controlling state are not in the same place."),
-        ("Behavior", "Late live repair 18/20; early control 0/20", "The broad state changes complete robot behavior, not only one vector."),
+        ("Behavior", "Late repair 18/20; new preservation screen 9/10", "The broad state controls behavior but does not always reproduce the clean trajectory."),
         ("Compression", "Object-local 0/8; Sonar endpoints 0/12", "A selective, portable instruction feature was not isolated."),
     ], widths=[1.35, 2.15, 3.55], font_size=7.7)
     add_para(doc, "Main organism: π0.5 LIBERO checkpoint. Boundary test: OpenVLA-OFT. Evidence is scoped to the archived tasks and checkpoints; it is not a universal claim about all VLAs.", size=7.9, color=MUTED, align=WD_ALIGN_PARAGRAPH.CENTER, before=3)
@@ -356,14 +356,14 @@ def build() -> None:
     # Page 3 — experimental ladder and method.
     add_page_break(doc)
     add_page_title(doc, "What we did", "A ladder from behavior to causal mechanism", "Each step asked a stronger question. Positive internal geometry was never treated as enough without an action or rollout test.")
-    doc.add_picture(str(ROOT / "figures/01_stimulus_intervention_behavior.png"), width=Inches(7.05))
-    add_caption(doc, "Figure 1. Same pixels and robot state, two valid instructions. Broad late image-state replacement redirected closed-loop behavior; the early-layer control did not.")
+    doc.add_picture(str(ROOT / "figures/09_prompt_pairs_behavior_heatmap.png"), width=Inches(7.05))
+    add_caption(doc, "Figure 1. Exact prompt pairs and the 1,200-rollout initial screen. Each heat-map cell is 20 official LIBERO initial states; only the instruction changes within a comparison.")
     add_table(doc, ["Stage", "Direct test", "Main finding"], [
         ("Behavior", "Conflict the benchmark goal with another valid command", "Obedience became measurable by first touch and success."),
         ("Readout", "Probe each layer and inspect attention", "Instruction identity remained readable at text positions."),
         ("Causality", "Patch text, image, and other prefix state", "Late image state, not late text state, carried most Goal action control."),
         ("Timing", "Swap instruction before prefill; repair state after", "The instruction is used early, then its consequence is distributed."),
-        ("Behavioral validation", "Repeat the patch at every replan", "Late repair completed 18/20 tasks; early control completed 0/20."),
+        ("Behavioral validation", "Repeat the patch; compare with paired clean paths", "Late repair was 18/20; new screen 9/10 with two deviations from clean."),
         ("Compression", "Patch object tokens, position doses, directions, subspaces", "No small portable representation matched the whole-state effect."),
         ("Communication", "Block and rescue instruction→image and image→action edges", "The broad route was necessary; compact writer rescue failed."),
         ("L6–8 computation", "Curvature, then full/attention-only matched-scene tests", "The path bent; only the natural full-block update transferred across scenes."),
@@ -385,7 +385,7 @@ def build() -> None:
         ("Probe accuracy", "10-way multinomial logistic regression; 5 folds grouped by initial state", "Text 1.000 at L0–16; image 0.113 at L0 → 0.993 at L1."),
         ("Repair R", "Progress from source toward donor action, with endpoint distance checks", "Text K/V 0.0106; late image K/V 0.8321."),
         ("Endpoint distance", "D_A and D_B are L2 distance divided by clean A–B distance", "Broad carrier D_B=0.2349; dose-256 D_B=0.9260; dose-512 D_B=0.2564."),
-        ("Behavior", "First intended object touched; simulator task success", "Full late repair 18/20; L6–8 edit: 3/12 B-first, 0/12 success."),
+        ("Behavior", "First contact, non-target grasp, steps/path, task success", "Full late repair 18/20; new screen 9/10, one wrong-first; L6–8 edit 0/12 success."),
         ("Attention mass", "Action-query mass per prefix segment; both total and per-token", "Text/image 11.41× per token; image/text 4.99× in total."),
         ("Monitor F1", "Outcome classifier versus constant positive baseline", "Dev 0.909; held instruction 0.681; held scene 0.745; baseline 0.801."),
         ("Curvature/chord", "Midpoint deviation divided by endpoint-output chord", "Median 0.188; 12/12 cell medians ≥0.1."),
@@ -411,10 +411,10 @@ def build() -> None:
         ("A local linear shift transfers the policy", "The L6→8 edit changed first contact in 3/12 Goal pairs but completed the new task in 0/12."),
     ], widths=[2.2, 4.85], font_size=7.25)
     add_para(doc, "Why this matters for safety.", bold_lead="Why this matters for safety.", size=8.7, before=4, after=1)
-    add_para(doc, "A monitor can read a stale copy of the instruction while missing the state that controls motion. A broad edit can make a robot touch the intended object while damaging the later trajectory. As learned policies and world models move into robots and vehicles, interpretability needs external behavioral validation and collateral-damage tests—not only probes, attention maps, or attractive latent-space plots.", size=8.6)
+    add_para(doc, "A monitor can read a stale copy of the instruction while missing the state that controls motion. The new preservation screen made the second risk concrete: broad repair was usually successful, but one rollout touched the wrong object first, another failed, and 8/10 took more steps than clean. As learned policies and world models move into robots and vehicles, interpretability needs external behavioral validation and collateral-damage tests—not only probes or attractive latent-space plots.", size=8.6)
     add_para(doc, "Limitations and what could have helped.", bold_lead="Limitations and what could have helped.", size=8.7, before=2, after=1)
     add_bullets(doc, [
-        "The strongest repair is donor-assisted and replaces a large state. A learned conditional intervention needs true prompt-pair holdout and closed-loop preservation controls.",
+        "The strongest repair is donor-assisted and replaces a large state. Its ten-unit preservation screen is too small to bound rare side effects or unrelated-task damage.",
         "The 8-edge reader result is development-only; it should not be called a confirmed circuit. The donor-free run is incomplete at 250/400 planned rows.",
         "Two checkpoints do not establish a VLA taxonomy. More models, training regimes, embodiments, and naturally occurring failure modes are needed.",
         "A future world-model study should begin with a released checkpoint and validated behavioral error before searching latent coordinates.",

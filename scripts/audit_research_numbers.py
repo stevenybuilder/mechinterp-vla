@@ -129,6 +129,111 @@ def state_repair() -> dict:
     return {"file": file_record(rel, 80), "cells": cells, "pooled": pooled}
 
 
+def state_repair_side_effects() -> dict:
+    """Audit the preregistered clean-preservation and specificity screen."""
+    rel = "artifacts/pi05_state_repair_side_effects_2026-09-04_v1/episodes.jsonl"
+    summary_rel = "artifacts/pi05_state_repair_side_effects_2026-09-04_v1/summary.json"
+    rows = list(jsonl(ROOT / rel))
+    stored = json.loads((ROOT / summary_rel).read_text())
+    keys = [(int(row["task_id"]), int(row["init_id"]), row["condition"]) for row in rows]
+    units = sorted({(int(row["task_id"]), int(row["init_id"])) for row in rows})
+    by_key = {(int(row["task_id"]), int(row["init_id"]), row["condition"]): row for row in rows}
+    conditions = (
+        "clean_correct",
+        "preserve_correct",
+        "repair_live",
+        "repair_early",
+        "wrong_donor_live",
+    )
+    counts = {}
+    for condition in conditions:
+        subset = [row for row in rows if row["condition"] == condition]
+        counts[condition] = {
+            "n": len(subset),
+            "success": sum(bool(row["success"]) for row in subset),
+            "correct_target_first_touched": sum(bool(row["correct_target_first_touched"]) for row in subset),
+            "non_target_first_touched": sum(bool(row["non_target_first_touched"]) for row in subset),
+            "any_non_target_grasp": sum(bool(row["any_non_target_grasp"]) for row in subset),
+            "median_steps": median(row["n_steps"] for row in subset),
+            "median_eef_path_length": median(row["eef_path_length"] for row in subset),
+            "median_n_non_target_touched": median(row["n_non_target_touched"] for row in subset),
+        }
+
+    outcome_fields = (
+        "success",
+        "n_steps",
+        "first_touch_set",
+        "correct_target_first_touched",
+        "non_target_first_touched",
+        "any_non_target_grasp",
+        "n_non_target_touched",
+        "eef_path_length",
+    )
+    preservation = []
+    step_differences = []
+    path_differences = []
+    step_ratios = []
+    path_ratios = []
+    for task_id, init_id in units:
+        clean = by_key[(task_id, init_id, "clean_correct")]
+        preserve = by_key[(task_id, init_id, "preserve_correct")]
+        repair = by_key[(task_id, init_id, "repair_live")]
+        preservation.append({
+            "task_id": task_id,
+            "init_id": init_id,
+            "action_hashes_equal": [r["action_sha256"] for r in clean["replans"]]
+            == [r["action_sha256"] for r in preserve["replans"]],
+            "outcomes_equal": all(clean[field] == preserve[field] for field in outcome_fields),
+            "all_edit_ratios_zero": all(
+                float(replan["donor_to_host_norm_ratio_median"]) == 0.0
+                and float(replan["donor_to_host_norm_ratio_max"]) == 0.0
+                for replan in preserve["replans"]
+            ),
+        })
+        step_differences.append(float(repair["n_steps"]) - float(clean["n_steps"]))
+        path_differences.append(float(repair["eef_path_length"]) - float(clean["eef_path_length"]))
+        step_ratios.append(float(repair["n_steps"]) / float(clean["n_steps"]))
+        path_ratios.append(float(repair["eef_path_length"]) / float(clean["eef_path_length"]))
+
+    stored_errors = []
+    for condition in conditions:
+        for field in (
+            "n",
+            "success",
+            "correct_target_first_touched",
+            "non_target_first_touched",
+            "any_non_target_grasp",
+            "median_steps",
+            "median_eef_path_length",
+            "median_n_non_target_touched",
+        ):
+            stored_errors.append(abs(float(counts[condition][field]) - float(stored["counts"][condition][field])))
+    preserve_all_exact = all(
+        row["action_hashes_equal"] and row["outcomes_equal"] and row["all_edit_ratios_zero"]
+        for row in preservation
+    )
+    stored_errors.append(abs(int(preserve_all_exact) - int(bool(stored["preserve_all_exact"]))))
+    return {
+        "file": file_record(rel, 50),
+        "summary_file": file_record(summary_rel),
+        "independent_units": len(units),
+        "conditions": Counter(row["condition"] for row in rows),
+        "duplicate_keys": [list(key) for key, count in Counter(keys).items() if count > 1],
+        "counts": counts,
+        "preserve_all_exact": preserve_all_exact,
+        "preservation_checks": preservation,
+        "repair_live_vs_clean_correct": {
+            "median_paired_step_difference": median(step_differences),
+            "median_paired_step_ratio": median(step_ratios),
+            "median_paired_eef_path_difference": median(path_differences),
+            "median_paired_eef_path_ratio": median(path_ratios),
+            "repair_longer_in_steps": sum(value > 0 for value in step_differences),
+            "repair_longer_in_path": sum(value > 0 for value in path_differences),
+        },
+        "maximum_error_against_stored_summary": max(stored_errors),
+    }
+
+
 def mediation() -> dict:
     rel = "artifacts/pi05_mediation_2026-08-31/run2/rows.jsonl"
     rows = list(jsonl(ROOT / rel))
@@ -750,6 +855,7 @@ def main() -> None:
         "stage2": stage2(),
         "prefill": prefill(),
         "state_repair": state_repair(),
+        "state_repair_side_effects": state_repair_side_effects(),
         "mediation": mediation(),
         "sonar_lite": sonar_lite(),
         "donor_free": donor_free(),
@@ -775,6 +881,9 @@ def main() -> None:
             "matched_rollout_rows": audit["matched_band_rollout_screen"]["file"]["jsonl_rows"],
             "matched_rollout_B_first": audit["matched_band_rollout_screen"]["counts"]["B_target_first_touched"]["matched_full"],
             "matched_rollout_success_B": audit["matched_band_rollout_screen"]["counts"]["success_B"]["matched_full"],
+            "state_repair_side_effect_rows": audit["state_repair_side_effects"]["file"]["jsonl_rows"],
+            "state_repair_side_effect_success": audit["state_repair_side_effects"]["counts"]["repair_live"]["success"],
+            "state_repair_side_effect_preserve_exact": audit["state_repair_side_effects"]["preserve_all_exact"],
         },
     }, indent=2))
 

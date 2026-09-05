@@ -1,0 +1,61 @@
+suite,task_id,task_prompt,condition,condition_prompt,successes,episodes,success_rate
+libero_object,0,pick up the alphabet soup and place it in the basket,correct,pick up the alphabet soup and place it in the basket,19,20,0.95
+libero_object,0,pick up the alphabet soup and place it in the basket,null,,17,20,0.85
+libero_object,0,pick up the alphabet soup and place it in the basket,wrong_object,pick up the cream cheese and place it in the basket,17,20,0.85
+libero_object,1,pick up the cream cheese and place it in the basket,correct,pick up the cream cheese and place it in the basket,20,20,1.0
+libero_object,1,pick up the cream cheese and place it in the basket,null,,8,20,0.4
+libero_object,1,pick up the cream cheese and place it in the basket,wrong_object,pick up the tomato sauce and place it in the basket,0,20,0.0
+libero_object,2,pick up the salad dressing and place it in the basket,correct,pick up the salad dressing and place it in the basket,20,20,1.0
+libero_object,2,pick up the salad dressing and place it in the basket,null,,14,20,0.7
+libero_object,2,pick up the salad dressing and place it in the basket,wrong_object,pick up the ketchup and place it in the basket,0,20,0.0
+libero_object,3,pick up the bbq sauce and place it in the basket,correct,pick up the bbq sauce and place it in the basket,19,20,0.95
+libero_object,3,pick up the bbq sauce and place it in the basket,null,,18,20,0.9
+libero_object,3,pick up the bbq sauce and place it in the basket,wrong_object,pick up the ketchup and place it in the basket,0,20,0.0
+libero_object,4,pick up the ketchup and place it in the basket,correct,pick up the ketchup and place it in the basket,20,20,1.0
+libero_object,4,pick up the ketchup and place it in the basket,null,,5,20,0.25
+libero_object,4,pick up the ketchup and place it in the basket,wrong_object,pick up the milk and place it in the basket,20,20,1.0
+libero_object,5,pick up the tomato sauce and place it in the basket,correct,pick up the tomato sauce and place it in the basket,20,20,1.0
+libero_object,5,pick up the tomato sauce and place it in the basket,null,,16,20,0.8
+libero_object,5,pick up the tomato sauce and place it in the basket,wrong_object,pick up the butter and place it in the basket,0,20,0.0
+libero_object,6,pick up the butter and place it in the basket,correct,pick up the butter and place it in the basket,20,20,1.0
+libero_object,6,pick up the butter and place it in the basket,null,,11,20,0.55
+libero_object,6,pick up the butter and place it in the basket,wrong_object,pick up the chocolate pudding and place it in the basket,20,20,1.0
+libero_object,7,pick up the milk and place it in the basket,correct,pick up the milk and place it in the basket,20,20,1.0
+libero_object,7,pick up the milk and place it in the basket,null,,20,20,1.0
+libero_object,7,pick up the milk and place it in the basket,wrong_object,pick up the chocolate pudding and place it in the basket,20,20,1.0
+libero_object,8,pick up the chocolate pudding and place it in the basket,correct,pick up the chocolate pudding and place it in the basket,20,20,1.0
+libero_object,8,pick up the chocolate pudding and place it in the basket,null,,17,20,0.85
+libero_object,8,pick up the chocolate pudding and place it in the basket,wrong_object,pick up the orange juice and place it in the basket,0,20,0.0
+libero_object,9,pick up the orange juice and place it in the basket,correct,pick up the orange juice and place it in the basket,20,20,1.0
+libero_object,9,pick up the orange juice and place it in the basket,null,,4,20,0.2
+libero_object,9,pick up the orange juice and place it in the basket,wrong_object,pick up the salad dressing and place it in the basket,15,20,0.75
+libero_goal,0,open the middle drawer of the cabinet,correct,open the middle drawer of the cabinet,19,20,0.95
+libero_goal,0,open the middle drawer of the cabinet,null,,0,20,0.0
+libero_goal,0,open the middle drawer of the cabinet,wrong_object,put the wine bottle on top of the cabinet,0,20,0.0
+libero_goal,1,put the bowl on the stove,correct,put the bowl on the stove,20,20,1.0
+libero_goal,1,put the bowl on the stove,null,,7,20,0.35
+libero_goal,1,put the bowl on the stove,wrong_object,put the wine bottle on the rack,0,20,0.0
+libero_goal,2,put the wine bottle on top of the cabinet,correct,put the wine bottle on top of the cabinet,19,20,0.95
+libero_goal,2,put the wine bottle on top of the cabinet,null,,1,20,0.05
+libero_goal,2,put the wine bottle on top of the cabinet,wrong_object,put the bowl on the stove,0,20,0.0
+libero_goal,3,open the top drawer and put the bowl inside,correct,open the top drawer and put the bowl inside,18,20,0.9
+libero_goal,3,open the top drawer and put the bowl inside,null,,2,20,0.1
+libero_goal,3,open the top drawer and put the bowl inside,wrong_object,turn on the stove,0,20,0.0
+libero_goal,4,put the bowl on top of the cabinet,correct,put the bowl on top of the cabinet,20,20,1.0
+libero_goal,4,put the bowl on top of the cabinet,null,,0,20,0.0
+libero_goal,4,put the bowl on top of the cabinet,wrong_object,push the plate to the front of the stove,0,20,0.0
+libero_goal,5,push the plate to the front of the stove,correct,push the plate to the front of the stove,20,20,1.0
+libero_goal,5,push the plate to the front of the stove,null,,0,20,0.0
+libero_goal,5,push the plate to the front of the stove,wrong_object,put the bowl on top of the cabinet,0,20,0.0
+libero_goal,6,put the cream cheese in the bowl,correct,put the cream cheese in the bowl,19,20,0.95
+libero_goal,6,put the cream cheese in the bowl,null,,1,20,0.05
+libero_goal,6,put the cream cheese in the bowl,wrong_object,open the middle drawer of the cabinet,0,20,0.0
+libero_goal,7,turn on the stove,correct,turn on the stove,20,20,1.0
+libero_goal,7,turn on the stove,null,,3,20,0.15
+libero_goal,7,turn on the stove,wrong_object,open the top drawer and put the bowl inside,0,20,0.0
+libero_goal,8,put the bowl on the plate,correct,put the bowl on the plate,20,20,1.0
+libero_goal,8,put the bowl on the plate,null,,10,20,0.5
+libero_goal,8,put the bowl on the plate,wrong_object,put the wine bottle on top of the cabinet,0,20,0.0
+libero_goal,9,put the wine bottle on the rack,correct,put the wine bottle on the rack,20,20,1.0
+libero_goal,9,put the wine bottle on the rack,null,,0,20,0.0
+libero_goal,9,put the wine bottle on the rack,wrong_object,put the bowl on the plate,0,20,0.0

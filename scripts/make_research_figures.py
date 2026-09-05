@@ -778,6 +778,267 @@ def figure_8_action_to_behavior() -> None:
     save(fig, "08_action_to_behavior")
 
 
+def figure_9_prompt_pairs_behavior_heatmap() -> None:
+    """Show the controlled prompt manipulation and its task-level behavioral effect."""
+    stage0 = load_json("artifacts/vla_stage0/20260830-094027/results.json")
+    manifest = load_json("artifacts/vla_arbitration/20260830-192300/arbitration_manifest.json")
+    raw_rows = load_jsonl("artifacts/vla_stage0/20260830-094027/per_episode.jsonl")
+
+    fig = plt.figure(figsize=(18.0, 10.0))
+    gs = fig.add_gridspec(2, 3, width_ratios=[1.42, 1.25, 1.25], hspace=0.46, wspace=0.58)
+    left = gs[:, 0].subgridspec(2, 1, height_ratios=[0.43, 0.57], hspace=0.08)
+    ax_scene = fig.add_subplot(left[0])
+    ax_prompts = fig.add_subplot(left[1])
+    ax_object = fig.add_subplot(gs[0, 1:])
+    ax_goal = fig.add_subplot(gs[1, 1:])
+    claim_title(
+        fig,
+        "Changing only the instruction changed what the robot did",
+        "π0.5 on LIBERO Object and Goal: 1,200 closed-loop rollouts; each heat-map cell is 20 official initial states.",
+    )
+
+    poster = mpimg.imread(ROOT / "media/videos/state-confirmation/poster.png")
+    # Exact scene crop from the preserved task-1 poster; no synthetic illustration.
+    scene = poster[156:457, 22:323]
+    ax_scene.imshow(scene)
+    ax_scene.axis("off")
+    ax_scene.set_title("Controlled stimulus", loc="left", pad=8)
+    panel_label(ax_scene, "a")
+    ax_scene.text(
+        0.0,
+        -0.055,
+        "Same camera image, robot state, and action noise;\nonly the instruction changes.",
+        transform=ax_scene.transAxes,
+        va="top",
+        fontsize=9.5,
+        color=GRAY,
+        style="italic",
+        linespacing=1.35,
+    )
+
+    ax_prompts.axis("off")
+    prompt_blocks = [
+        (
+            0.93,
+            "PAIR 1 — SAME OBJECT SCENE",
+            "\u201cpick up the cream cheese and\nplace it in the basket\u201d\n"
+            "versus\n"
+            "\u201cpick up the tomato sauce and\nplace it in the basket\u201d",
+            "Correct: 20/20 success\nConflict: 0/20 success; tomato sauce first 20/20",
+        ),
+        (
+            0.48,
+            "PAIR 2 — SAME OBJECT SCENE",
+            "\u201cpick up the salad dressing and\nplace it in the basket\u201d\n"
+            "versus\n"
+            "\u201cpick up the ketchup and\nplace it in the basket\u201d",
+            "Correct: 20/20 success\nConflict: 0/20 success; ketchup first 20/20",
+        ),
+    ]
+    for y, heading, prompt_text, outcome in prompt_blocks:
+        ax_prompts.text(0.0, y, heading, fontsize=9.0, weight="bold", color=BLUE, va="top")
+        ax_prompts.text(0.0, y - 0.075, prompt_text, fontsize=9.2, va="top", linespacing=1.24)
+        ax_prompts.text(0.0, y - 0.315, outcome, fontsize=8.7, va="top", color=GRAY, linespacing=1.22)
+    ax_prompts.text(
+        0.0,
+        0.005,
+        "\u201cA conflicting instruction can redirect first contact\neven when the physical scene is unchanged.\u201d",
+        fontsize=10.2,
+        color=ORANGE,
+        weight="bold",
+        va="bottom",
+        linespacing=1.35,
+    )
+
+    condition_order = ["correct", "null", "wrong_object"]
+    condition_labels = ["Correct\ninstruction", "Empty\ninstruction", "Conflicting\ninstruction"]
+    export_rows = []
+    images = []
+    for ax, suite, title in [
+        (ax_object, "libero_object", "LIBERO Object: some tasks persist without the right instruction"),
+        (ax_goal, "libero_goal", "LIBERO Goal: behavior depends strongly on the instruction"),
+    ]:
+        per_task = stage0["suites"][suite]["per_task"]
+        task_ids = list(range(10))
+        values = np.array(
+            [[per_task[str(task_id)][condition]["success"] / per_task[str(task_id)][condition]["n"]
+              for condition in condition_order]
+             for task_id in task_ids]
+        )
+        image = ax.imshow(values, cmap="RdYlGn", vmin=0, vmax=1, aspect="auto")
+        images.append(image)
+        ax.set_xticks(range(3), condition_labels)
+        labels = []
+        for task_id in task_ids:
+            prompt = manifest[suite]["tasks"][str(task_id)]["prompt"]
+            if suite == "libero_object":
+                prompt = prompt.removeprefix("pick up the ").removesuffix(" and place it in the basket")
+            else:
+                goal_labels = [
+                    "open middle drawer",
+                    "bowl → stove",
+                    "wine bottle → cabinet",
+                    "bowl → top drawer",
+                    "bowl → cabinet",
+                    "push plate forward",
+                    "cream cheese → bowl",
+                    "turn on stove",
+                    "bowl → plate",
+                    "wine bottle → rack",
+                ]
+                prompt = goal_labels[task_id]
+            labels.append(f"t{task_id}  {prompt}")
+        ax.set_yticks(task_ids, labels, fontsize=8.7)
+        ax.set_title(title, loc="left", pad=9)
+        ax.set_ylabel("Official LIBERO task")
+        ax.tick_params(length=0)
+        for task_id in task_ids:
+            for j, condition in enumerate(condition_order):
+                rec = per_task[str(task_id)][condition]
+                rate = rec["success"] / rec["n"]
+                ax.text(
+                    j,
+                    task_id,
+                    f"{rec['success']}/{rec['n']}",
+                    ha="center",
+                    va="center",
+                    fontsize=9.0,
+                    weight="bold",
+                    color=WHITE if rate < 0.25 or rate > 0.78 else INK,
+                )
+                matching = [
+                    row for row in raw_rows
+                    if row["suite"] == suite and int(row["task_id"]) == task_id and row["condition"] == condition
+                ]
+                export_rows.append(
+                    {
+                        "suite": suite,
+                        "task_id": task_id,
+                        "task_prompt": manifest[suite]["tasks"][str(task_id)]["prompt"],
+                        "condition": condition,
+                        "condition_prompt": matching[0]["prompt"] if matching else "",
+                        "successes": rec["success"],
+                        "episodes": rec["n"],
+                        "success_rate": rate,
+                    }
+                )
+        totals = [sum(per_task[str(i)][condition]["success"] for i in task_ids) for condition in condition_order]
+        ax.text(
+            1.0,
+            -0.18,
+            "Aggregate: " + "   |   ".join(f"{label.splitlines()[0]} {count}/200" for label, count in zip(condition_labels, totals)),
+            transform=ax.transAxes,
+            ha="right",
+            fontsize=9.0,
+            color=GRAY,
+        )
+        if suite == "libero_object":
+            # These are the two concrete pairs printed at left.
+            for task_id in [1, 2]:
+                ax.add_patch(plt.Rectangle((-0.49, task_id - 0.48), 2.98, 0.96, fill=False, edgecolor=BLUE, lw=1.7))
+        panel_label(ax, "b" if suite == "libero_object" else "c")
+
+    cax = fig.add_axes([0.944, 0.235, 0.012, 0.52])
+    cbar = fig.colorbar(images[-1], cax=cax)
+    cbar.set_label("Simulator task-success rate")
+    fig.text(
+        0.44,
+        0.022,
+        "Under conflicting prompts, the robot touched the named alternative first in 55/200 Object rollouts and 185/200 Goal rollouts. "
+        "The heat map shows success on the scene's original task, not generic motion.",
+        ha="left",
+        fontsize=9.0,
+        color=GRAY,
+    )
+    write_csv("09_prompt_pairs_behavior_heatmap.csv", export_rows)
+    fig.subplots_adjust(top=0.875, left=0.045, right=0.925, bottom=0.105)
+    save(fig, "09_prompt_pairs_behavior_heatmap")
+
+
+def figure_10_closed_loop_visual_comparison() -> None:
+    """Turn the verified four-way rollout capture into a paper-ready example figure."""
+    meta = load_json("media/videos/state-confirmation/meta.json")
+    poster = mpimg.imread(ROOT / "media/videos/state-confirmation/poster.png")
+    panel_by_condition = {panel["condition"]: panel for panel in meta["panels"]}
+    specs = [
+        (
+            "conflict",
+            (22, 323),
+            "Conflicting prompt",
+            "\u201cpick up the tomato sauce\u2026\u201d",
+            "tomato sauce first  •  task failed",
+            "#B33A3A",
+        ),
+        (
+            "correct",
+            (334, 635),
+            "Correct prompt",
+            "\u201cpick up the cream cheese\u2026\u201d",
+            "cream cheese first  •  task complete",
+            TEAL,
+        ),
+        (
+            "state_live",
+            (646, 947),
+            "Late-state repair",
+            "external prompt still names tomato sauce",
+            "cream cheese first  •  task complete",
+            BLUE,
+        ),
+        (
+            "state_early",
+            (958, 1259),
+            "Early-layer control",
+            "same transplant at layers 0–5",
+            "tomato sauce first  •  task failed",
+            ORANGE,
+        ),
+    ]
+
+    fig, axes = plt.subplots(1, 4, figsize=(16.0, 5.5))
+    claim_title(
+        fig,
+        "The same scene: prompt conflict fails, late-state repair succeeds",
+        "π0.5, LIBERO Object task 1, initial state 20; independent closed-loop runs share the registered scene and noise-seed rule.",
+    )
+    exported = []
+    for i, (condition, (x0, x1), title, context, outcome, color) in enumerate(specs):
+        ax = axes[i]
+        ax.imshow(poster[156:457, x0:x1])
+        ax.axis("off")
+        ax.set_title(title, loc="left", pad=8, color=color, fontsize=12.3, weight="bold")
+        ax.text(0, -0.06, context, transform=ax.transAxes, va="top", fontsize=9.2, color=GRAY)
+        ax.text(0, -0.13, outcome, transform=ax.transAxes, va="top", fontsize=9.3, color=color, weight="bold")
+        panel_label(ax, "abcd"[i])
+        saved = panel_by_condition[condition]["saved_record"]
+        exported.append(
+            {
+                "panel": "abcd"[i],
+                "condition": condition,
+                "prompt": saved["prompt"],
+                "donor_layers": panel_by_condition[condition]["donor_layers"],
+                "success": int(bool(saved["success"])),
+                "first_touch_set": saved["first_touch_set"],
+                "correct_target_first_touched": int(bool(saved["correct_target_first_touched"])),
+                "conflict_target_first_touched": int(bool(saved["conflict_target_first_touched"])),
+                "seed": saved["seed"],
+                "reproduction_check": panel_by_condition[condition]["reproduction_check"],
+            }
+        )
+    fig.text(
+        0.5,
+        0.028,
+        "At every replan, the repair copies only all 512 image-position K/V entries from the same-observation correct-prompt donor. "
+        "No donor action or stored trajectory is copied. All four recaptures match the archived outcomes.",
+        ha="center",
+        fontsize=9.0,
+        color=GRAY,
+    )
+    write_csv("10_closed_loop_visual_conditions.csv", exported)
+    fig.subplots_adjust(top=0.80, left=0.045, right=0.98, bottom=0.17, wspace=0.075)
+    save(fig, "10_closed_loop_visual_comparison")
+
+
 def main() -> None:
     OUT.mkdir(exist_ok=True)
     style()
@@ -789,7 +1050,9 @@ def main() -> None:
     figure_6_architecture_boundary()
     figure_7_matched_band_transform()
     figure_8_action_to_behavior()
-    print("Wrote eight claim-first figures and source CSVs to", OUT)
+    figure_9_prompt_pairs_behavior_heatmap()
+    figure_10_closed_loop_visual_comparison()
+    print("Wrote ten claim-first figures and source CSVs to", OUT)
 
 
 if __name__ == "__main__":

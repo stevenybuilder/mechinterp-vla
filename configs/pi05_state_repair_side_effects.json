@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "policy": "lerobot/pi05_libero_finetuned_v044",
+  "revision": "8e174154ef5f6c60a8da12ae99c303d8963138c1",
+  "suite": "libero_object",
+  "base_seed": 2609040,
+  "initial_states": [30, 31, 32, 33, 34],
+  "late_layers": [12, 13, 14, 15, 16, 17],
+  "early_layers": [0, 1, 2, 3, 4, 5],
+  "action_execution_horizon": 10,
+  "tasks": [
+    {"task_id": 1, "conflict_task_id": 5, "wrong_donor_task_id": 0},
+    {"task_id": 2, "conflict_task_id": 4, "wrong_donor_task_id": 1}
+  ],
+  "conditions": [
+    "clean_correct",
+    "preserve_correct",
+    "repair_live",
+    "repair_early",
+    "wrong_donor_live"
+  ]
+}

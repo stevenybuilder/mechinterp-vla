@@ -54,9 +54,22 @@ artifacts/*
 !artifacts/pi05_matched_band_rollout_smoke_2026-09-04_v1/
 !artifacts/pi05_matched_band_rollout_smoke_2026-09-04_v1/episodes.jsonl
 !artifacts/pi05_matched_band_rollout_smoke_2026-09-04_v1/manifest.json
+!artifacts/pi05_state_repair_side_effects_2026-09-04_v1/
+!artifacts/pi05_state_repair_side_effects_2026-09-04_v1/episodes.jsonl
+!artifacts/pi05_state_repair_side_effects_2026-09-04_v1/manifest.json
+!artifacts/pi05_state_repair_side_effects_2026-09-04_v1/summary.json
 !logs/
 logs/*
 !logs/pi05_matched_band_transform_2026-09-04_v1.log
 !logs/pi05_matched_band_rollout_2026-09-04_v1.log
 !logs/pi05_matched_band_rollout_screen_2026-09-04_v1.log
 !logs/pi05_matched_band_rollout_smoke_2026-09-04_v1.log
+!logs/pi05_state_repair_side_effects_2026-09-04_v1.log
+
+# Small, verified presentation media for the canonical closed-loop result.
+!media/
+media/*
+!media/videos/
+media/videos/*
+!media/videos/state-confirmation/
+!media/videos/state-confirmation/*

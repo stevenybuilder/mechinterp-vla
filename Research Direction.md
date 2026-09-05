@@ -20,17 +20,17 @@ The project began with the same concern in a JEPA-style world model: could a lea
 
 ### What conclusions have you reached about this research problem?
 
-π0.5 uses the instruction during multimodal prefill, but the readable copy left at text positions later has little causal control over the tested Goal actions. The instruction's consequence becomes part of broad image-position state. Replacing the entire late state can redirect full closed-loop behavior (`18/20` successes versus `0/20` for the early-layer control), so the handoff is real and behaviorally important. Every completed attempt to compress it into a static direction, small image region, low-rank component, or compact writer failed its stronger causal endpoint. A final within-prompt-pair test isolated a **broad layer-6→8 transformation** that transferred between initial scenes and depended strongly on MLP processing. In a 36-episode simulator screen, that edit changed the first target toward B in `3/12` prompt pairs but completed B in `0/12`; clean B completed `12/12`. The honest conclusion is model-biological: **decodability, local causal leverage, and coherent behavioral control come apart after modalities mix. The first partly transferable computation we found is broad and can redirect an initial choice without installing the new policy.**
+π0.5 uses the instruction during multimodal prefill, but the readable copy left at text positions later has little causal control over the tested Goal actions. The instruction's consequence becomes part of broad image-position state. Replacing the entire late state can redirect full closed-loop behavior (`18/20` successes versus `0/20` for the early-layer control), so the handoff is real and behaviorally important. A preregistered follow-up on ten new task/state units found that the same late repair was powerful but not perfectly clean: `9/10` successes versus `10/10` clean, with one wrong-first-contact episode, one separate failure, and a median paired increase of `15` steps. Every completed attempt to compress the effect into a static direction, small image region, low-rank component, or compact writer failed its stronger causal endpoint. A final within-prompt-pair test isolated a **broad layer-6→8 transformation** that transferred between initial scenes and depended strongly on MLP processing. In a 36-episode simulator screen, that edit changed the first target toward B in `3/12` prompt pairs but completed B in `0/12`; clean B completed `12/12`. The honest conclusion is model-biological: **decodability, local causal leverage, selective intervention, and coherent behavioral control come apart after modalities mix.**
 
 ## The short version
 
 The original hope was that a robot policy would contain a clean internal variable for “which instruction should I follow”—something like the single refusal direction found in language models. The experiments found a messier biology.
 
-In the tested π0.5 policy, language matters when the model first processes the instruction and image together. After that, a readable copy of the instruction remains at the text tokens, but editing that copy barely changes the next action. The instruction's consequence has become embedded in a broad state attached to image positions and the current motor plan. Replacing the full late state can redirect complete rollouts. Compact directions, small token sets, low-rank operators, and compact writers failed. The full instruction-dependent update across layers 6–8 transferred partially between new initial scenes within the same prompt pair, but in the simulator it redirected first contact in only `3/12` pairs and achieved `0/12` task success.
+In the tested π0.5 policy, language matters when the model first processes the instruction and image together. After that, a readable copy of the instruction remains at the text tokens, but editing that copy barely changes the next action. The instruction's consequence has become embedded in a broad state attached to image positions and the current motor plan. Replacing the full late state can redirect complete rollouts, but a new preservation screen found that repaired behavior was not always the same as clean behavior. Compact directions, small token sets, low-rank operators, and compact writers failed. The full instruction-dependent update across layers 6–8 transferred partially between new initial scenes within the same prompt pair, but in the simulator it redirected first contact in only `3/12` pairs and achieved `0/12` task success.
 
 The best research claim is therefore not “we found the instruction circuit.” It is:
 
-> **π0.5 preserves a readable instruction at text positions after those positions become largely redundant for action. Its action-relevant consequence is carried by broad image-associated state. A full layer-6→8 instruction update transfers partly across initial scenes and requires the MLP computation, but it only sometimes redirects initial contact and does not transfer the complete task policy.**
+> **π0.5 preserves a readable instruction at text positions after those positions become largely redundant for action. Its action-relevant consequence is carried by broad image-associated state that can control full rollouts but does not guarantee a clean policy switch. A full layer-6→8 instruction update transfers partly across initial scenes and requires the MLP computation, but it only sometimes redirects initial contact and does not transfer the complete task policy.**
 
 This is useful model biology because it separates three things that are often collapsed: where information entered, where it can be decoded, and where the state controlling behavior currently lives.
 
@@ -40,7 +40,7 @@ This is useful model biology because it separates three things that are often co
 
 **Counting rule:** an experiment family is one separately executed scientific question with its own intervention or analysis target. Seeds, initial states, prompt directions, ablation conditions, and rollouts are repeated units inside an experiment, not separate experiments.
 
-By that rule, **20 computational experiment families produced real measurements**: **19 in the main VLA investigation** and **one earlier world-model feasibility pilot**. This is not “20 successes.” One donor-free run stopped at `250/400` planned rows, one reader result is development-only, and the world-model pilot never reached its intended false-belief test. The substantive CAFT fine-tune is not counted because it never ran. The main completed raw-integrity table contains `71,196` JSONL records, before several earlier behavioral, monitor, and CAFT-screen records. The stopped oversized rollout panel's 12 partial rows and the three-row smoke test are preserved but excluded from that completed-experiment total.
+By that rule, **21 computational experiment families produced real measurements**: **20 in the main VLA investigation** and **one earlier world-model feasibility pilot**. This is not “21 successes.” One donor-free run stopped at `250/400` planned rows, one reader result is development-only, and the world-model pilot never reached its intended false-belief test. The substantive CAFT fine-tune is not counted because it never ran. The main completed raw-integrity table contains `71,246` JSONL records, before several earlier behavioral, monitor, and CAFT-screen records. The stopped oversized rollout panel's 12 partial rows and the three-row smoke test are preserved but excluded from that completed-experiment total.
 
 The overall hypothesis, in plain English, was:
 
@@ -70,6 +70,7 @@ The answer was: **we found where broad causal control moves and one partly reusa
 | 18 | Curvature removal/rescue action test | Does that measured bend materially control the action? | It failed the frozen gate: median action change was `0.0973`, below `0.100`, and only `5/12` directions passed rather than the required `8/12`. | Complete negative follow-up; `artifacts/pi05_curvature_action_2026-09-04_v2/rows.jsonl` |
 | 19 | Matched layer-6→8 transformation | Does the natural three-block instruction update transfer to another initial scene, and is attention alone sufficient? | A full message from another scene moved action `0.2108` along the A→B axis versus `0.0058` for random and beat random in `12/12` cells (`p=0.00049`). Matching full messages reached `0.3400`; matching attention-only reached `0.0402`, and full beat attention-only in `12/12` (`p=0.00049`). | Complete; `artifacts/pi05_matched_band_transform_2026-09-04_v1/rows.jsonl` |
 | 20 | Matched-transform closed-loop breadth screen | Does that action-vector shift change what the simulated robot does? | The edit made B the first target in `3/12` prompt pairs versus `0/12` for clean A, but completed B in `0/12`; clean B completed `12/12`. This is initial redirection, not policy transfer. | Complete exploratory screen; `artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/episodes.jsonl` |
+| 21 | Broad-repair side-effect screen | Does the successful late state transplant reproduce ordinary correct behavior without collateral contacts or inefficiency? | Live repair succeeded `9/10` versus clean `10/10`, with one wrong-first contact, one separate failure, no non-target grasps, and a median paired increase of `15` steps. Correct→correct transplantation was exactly inert; early and wrong-donor controls succeeded `0/10`. | Complete small preservation screen; `artifacts/pi05_state_repair_side_effects_2026-09-04_v1/episodes.jsonl` |
 
 The substantive CAFT fine-tune is deliberately **not** added to this count because it was cancelled before it ran. Instrumentation checks are also not scientific experiments.
 
@@ -97,9 +98,9 @@ Plain English: the written order is still legible, but the machine is no longer 
 
 ### 2. Broad image-associated state can control the robot's decision
 
-Replacing image-position K/V across late layers 12–17 moved the immediate action strongly toward the donor instruction (`R=0.8321`). Repeating the same intervention at every replan repaired `18/20` conflicted rollouts, while an equally broad early-layer control repaired `0/20`.
+Replacing image-position K/V across late layers 12–17 moved the immediate action strongly toward the donor instruction (`R=0.8321`). Repeating the same intervention at every replan repaired `18/20` conflicted rollouts, while an equally broad early-layer control repaired `0/20`. On ten new task/state units, late repair succeeded `9/10`, but one successful run touched the wrong object first, a different run failed, and repaired episodes took a median `15` more steps than their paired clean controls.
 
-Plain English: the instruction's effect becomes part of a live scene-and-motor representation. Changing that representation can make the robot choose and complete the other task.
+Plain English: the instruction's effect becomes part of a live scene-and-motor representation. Changing that representation can make the robot choose and complete the other task, but the broad transplant does not always reproduce the clean trajectory.
 
 ### 3. The useful state is not a small object patch or a reusable linear command
 
@@ -216,6 +217,10 @@ This established that the instruction is genuinely used during prefill. It corre
 
 The live state-conditioned repair computed a correct-prompt donor on the same current observation at every replan, then inserted only late image K/V into the conflicted run. It recovered `18/20` task successes, while the early-layer control recovered `0/20`.
 
+![The same registered scene under the conflict, correct prompt, late repair, and early-layer control](figures/10_closed_loop_visual_comparison.png)
+
+These are real simulator recaptures of Object task 1, initial state 20. The conflicting tomato-sauce prompt failed; the clean cream-cheese prompt succeeded; and the late L12–17 repair made the robot touch cream cheese and succeed despite the external tomato-sauce prompt. The early L0–5 control still touched tomato sauce and failed. All four outcomes match the archived records. The full synchronized animation is available as [GIF](media/videos/state-confirmation/combined.gif), [MP4](media/videos/state-confirmation/combined.mp4), and [WebM](media/videos/state-confirmation/combined.webm). It illustrates the original canonical confirmation, not the newer side-effect screen, which did not record video.
+
 This was the strongest positive result, but also exposed the main limitation: all 512 image positions across six layers were replaced. That is causal leverage over a state, not an isolated instruction feature.
 
 ### Phase 5: try to compress the state
@@ -243,6 +248,10 @@ Clamping the image-position MLP outputs in layers 6, 7, and 8 to their clean-A v
 The first rollout plan—five conditions, 12 prompt pairs, and five initial states—would have required 300 episodes and roughly two hours. That was excessive for the first question, so it was stopped after 12 preserved rows and replaced by a frozen breadth screen: one untouched initial state for all 12 pairs under clean A, clean B, and the full edit.
 
 The edit made B the first contacted target in `3/12` pairs, compared with `0/12` under clean A. But it completed B in `0/12`, while clean B completed `12/12`. This resolves the ambiguity in the immediate-action result: the transformation has real but incomplete behavioral leverage. It can sometimes redirect the beginning of a trajectory without generating the sequence of state-dependent decisions required to finish the task.
+
+### Phase 10: test whether the successful broad repair has side effects
+
+The earlier `18/20` late-state repair established behavioral control, but success alone could hide detours or collateral contacts. A frozen 50-episode panel compared ten paired clean and late-repaired rollouts while adding exact correct→correct preservation, early-layer, and wrong-donor controls. Late repair succeeded `9/10`; one successful rollout touched the wrong object first, another rollout failed, and repaired episodes were longer in `8/10` pairs. The result preserves the causal claim while rejecting the stronger idea that the broad transplant is an ordinary, selective policy switch.
 
 ## Why VLAs rather than another LLM project
 
@@ -388,6 +397,10 @@ The most important stimulus was not a natural-language dataset split; it was a c
 
 This design makes the instruction the only changing input within a cell. It does not by itself establish broad semantic generalization: most experiments changed instructions within a small set of LIBERO task templates.
 
+![Example paired prompts and the initial behavioral heat map](figures/09_prompt_pairs_behavior_heatmap.png)
+
+The heat map reports the original 1,200-rollout behavioral screen. Each cell is one official task across 20 initial states; the quoted cream-cheese/tomato-sauce and salad-dressing/ketchup pairs are the two later closed-loop repair tasks.
+
 ## Methodology
 
 ### 1. Behavioral assay
@@ -430,7 +443,11 @@ We interpolated between A/B states around layers 6–8, measured deviation of th
 
 We held the 512-position image field at layer 5 fixed to the A state, ran the layer-6→8 band under A and B, and inserted the resulting B-minus-A layer-8 update into a common clean-A host. The cross-scene arm used the next initial state's update and rescaled it to the matching update's Frobenius norm. The attention-only arm reran the band while clamping the image-position MLP output at each of layers 6–8 to clean A. This compares the natural full block computation with scene mismatch, attention-only, and equal-norm random controls without searching layers or doses.
 
-### 11. Evaluation discipline
+### 11. Broad-repair preservation screen
+
+We reran the successful late L12–17 transplant on new Object initial states and recorded contact order, non-target grasps, distinct objects touched, episode length, and end-effector path length. A correct-prompt host with a separately computed identical correct-prompt donor tested bitwise preservation; early-layer and valid wrong-object donors tested site and donor specificity.
+
+### 12. Evaluation discipline
 
 The project used discovery/development/confirmation splits where feasible, frozen gates, bidirectional A↔B tests, both distances to clean endpoints, exact identity checks, count- or norm-matched controls, prompt-length warnings, and stopping rules that kept protected confirmation closed after failed gates.
 
@@ -453,6 +470,7 @@ The project used discovery/development/confirmation splits where feasible, froze
 | Writer band | Fixed layers 6–8 versus layers 14–16 control | Does the sharp transition profile identify a decisive writer band? |
 | Nonlinearity | Endpoint identities, midpoint curvature, curvature removal/action rescue | Is non-affine geometry causally important to action? |
 | Matched block transformation | Matching versus next-scene full update; MLP-clamped attention-only update; norm-matched random | Does the natural L6→8 computation transfer, and does within-token MLP processing matter? |
+| Broad-repair preservation | Correct→correct identity, early band, wrong donor, paired clean trajectories | Does the successful broad edit preserve contact order and efficiency rather than merely reach the goal? |
 | Cross-architecture | OpenVLA persistent image/instruction/both K/V plus residual controls | Is the π0.5 handoff architecture-general? |
 | Monitoring | Random-fold development versus held-out instruction and held-out scene | Does an activation monitor generalize beyond the situations that made it look good? |
 
@@ -471,6 +489,7 @@ This is the compact map. The exact definitions, hashes, and caveats are in [`num
 | Attention mismatch | text/image `11.41×` per token; image/text `4.99×` in total | same |
 | Prefill handoff | 1,350 rows; all-image restore `D_dst=0.10498`; random subset `0.99843` | `artifacts/pi05_prefill_mediation_2026-08-31/rows.jsonl` |
 | Closed-loop repair | live late repair `18/20`; early control `0/20`; conflict `0/20` | `artifacts/pi05_instruction_repair_2026-08-31/state_confirm/episodes.jsonl` |
+| Repair side effects | late repair `9/10` vs clean `10/10`; wrong-first `1/10` vs `0/10`; no non-target grasps; median paired step increase `15`; exact preserve `10/10` | `artifacts/pi05_state_repair_side_effects_2026-09-04_v1/episodes.jsonl` |
 | Mediation reset | broad carrier B-like `10/12`; reset `0/12`; dead/random `0/12` | `artifacts/pi05_mediation_2026-08-31/run2/rows.jsonl` |
 | Position dose | 256 positions `D_B=0.92599`; all 512 `0.25636` | `artifacts/pi05_mediation_2026-08-31/dose1/rows.jsonl` |
 | Sonar-lite | fit beats wrong `12/12`; joint target landings `0/12` | `artifacts/pi05_sonar_lite_source_mediator_v1/` |
@@ -557,7 +576,8 @@ The most defensible contribution is the combined empirical chain in this particu
 5. direct instruction→image communication across the prefix is necessary, while the exact writer remains unresolved;
 6. a full layer-6→8 instruction-induced update transfers between initial scenes within a prompt pair, while clamping the three image-position MLP outputs removes most of its causal effect;
 7. that edit sometimes changes the first target (`3/12`) but does not complete the new task (`0/12`), separating local steering from policy transfer;
-8. a second architecture shows the opposite direct-route balance.
+8. the stronger whole-state transplant usually repairs the task but can still alter contact order, fail, or lengthen the trajectory, separating behavioral success from selective control;
+9. a second architecture shows the opposite direct-route balance.
 
 That is more specific than a generic layer map. It is evidence that **monitor location, causal state, compact representation, and transferable computation can come apart inside an embodied policy**. The negative compression ladder plus the positive full-transformation ablation is arguably the distinctive part.
 
@@ -567,13 +587,13 @@ The novelty remains bounded because the new transformation still spans all 512 i
 
 1. **One primary checkpoint.** Most causal depth comes from one π0.5 LIBERO-fine-tuned revision. OpenVLA-OFT is a boundary condition, not a matched replication.
 2. **Narrow task language.** LIBERO uses templated commands and a small set of manipulation tasks. This is not evidence about open-ended language understanding.
-3. **Broad donor intervention.** The successful `18/20` repair copies all 512 image positions across six layers from a correct-prompt computation on the same observation.
+3. **Broad donor intervention.** The successful `18/20` repair copies all 512 image positions across six layers from a correct-prompt computation on the same observation. A ten-unit side-effect screen found `9/10` success, one wrong-first contact, one separate failure, and longer episodes in `8/10`; this is informative but too small to estimate rare harms.
 4. **Incomplete portability test.** The donor-free run stopped at 250/400 rows; only three held-out edges completed.
 5. **Reader not fully confirmed.** The 8-edge reader passed development initial states, but the original held-out prompt-pair panel was invalid and the corrected panel was never run.
 6. **Writer only partly resolved.** The full layers-6–8 update is causal and the MLP ablation is strong, but this does not identify which MLP features, attention heads, or interactions compute the transferable component.
 7. **Synthetic nonlinear path.** Midpoint interpolation may traverse states the model never naturally visits. Curvature there need not describe the natural activation manifold.
 8. **Behavioral coverage.** The strong full-state repair measured two Object tasks. The layer-6→8 Goal breadth screen covered 12 directed pairs but only one initial state per pair, omitted random and attention-only rollout controls, and achieved no task-B successes.
-9. **No clean collateral-damage suite.** We observed downstream failure in the static-vector pilot but did not run a broad unrelated-task preservation battery for every intervention.
+9. **Narrow collateral-damage coverage.** The final preservation screen measured contacts, grasps, path length, and success on two Object tasks, but it was only ten paired units and did not test unrelated tasks, layouts, or collision classes.
 10. **Archive boundary.** Large activation intermediates and unrelated safety/robotics branches are excluded, though raw rows, analyzers, manifests, and runtime snapshots for the core claims are retained.
 11. **Restricted transformation generalization.** “Other scene” means a different LIBERO initial state for the same directed instruction pair. It is not held-out task language, a different suite, or another checkpoint.
 
@@ -613,7 +633,7 @@ Use causal scrubbing or path patching with natural source states to test whether
 
 ### 5. Measure collateral damage explicitly
 
-For any successful intervention, predeclare a preservation suite: already-correct tasks, unrelated objects, different layouts, action smoothness, collision rate, first touch, and complete success. Physical control that improves one benchmark while degrading neighboring behavior is not selective understanding.
+The ten-unit screen established the measurement pattern and found two direct deviations from clean behavior, but it is not a broad safety battery. Expand it prospectively to already-correct unrelated tasks, different layouts, action smoothness, collision rate, first touch, and complete success. Physical control that improves one benchmark while degrading neighboring behavior is not selective understanding.
 
 ### 6. Compare training regimes, not just architectures
 
@@ -645,7 +665,7 @@ That standard is harder than making a good activation plot. It is also the stand
 
 ## Current honest conclusion
 
-The results are bad for the original compact-direction hypothesis and informative for a transformation-level model-biology story. We found a causal handoff, a behaviorally powerful downstream state, and a broad layer-6→8 instruction update that transfers across initial scenes within a prompt pair. The MLP-clamp ablation shows that attention-only routing explains little of its immediate-action effect. The rollout screen then showed the limit: `3/12` initial target redirections but `0/12` task completions. We did not find a compact, donor-free representation or complete writer-reader circuit.
+The results are bad for the original compact-direction hypothesis and informative for a transformation-level model-biology story. We found a causal handoff, a behaviorally powerful downstream state, and a broad layer-6→8 instruction update that transfers across initial scenes within a prompt pair. The MLP-clamp ablation shows that attention-only routing explains little of its immediate-action effect. The rollout screen then showed one limit: `3/12` initial target redirections but `0/12` task completions. The side-effect screen showed another: even the stronger whole-state repair produced `9/10` successes rather than clean `10/10`, with one wrong-first contact and generally longer trajectories. We did not find a compact, donor-free representation or complete writer-reader circuit.
 
 For a MATS application, this remains high-end borderline rather than a clean accept. The final experiments distinguish cross-scene transfer, attention routing, MLP transformation, immediate action, first contact, and complete task success with frozen tests. But the central positive object is broad and paired-run-derived; its closed-loop effect is incomplete and not confirmed on new prompt semantics. The application should lead with the surprising mechanistic update—**a locally effective linear displacement can redirect the start of behavior without transferring the policy**—and state the `0/12` success result without euphemism.
 
@@ -663,6 +683,7 @@ For a MATS application, this remains high-end borderline rather than a clean acc
 - Writer-band and nonlinear follow-ups: [`docs/FINDINGS-pi05-writer-band-and-nonlinear-followups-2026-09-04.md`](docs/FINDINGS-pi05-writer-band-and-nonlinear-followups-2026-09-04.md)
 - Matched layer-6→8 transformation: [`docs/FINDINGS-pi05-matched-layer6-8-transform-2026-09-04.md`](docs/FINDINGS-pi05-matched-layer6-8-transform-2026-09-04.md)
 - Matched-transform rollout screen: [`docs/FINDINGS-pi05-matched-layer6-8-closed-loop-2026-09-04.md`](docs/FINDINGS-pi05-matched-layer6-8-closed-loop-2026-09-04.md)
+- Broad-repair side-effect screen: [`docs/FINDINGS-pi05-state-repair-side-effects-2026-09-04.md`](docs/FINDINGS-pi05-state-repair-side-effects-2026-09-04.md)
 - Donor-free pause record: [`docs/PAUSE-pi05-donor-free-low-rank-repair-2026-09-04.md`](docs/PAUSE-pi05-donor-free-low-rank-repair-2026-09-04.md)
 - Figure suite: [`figures/README.md`](figures/README.md)
 

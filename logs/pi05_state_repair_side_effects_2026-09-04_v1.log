@@ -1,0 +1,280 @@
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+WARNING:robosuite_logs:No private macro file found!
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+WARNING:robosuite_logs:It is recommended to use a private macro file
+[robosuite WARNING] To setup, run: python /opt/conda/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+WARNING:robosuite_logs:To setup, run: python /opt/conda/lib/python3.11/site-packages/robosuite/scripts/setup_macros.py
+WARNING:root:Vision embedding key might need handling: model.paligemma_with_expert.paligemma.model.vision_tower.vision_model.embeddings.patch_embedding.bias
+WARNING:root:Vision embedding key might need handling: model.paligemma_with_expert.paligemma.model.vision_tower.vision_model.embeddings.patch_embedding.weight
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+The PI05 model is a direct port of the OpenPI implementation. 
+This implementation follows the original OpenPI structure for compatibility. 
+Original implementation: https://github.com/Physical-Intelligence/openpi
+Loading model from: lerobot/pi05_libero_finetuned_v044
+✓ Loaded state dict from model.safetensors
+Warning: Could not remap state dict keys: Error(s) in loading state_dict for PI05Policy:
+	Missing key(s) in state_dict: "model.paligemma_with_expert.paligemma.model.language_model.embed_tokens.weight". 
+Local assets not found. Downloading from HuggingFace Hub...
+Assets already downloaded at /root/.cache/libero/assets
+[side-effects] task=1 init=30 condition=clean_correct success=1 correct_first=1 wrong_first=0 steps=139 wall=8.4s
+[side-effects] task=1 init=30 condition=preserve_correct success=1 correct_first=1 wrong_first=0 steps=139 wall=9.2s
+[side-effects] task=1 init=30 condition=repair_live success=1 correct_first=1 wrong_first=0 steps=131 wall=9.0s
+[side-effects] task=1 init=30 condition=repair_early success=0 correct_first=0 wrong_first=1 steps=280 wall=17.0s
+[side-effects] task=1 init=30 condition=wrong_donor_live success=0 correct_first=0 wrong_first=1 steps=280 wall=16.6s
+[side-effects] task=1 init=31 condition=clean_correct success=1 correct_first=1 wrong_first=0 steps=200 wall=10.5s
+[side-effects] task=1 init=31 condition=preserve_correct success=1 correct_first=1 wrong_first=0 steps=200 wall=12.7s
+[side-effects] task=1 init=31 condition=repair_live success=1 correct_first=1 wrong_first=0 steps=184 wall=11.8s
+[side-effects] task=1 init=31 condition=repair_early success=0 correct_first=0 wrong_first=1 steps=280 wall=17.9s
+[side-effects] task=1 init=31 condition=wrong_donor_live success=0 correct_first=0 wrong_first=1 steps=280 wall=17.0s
+[side-effects] task=1 init=32 condition=clean_correct success=1 correct_first=1 wrong_first=0 steps=119 wall=7.1s
+[side-effects] task=1 init=32 condition=preserve_correct success=1 correct_first=1 wrong_first=0 steps=119 wall=8.2s
+[side-effects] task=1 init=32 condition=repair_live success=1 correct_first=1 wrong_first=0 steps=124 wall=8.7s
+[side-effects] task=1 init=32 condition=repair_early success=0 correct_first=0 wrong_first=1 steps=280 wall=18.3s
+[side-effects] task=1 init=32 condition=wrong_donor_live success=0 correct_first=0 wrong_first=1 steps=280 wall=18.3s
+[side-effects] task=1 init=33 condition=clean_correct success=1 correct_first=1 wrong_first=0 steps=117 wall=7.2s
+[side-effects] task=1 init=33 condition=preserve_correct success=1 correct_first=1 wrong_first=0 steps=117 wall=8.3s
+[side-effects] task=1 init=33 condition=repair_live success=1 correct_first=1 wrong_first=0 steps=121 wall=10.1s
+[side-effects] task=1 init=33 condition=repair_early success=0 correct_first=0 wrong_first=1 steps=280 wall=19.1s
+[side-effects] task=1 init=33 condition=wrong_donor_live success=0 correct_first=0 wrong_first=1 steps=280 wall=19.0s
+[side-effects] task=1 init=34 condition=clean_correct success=1 correct_first=1 wrong_first=0 steps=125 wall=7.9s
+[side-effects] task=1 init=34 condition=preserve_correct success=1 correct_first=1 wrong_first=0 steps=125 wall=9.3s
+[side-effects] task=1 init=34 condition=repair_live success=1 correct_first=0 wrong_first=1 steps=155 wall=11.1s
+[side-effects] task=1 init=34 condition=repair_early success=0 correct_first=0 wrong_first=1 steps=280 wall=19.0s
+[side-effects] task=1 init=34 condition=wrong_donor_live success=0 correct_first=0 wrong_first=1 steps=280 wall=18.4s
+[side-effects] task=2 init=30 condition=clean_correct success=1 correct_first=1 wrong_first=0 steps=120 wall=7.7s
+[side-effects] task=2 init=30 condition=preserve_correct success=1 correct_first=1 wrong_first=0 steps=120 wall=9.0s
+[side-effects] task=2 init=30 condition=repair_live success=1 correct_first=1 wrong_first=0 steps=156 wall=11.5s
+[side-effects] task=2 init=30 condition=repair_early success=0 correct_first=0 wrong_first=1 steps=280 wall=18.8s
+[side-effects] task=2 init=30 condition=wrong_donor_live success=0 correct_first=1 wrong_first=0 steps=280 wall=18.9s
+[side-effects] task=2 init=31 condition=clean_correct success=1 correct_first=1 wrong_first=0 steps=116 wall=7.5s
+[side-effects] task=2 init=31 condition=preserve_correct success=1 correct_first=1 wrong_first=0 steps=116 wall=8.9s
+[side-effects] task=2 init=31 condition=repair_live success=1 correct_first=1 wrong_first=0 steps=170 wall=12.1s
+[side-effects] task=2 init=31 condition=repair_early success=0 correct_first=0 wrong_first=1 steps=280 wall=19.1s
+[side-effects] task=2 init=31 condition=wrong_donor_live success=0 correct_first=1 wrong_first=0 steps=280 wall=18.9s
+[side-effects] task=2 init=32 condition=clean_correct success=1 correct_first=1 wrong_first=0 steps=118 wall=7.4s
+[side-effects] task=2 init=32 condition=preserve_correct success=1 correct_first=1 wrong_first=0 steps=118 wall=8.8s
+[side-effects] task=2 init=32 condition=repair_live success=0 correct_first=1 wrong_first=0 steps=280 wall=18.8s
+[side-effects] task=2 init=32 condition=repair_early success=0 correct_first=0 wrong_first=1 steps=280 wall=19.1s
+[side-effects] task=2 init=32 condition=wrong_donor_live success=0 correct_first=1 wrong_first=0 steps=280 wall=18.8s
+[side-effects] task=2 init=33 condition=clean_correct success=1 correct_first=1 wrong_first=0 steps=111 wall=7.5s
+[side-effects] task=2 init=33 condition=preserve_correct success=1 correct_first=1 wrong_first=0 steps=111 wall=8.9s
+[side-effects] task=2 init=33 condition=repair_live success=1 correct_first=1 wrong_first=0 steps=129 wall=9.5s
+[side-effects] task=2 init=33 condition=repair_early success=0 correct_first=0 wrong_first=1 steps=280 wall=19.2s
+[side-effects] task=2 init=33 condition=wrong_donor_live success=0 correct_first=1 wrong_first=0 steps=280 wall=19.5s
+[side-effects] task=2 init=34 condition=clean_correct success=1 correct_first=1 wrong_first=0 steps=117 wall=7.7s
+[side-effects] task=2 init=34 condition=preserve_correct success=1 correct_first=1 wrong_first=0 steps=117 wall=9.0s
+[side-effects] task=2 init=34 condition=repair_live success=1 correct_first=1 wrong_first=0 steps=129 wall=9.5s
+[side-effects] task=2 init=34 condition=repair_early success=0 correct_first=0 wrong_first=1 steps=280 wall=18.9s
+[side-effects] task=2 init=34 condition=wrong_donor_live success=0 correct_first=1 wrong_first=0 steps=280 wall=19.0s
+{
+  "counts": {
+    "clean_correct": {
+      "any_non_target_grasp": 0,
+      "correct_target_first_touched": 10,
+      "median_eef_path_length": 1.0092861447161052,
+      "median_n_non_target_touched": 0.0,
+      "median_steps": 118.5,
+      "n": 10,
+      "non_target_first_touched": 0,
+      "success": 10
+    },
+    "preserve_correct": {
+      "any_non_target_grasp": 0,
+      "correct_target_first_touched": 10,
+      "median_eef_path_length": 1.0092861447161052,
+      "median_n_non_target_touched": 0.0,
+      "median_steps": 118.5,
+      "n": 10,
+      "non_target_first_touched": 0,
+      "success": 10
+    },
+    "repair_early": {
+      "any_non_target_grasp": 8,
+      "correct_target_first_touched": 0,
+      "median_eef_path_length": 1.2970386146793427,
+      "median_n_non_target_touched": 1.0,
+      "median_steps": 280.0,
+      "n": 10,
+      "non_target_first_touched": 10,
+      "success": 0
+    },
+    "repair_live": {
+      "any_non_target_grasp": 0,
+      "correct_target_first_touched": 9,
+      "median_eef_path_length": 1.026396615325206,
+      "median_n_non_target_touched": 0.0,
+      "median_steps": 143.0,
+      "n": 10,
+      "non_target_first_touched": 1,
+      "success": 9
+    },
+    "wrong_donor_live": {
+      "any_non_target_grasp": 7,
+      "correct_target_first_touched": 5,
+      "median_eef_path_length": 1.2873747450945452,
+      "median_n_non_target_touched": 1.0,
+      "median_steps": 280.0,
+      "n": 10,
+      "non_target_first_touched": 5,
+      "success": 0
+    }
+  },
+  "independent_units": 10,
+  "paired_repair_live_vs_clean_correct": {
+    "any_non_target_grasp": {
+      "exact_mcnemar": {
+        "discordant": 0,
+        "negative": 0,
+        "p_two_sided": 1.0,
+        "positive": 0
+      },
+      "repair_live_minus_clean_correct": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "correct_target_first_touched": {
+      "exact_mcnemar": {
+        "discordant": 1,
+        "negative": 1,
+        "p_two_sided": 1.0,
+        "positive": 0
+      },
+      "repair_live_minus_clean_correct": [
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "non_target_first_touched": {
+      "exact_mcnemar": {
+        "discordant": 1,
+        "negative": 0,
+        "p_two_sided": 1.0,
+        "positive": 1
+      },
+      "repair_live_minus_clean_correct": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "success": {
+      "exact_mcnemar": {
+        "discordant": 1,
+        "negative": 1,
+        "p_two_sided": 1.0,
+        "positive": 0
+      },
+      "repair_live_minus_clean_correct": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "preserve_all_exact": true,
+  "preserve_correct": [
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 30,
+      "outcomes_equal": true,
+      "task_id": 1
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 31,
+      "outcomes_equal": true,
+      "task_id": 1
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 32,
+      "outcomes_equal": true,
+      "task_id": 1
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 33,
+      "outcomes_equal": true,
+      "task_id": 1
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 34,
+      "outcomes_equal": true,
+      "task_id": 1
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 30,
+      "outcomes_equal": true,
+      "task_id": 2
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 31,
+      "outcomes_equal": true,
+      "task_id": 2
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 32,
+      "outcomes_equal": true,
+      "task_id": 2
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 33,
+      "outcomes_equal": true,
+      "task_id": 2
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 34,
+      "outcomes_equal": true,
+      "task_id": 2
+    }
+  ],
+  "rows": 50,
+  "schema_version": 1
+}

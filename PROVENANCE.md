@@ -8,7 +8,7 @@
 
 The earlier local-evidence gap is closed for the records needed to substantiate the MATS model-biology narrative. The MATS archive now contains the previously missing 60,000 raw Stage-2 localization rows, early negative-result artifacts, raw Stage-1 records, historical runtime logs, and snapshots of the exact 4090 and OpenVLA-OFT runtime code trees that accompanied those runs.
 
-The 2026-09-04 MATS-only follow-ups are also local: attention writer/reader development, the fixed layers-6–8 writer-band confirmation, the lean midpoint-curvature diagnostic, the curvature action follow-up, the 420-row matched layer-6→8 transformation experiment, and its 36-episode closed-loop breadth screen. The transformation transfers across initial scenes within known prompt pairs and the full attention-plus-MLP update is much stronger than the attention-only version. In the simulator it produced `3/12` B-first contacts but `0/12` task-B successes. `numbers audit.md` and `artifacts/numbers-audit-derived.json` consolidate the checked claims and correct earlier overstatements about repeated writing, reader confirmation, universal scene specificity, and action-vector movement as behavioral repair.
+The 2026-09-04 MATS-only follow-ups are also local: attention writer/reader development, the fixed layers-6–8 writer-band confirmation, the lean midpoint-curvature diagnostic, the curvature action follow-up, the 420-row matched layer-6→8 transformation experiment, its 36-episode closed-loop breadth screen, and the 50-episode broad-repair side-effect screen. The transformation transfers across initial scenes within known prompt pairs and the full attention-plus-MLP update is much stronger than the attention-only version. In the simulator it produced `3/12` B-first contacts but `0/12` task-B successes. The broad late repair separately produced `9/10` successes against clean `10/10`, with one wrong-first contact and one separate failure. `numbers audit.md` and `artifacts/numbers-audit-derived.json` consolidate the checked claims and correct earlier overstatements about repeated writing, reader confirmation, universal scene specificity, action-vector movement as behavioral repair, and task success as clean preservation.
 
 The copy was additive and non-destructive. Existing MATS files were never replaced. The source robotics project was not modified.
 
@@ -93,11 +93,24 @@ Before examining the remaining prompt pairs, `docs/ADDENDUM-pi05-matched-layer6-
 
 The complete table has 36 unique rows. The audit reproduces all stored counts and median episode lengths exactly and verifies nonzero message norms in every edited replan. The edit produced B-first contact in `3/12` pairs and task-B success in `0/12`; clean B produced `9/12` and `12/12`. The 12-row stopped panel and three-row smoke test are retained in their separately named artifact directories and excluded from the complete-screen count.
 
+## Broad-repair side-effect screen
+
+This 50-episode panel was preregistered and executed only under the MATS project. Its primary provenance is:
+
+- preregistration: `docs/PREREG-pi05-state-repair-side-effects-2026-09-04.md`;
+- frozen configuration: `configs/pi05_state_repair_side_effects.json`;
+- implementation and test: `scripts/vla/pi05_state_repair_side_effects.py` and `tests/test_pi05_state_repair_side_effects.py`;
+- raw results: `artifacts/pi05_state_repair_side_effects_2026-09-04_v1/`;
+- runtime log: `logs/pi05_state_repair_side_effects_2026-09-04_v1.log`;
+- canonical interpretation: `docs/FINDINGS-pi05-state-repair-side-effects-2026-09-04.md`.
+
+The table contains 50 unique rows: two Object tasks × five new initial states × five conditions. Remote and local hashes matched after transfer. The independent audit reproduced all stored counts and medians, verified the absence of duplicate keys, and confirmed exact action hashes and outcomes for all ten clean correct→correct preservation pairs. Live late repair succeeded `9/10`; clean succeeded `10/10`; early and wrong-donor controls succeeded `0/10`.
+
 ## Derived audit, synthesis, and figures
 
 `scripts/audit_research_numbers.py` independently parses the primary raw tables, checks row counts and hashes, and recomputes the headline values in `artifacts/numbers-audit-derived.json`. The human-readable audit is `numbers audit.md`; `Research Direction.md` is the consolidated narrative based on that ledger.
 
-`scripts/make_research_figures.py` reads the preserved raw JSONL records, canonical Stage-2 `results.json`, and the derived audit JSON. It creates eight current claim-first figures under `figures/`, with 17 adjacent current source CSVs and both PNG and PDF output. The earlier seven-figure set remains present but is explicitly marked superseded in `figures/README.md`. The current figures were visually inspected after generation. These files summarize existing evidence and do not create new experimental claims.
+`scripts/make_research_figures.py` reads the preserved raw JSONL records, canonical Stage-2 `results.json`, the derived audit JSON, and verified video metadata. It creates ten current claim-first figures under `figures/`, with 19 adjacent current source CSVs and both PNG and PDF output. The tenth figure uses real frames from a canonical state-confirmation recapture whose four outcomes match the archived records. The earlier seven-figure set remains present but is explicitly marked superseded in `figures/README.md`. The current figures were visually inspected after generation. These files summarize existing evidence and do not create new experimental claims.
 
 ## Deliberately excluded
 
@@ -113,7 +126,7 @@ Those remain part of the separate robotics-performance project and must not be u
 
 ## Integrity inventory
 
-`PROVENANCE-SHA256SUMS` is the unified archive inventory. The 2026-09-04 release inventory contains 988 entries. It hashes every regular file in the curated project except itself, temporary files, macOS metadata, Python bytecode, cache directories, and `tmp/`. It supplements rather than rewrites the older frozen checksum receipts, some of which use historical absolute or source-root paths.
+`PROVENANCE-SHA256SUMS` is the unified archive inventory. The 2026-09-04 release inventory contains 1,011 entries. It hashes every regular file in the curated project except itself, temporary files, macOS metadata, Python bytecode, cache directories, and `tmp/`. It supplements rather than rewrites the older frozen checksum receipts, some of which use historical absolute or source-root paths.
 
 To verify from the archive root:
 

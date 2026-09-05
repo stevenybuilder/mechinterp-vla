@@ -1,0 +1,5 @@
+panel,condition,prompt,donor_layers,success,first_touch_set,correct_target_first_touched,conflict_target_first_touched,seed,reproduction_check
+a,conflict,pick up the tomato sauce and place it in the basket,,0,['tomato_sauce_1'],0,1,20380831,MATCHES
+b,correct,pick up the cream cheese and place it in the basket,,1,['cream_cheese_1'],1,0,20380831,MATCHES
+c,state_live,pick up the tomato sauce and place it in the basket,"[12, 13, 14, 15, 16, 17]",1,['cream_cheese_1'],1,0,20380831,MATCHES
+d,state_early,pick up the tomato sauce and place it in the basket,"[0, 1, 2, 3, 4, 5]",0,['tomato_sauce_1'],0,1,20380831,MATCHES

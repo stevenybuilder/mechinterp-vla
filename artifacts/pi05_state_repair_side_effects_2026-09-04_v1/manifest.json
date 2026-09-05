@@ -1,0 +1,63 @@
+{
+  "config": {
+    "action_execution_horizon": 10,
+    "base_seed": 2609040,
+    "conditions": [
+      "clean_correct",
+      "preserve_correct",
+      "repair_live",
+      "repair_early",
+      "wrong_donor_live"
+    ],
+    "early_layers": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "initial_states": [
+      30,
+      31,
+      32,
+      33,
+      34
+    ],
+    "late_layers": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "policy": "lerobot/pi05_libero_finetuned_v044",
+    "revision": "8e174154ef5f6c60a8da12ae99c303d8963138c1",
+    "schema_version": 1,
+    "suite": "libero_object",
+    "tasks": [
+      {
+        "conflict_task_id": 5,
+        "task_id": 1,
+        "wrong_donor_task_id": 0
+      },
+      {
+        "conflict_task_id": 4,
+        "task_id": 2,
+        "wrong_donor_task_id": 1
+      }
+    ]
+  },
+  "files": {
+    "/root/mats-mech-interp/configs/pi05_state_repair_side_effects.json": "5fa856995a1010865546a230859535bba84e48d06b6123eb1180a6539d4f9d0c",
+    "/root/mats-mech-interp/docs/PREREG-pi05-state-repair-side-effects-2026-09-04.md": "7592421f5027ed92dba83923515fdea23bc3a76494e19158cbd2a583fbd39442",
+    "/root/mats-mech-interp/scripts/vla/hooks.py": "6ea353dbf62873e0ef05c3a2abe9eb6aebb4043314820ceb3047e0d672a7da16",
+    "/root/mats-mech-interp/scripts/vla/pi05_state_repair_side_effects.py": "92aa10a05ba96d1a58d88bdec7a0f9577535aa8331988ab8e7401cf8b07e28cb",
+    "/root/mats-mech-interp/scripts/vla/run_instruction_repair.py": "2a093ddef0e110e98d434817d7be4466351e37cc7a8057dfd636ee17e9fd4504",
+    "/root/mats-mech-interp/tests/test_pi05_state_repair_side_effects.py": "73470a03a03597e523244216c9e4108bc414ef72265e8b7a8a384bc4a5b7f7ee"
+  },
+  "rows_sha256": "b85348d10557076306c111589070516df3bb0609149dde5cc2dbfb94d6340af2",
+  "schema_version": 1,
+  "summary_sha256": "8dd520b48971b223f80c075695b8ef6fc1b971ba4582c69b6b731006584741c0"
+}

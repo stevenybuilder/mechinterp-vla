@@ -1,0 +1,212 @@
+{
+  "counts": {
+    "clean_correct": {
+      "any_non_target_grasp": 0,
+      "correct_target_first_touched": 10,
+      "median_eef_path_length": 1.0092861447161052,
+      "median_n_non_target_touched": 0.0,
+      "median_steps": 118.5,
+      "n": 10,
+      "non_target_first_touched": 0,
+      "success": 10
+    },
+    "preserve_correct": {
+      "any_non_target_grasp": 0,
+      "correct_target_first_touched": 10,
+      "median_eef_path_length": 1.0092861447161052,
+      "median_n_non_target_touched": 0.0,
+      "median_steps": 118.5,
+      "n": 10,
+      "non_target_first_touched": 0,
+      "success": 10
+    },
+    "repair_early": {
+      "any_non_target_grasp": 8,
+      "correct_target_first_touched": 0,
+      "median_eef_path_length": 1.2970386146793427,
+      "median_n_non_target_touched": 1.0,
+      "median_steps": 280.0,
+      "n": 10,
+      "non_target_first_touched": 10,
+      "success": 0
+    },
+    "repair_live": {
+      "any_non_target_grasp": 0,
+      "correct_target_first_touched": 9,
+      "median_eef_path_length": 1.026396615325206,
+      "median_n_non_target_touched": 0.0,
+      "median_steps": 143.0,
+      "n": 10,
+      "non_target_first_touched": 1,
+      "success": 9
+    },
+    "wrong_donor_live": {
+      "any_non_target_grasp": 7,
+      "correct_target_first_touched": 5,
+      "median_eef_path_length": 1.2873747450945452,
+      "median_n_non_target_touched": 1.0,
+      "median_steps": 280.0,
+      "n": 10,
+      "non_target_first_touched": 5,
+      "success": 0
+    }
+  },
+  "independent_units": 10,
+  "paired_repair_live_vs_clean_correct": {
+    "any_non_target_grasp": {
+      "exact_mcnemar": {
+        "discordant": 0,
+        "negative": 0,
+        "p_two_sided": 1.0,
+        "positive": 0
+      },
+      "repair_live_minus_clean_correct": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "correct_target_first_touched": {
+      "exact_mcnemar": {
+        "discordant": 1,
+        "negative": 1,
+        "p_two_sided": 1.0,
+        "positive": 0
+      },
+      "repair_live_minus_clean_correct": [
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "non_target_first_touched": {
+      "exact_mcnemar": {
+        "discordant": 1,
+        "negative": 0,
+        "p_two_sided": 1.0,
+        "positive": 1
+      },
+      "repair_live_minus_clean_correct": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "success": {
+      "exact_mcnemar": {
+        "discordant": 1,
+        "negative": 1,
+        "p_two_sided": 1.0,
+        "positive": 0
+      },
+      "repair_live_minus_clean_correct": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "preserve_all_exact": true,
+  "preserve_correct": [
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 30,
+      "outcomes_equal": true,
+      "task_id": 1
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 31,
+      "outcomes_equal": true,
+      "task_id": 1
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 32,
+      "outcomes_equal": true,
+      "task_id": 1
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 33,
+      "outcomes_equal": true,
+      "task_id": 1
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 34,
+      "outcomes_equal": true,
+      "task_id": 1
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 30,
+      "outcomes_equal": true,
+      "task_id": 2
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 31,
+      "outcomes_equal": true,
+      "task_id": 2
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 32,
+      "outcomes_equal": true,
+      "task_id": 2
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 33,
+      "outcomes_equal": true,
+      "task_id": 2
+    },
+    {
+      "action_hashes_equal": true,
+      "all_edit_ratios_zero": true,
+      "init_id": 34,
+      "outcomes_equal": true,
+      "task_id": 2
+    }
+  ],
+  "rows": 50,
+  "schema_version": 1
+}

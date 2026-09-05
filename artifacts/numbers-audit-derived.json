@@ -1279,5 +1279,164 @@
         "success": 18
       }
     }
+  },
+  "state_repair_side_effects": {
+    "conditions": {
+      "clean_correct": 10,
+      "preserve_correct": 10,
+      "repair_early": 10,
+      "repair_live": 10,
+      "wrong_donor_live": 10
+    },
+    "counts": {
+      "clean_correct": {
+        "any_non_target_grasp": 0,
+        "correct_target_first_touched": 10,
+        "median_eef_path_length": 1.0092861447161052,
+        "median_n_non_target_touched": 0.0,
+        "median_steps": 118.5,
+        "n": 10,
+        "non_target_first_touched": 0,
+        "success": 10
+      },
+      "preserve_correct": {
+        "any_non_target_grasp": 0,
+        "correct_target_first_touched": 10,
+        "median_eef_path_length": 1.0092861447161052,
+        "median_n_non_target_touched": 0.0,
+        "median_steps": 118.5,
+        "n": 10,
+        "non_target_first_touched": 0,
+        "success": 10
+      },
+      "repair_early": {
+        "any_non_target_grasp": 8,
+        "correct_target_first_touched": 0,
+        "median_eef_path_length": 1.2970386146793427,
+        "median_n_non_target_touched": 1.0,
+        "median_steps": 280.0,
+        "n": 10,
+        "non_target_first_touched": 10,
+        "success": 0
+      },
+      "repair_live": {
+        "any_non_target_grasp": 0,
+        "correct_target_first_touched": 9,
+        "median_eef_path_length": 1.026396615325206,
+        "median_n_non_target_touched": 0.0,
+        "median_steps": 143.0,
+        "n": 10,
+        "non_target_first_touched": 1,
+        "success": 9
+      },
+      "wrong_donor_live": {
+        "any_non_target_grasp": 7,
+        "correct_target_first_touched": 5,
+        "median_eef_path_length": 1.2873747450945452,
+        "median_n_non_target_touched": 1.0,
+        "median_steps": 280.0,
+        "n": 10,
+        "non_target_first_touched": 5,
+        "success": 0
+      }
+    },
+    "duplicate_keys": [],
+    "file": {
+      "bytes": 430504,
+      "expected_rows": 50,
+      "jsonl_rows": 50,
+      "path": "artifacts/pi05_state_repair_side_effects_2026-09-04_v1/episodes.jsonl",
+      "row_count_matches": true,
+      "sha256": "b85348d10557076306c111589070516df3bb0609149dde5cc2dbfb94d6340af2"
+    },
+    "independent_units": 10,
+    "maximum_error_against_stored_summary": 0.0,
+    "preservation_checks": [
+      {
+        "action_hashes_equal": true,
+        "all_edit_ratios_zero": true,
+        "init_id": 30,
+        "outcomes_equal": true,
+        "task_id": 1
+      },
+      {
+        "action_hashes_equal": true,
+        "all_edit_ratios_zero": true,
+        "init_id": 31,
+        "outcomes_equal": true,
+        "task_id": 1
+      },
+      {
+        "action_hashes_equal": true,
+        "all_edit_ratios_zero": true,
+        "init_id": 32,
+        "outcomes_equal": true,
+        "task_id": 1
+      },
+      {
+        "action_hashes_equal": true,
+        "all_edit_ratios_zero": true,
+        "init_id": 33,
+        "outcomes_equal": true,
+        "task_id": 1
+      },
+      {
+        "action_hashes_equal": true,
+        "all_edit_ratios_zero": true,
+        "init_id": 34,
+        "outcomes_equal": true,
+        "task_id": 1
+      },
+      {
+        "action_hashes_equal": true,
+        "all_edit_ratios_zero": true,
+        "init_id": 30,
+        "outcomes_equal": true,
+        "task_id": 2
+      },
+      {
+        "action_hashes_equal": true,
+        "all_edit_ratios_zero": true,
+        "init_id": 31,
+        "outcomes_equal": true,
+        "task_id": 2
+      },
+      {
+        "action_hashes_equal": true,
+        "all_edit_ratios_zero": true,
+        "init_id": 32,
+        "outcomes_equal": true,
+        "task_id": 2
+      },
+      {
+        "action_hashes_equal": true,
+        "all_edit_ratios_zero": true,
+        "init_id": 33,
+        "outcomes_equal": true,
+        "task_id": 2
+      },
+      {
+        "action_hashes_equal": true,
+        "all_edit_ratios_zero": true,
+        "init_id": 34,
+        "outcomes_equal": true,
+        "task_id": 2
+      }
+    ],
+    "preserve_all_exact": true,
+    "repair_live_vs_clean_correct": {
+      "median_paired_eef_path_difference": 0.026070235619087,
+      "median_paired_eef_path_ratio": 1.0277125844281807,
+      "median_paired_step_difference": 15.0,
+      "median_paired_step_ratio": 1.1323631323631322,
+      "repair_longer_in_path": 7,
+      "repair_longer_in_steps": 8
+    },
+    "summary_file": {
+      "bytes": 4544,
+      "jsonl_rows": null,
+      "path": "artifacts/pi05_state_repair_side_effects_2026-09-04_v1/summary.json",
+      "sha256": "8dd520b48971b223f80c075695b8ef6fc1b971ba4582c69b6b731006584741c0"
+    }
   }
 }

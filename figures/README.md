@@ -18,6 +18,8 @@ The PNG files are for Markdown and slides; PDFs are vector versions. Every quant
 | Full L6–8 update transfers across initial scenes and needs MLP processing | action-axis progress, prompt-pair-cell median | other-scene full `0.2108` vs random `0.0058`; full > attention-only `12/12` | 12 directed cells × five states |
 | The L6–8 edit changes some initial choices but not task success | B-first contact and task-B completion | edit `3/12` B-first, `0/12` success; clean B `9/12`, `12/12` | exploratory screen, one state × 12 directed cells |
 | Dominant route is architecture-dependent | normalized donor recovery | π0.5: image; OpenVLA-OFT: text | π0.5 six directions; OFT seven tasks |
+| Changing only the prompt changes closed-loop behavior | simulator task success and first contact | Goal success `195/200 → 0/200` under correct→conflict; named alternative first `185/200` | 1,200 Stage-0 rollouts; 20 states × 10 tasks × 3 conditions × 2 suites |
+| The broad late-state transplant can reverse a conflicted rollout | first contact and simulator success in one visually recaptured episode | late L12–17 repair: cream cheese first, success; early L0–5 control: tomato sauce first, failure | canonical Object task 1, initial state 20; all recaptures match archived outcomes |
 
 ## 1. Stimulus, intervention, and behavior
 
@@ -121,6 +123,30 @@ The PNG files are for Markdown and slides; PDFs are vector versions. Every quant
 
 **Data:** [`08a_action_behavior_cells.csv`](08a_action_behavior_cells.csv), [`08b_rollout_outcomes.csv`](08b_rollout_outcomes.csv); raw `../artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/episodes.jsonl`.
 
+## 9. Example prompt pairs and initial behavioral screen
+
+![Example prompt pairs and task-level outcome heat map](09_prompt_pairs_behavior_heatmap.png)
+
+**What to notice:** the same physical Object scene can support two valid instructions. For the highlighted cream-cheese/tomato-sauce and salad-dressing/ketchup pairs, the correct prompt completed the scene's original task in `20/20`, while the conflicting prompt completed it in `0/20` and contacted the object named by the conflict first in `20/20`. Across Goal tasks, correct-prompt success was `195/200`, empty-prompt success `24/200`, and conflicting-prompt success `0/200`; under conflict, the named alternative was contacted first in `185/200`.
+
+**Stimuli:** official LIBERO Object and Goal simulator initial states. Within each episode triplet, camera observation, robot state, seed, and action-noise rule were fixed; only the instruction changed. The left panel uses a real preserved LIBERO frame and quotes the exact prompts from the raw record.
+
+**Metric:** each heat-map cell is simulator success on the scene's original task, shown as successes out of 20 official initial states. The footer separately reports first contact with the alternative named by the conflicting prompt, avoiding the mistake of treating task failure as generic model failure.
+
+**Data:** [`09_prompt_pairs_behavior_heatmap.csv`](09_prompt_pairs_behavior_heatmap.csv); raw `../artifacts/vla_stage0/20260830-094027/per_episode.jsonl` and aggregate `results.json`.
+
+## 10. What the closed-loop intervention looked like
+
+![Four matched simulator rollouts](10_closed_loop_visual_comparison.png)
+
+**What to notice:** all four panels begin from the same registered LIBERO scene and use the same noise-seed rule. The conflicting prompt makes the robot contact tomato sauce and fail. The correct prompt contacts cream cheese and succeeds. Under the conflicting prompt, transplanting all 512 image-position K/V entries at layers 12–17 from a same-observation correct-prompt donor makes the robot contact cream cheese and succeed; applying the same transplant at layers 0–5 leaves the conflict behavior intact.
+
+**Provenance:** these are real simulator frames recaptured for the canonical `18/20` state-confirmation experiment, not illustrations and not frames from the newer 50-episode side-effect screen. Each of the four recaptured outcomes matches its archived episode record. The corresponding synchronized animation is [`../media/videos/state-confirmation/combined.gif`](../media/videos/state-confirmation/combined.gif), with MP4 and WebM versions beside it.
+
+**Limits:** this figure shows one representative task/state unit. The aggregate causal claim comes from the archived 80-rollout confirmation, while the separate newer preservation screen found `9/10` repair successes and exposed one wrong-first contact and one separate failure.
+
+**Data:** [`10_closed_loop_visual_conditions.csv`](10_closed_loop_visual_conditions.csv); metadata `../media/videos/state-confirmation/meta.json`; raw canonical outcomes `../artifacts/pi05_instruction_repair_2026-08-31/state_confirm/episodes.jsonl`.
+
 ## Regenerate
 
 From the project root:
@@ -130,4 +156,4 @@ python3 scripts/audit_research_numbers.py
 uv run --with numpy --with matplotlib python scripts/make_research_figures.py
 ```
 
-The numerical audit reproduced SHA-256 `47003b52f0a76595553991803f6dbf0765e43aaa7febca569c1dfe1d867820df` immediately before these figures were rendered and visually inspected on 2026-09-04.
+The numerical audit reproduced SHA-256 `8eec292ee59d299d60329b7f6ead4482bef3d757328b02e3c51f0556a357e170` immediately before these figures were rendered and visually inspected on 2026-09-04.
