@@ -8,6 +8,10 @@ We held the camera observation and robot state fixed, changed only the instructi
 
 In the tested π0.5 checkpoint, the instruction is used while the image-and-text prefix is built. After that, instruction identity remains readable at the text positions, but editing those positions barely changes the Goal action. Broad image-position state at late layers has much more causal leverage: transplanting it on every replan repaired `18/20` conflicted rollouts, while the same intervention at an early control band repaired `0/20`. A new paired preservation screen showed why this is causal control rather than a clean policy switch: late repair succeeded `9/10` versus clean `10/10`, with one wrong-first contact, one separate failure, and usually longer trajectories. Static directions, object-local patches, low-rank subspaces, donor-free operators, and compact writer rescues did not reproduce the broad effect. The **full instruction-dependent update across layers 6–8 transfers partly between initial scenes and depends strongly on the MLP sublayers**, but a simulator screen found only `3/12` B-first contacts and `0/12` B-task completions. The best current description is a broad multi-block handoff with local causal leverage—not a discovered instruction neuron, portable steering vector, or transferred policy.
 
+![Instruction identity remains readable at text positions even though text-state edits barely change the action](figures/00c_readable_not_causal_hero.png)
+
+The mismatch is direct: text-position instruction probes remain `1.000` accurate through layer 16, while swapping instruction-token K/V across all 18 layers moves the action only `R=0.0106`; zeroing text key outputs is also approximately null. By contrast, late image-position K/V repair reaches `R=0.8321` across the same six directed prompt-pair cells.
+
 ![The target-relevant action shift stays small until all 512 image positions are replaced](figures/00_position_dose_hero.png)
 
 ![The instruction is readable early, transformed around layers 6–8, and causally dominant only in late image state](figures/00b_layerwise_model_biology_hero.png)

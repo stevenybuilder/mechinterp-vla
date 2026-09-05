@@ -1,0 +1,55 @@
+panel,series,layer,condition,cell,metric,value
+probe,instruction_token_state,0,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,1,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,2,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,3,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,4,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,5,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,6,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,7,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,8,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,9,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,10,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,11,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,12,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,13,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,14,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,15,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,16,,,held_out_10way_accuracy,1.0
+probe,instruction_token_state,17,,,held_out_10way_accuracy,0.9986666666666666
+probe,image_token_state,0,,,held_out_10way_accuracy,0.11333333333333333
+probe,image_token_state,1,,,held_out_10way_accuracy,0.9926666666666666
+probe,image_token_state,2,,,held_out_10way_accuracy,0.9966666666666667
+probe,image_token_state,3,,,held_out_10way_accuracy,1.0
+probe,image_token_state,4,,,held_out_10way_accuracy,1.0
+probe,image_token_state,5,,,held_out_10way_accuracy,1.0
+probe,image_token_state,6,,,held_out_10way_accuracy,1.0
+probe,image_token_state,7,,,held_out_10way_accuracy,1.0
+probe,image_token_state,8,,,held_out_10way_accuracy,1.0
+probe,image_token_state,9,,,held_out_10way_accuracy,1.0
+probe,image_token_state,10,,,held_out_10way_accuracy,1.0
+probe,image_token_state,11,,,held_out_10way_accuracy,1.0
+probe,image_token_state,12,,,held_out_10way_accuracy,1.0
+probe,image_token_state,13,,,held_out_10way_accuracy,1.0
+probe,image_token_state,14,,,held_out_10way_accuracy,1.0
+probe,image_token_state,15,,,held_out_10way_accuracy,1.0
+probe,image_token_state,16,,,held_out_10way_accuracy,1.0
+probe,image_token_state,17,,,held_out_10way_accuracy,1.0
+causal,Text K/V swap all 18 layers,,KV[INSTR]@all,libero_goal_t0_vs_t6:A<-B,cell_median_R,-0.004097126905135774
+causal,Text K/V swap all 18 layers,,KV[INSTR]@all,libero_goal_t0_vs_t6:B<-A,cell_median_R,0.010667236636474484
+causal,Text K/V swap all 18 layers,,KV[INSTR]@all,libero_goal_t2_vs_t5:A<-B,cell_median_R,-0.013009778529761623
+causal,Text K/V swap all 18 layers,,KV[INSTR]@all,libero_goal_t2_vs_t5:B<-A,cell_median_R,0.01389804608985112
+causal,Text K/V swap all 18 layers,,KV[INSTR]@all,libero_goal_t9_vs_t6:A<-B,cell_median_R,0.03835334360752323
+causal,Text K/V swap all 18 layers,,KV[INSTR]@all,libero_goal_t9_vs_t6:B<-A,cell_median_R,0.010437008128643203
+causal,Text key-output knockout,,KO[INSTR],libero_goal_t0_vs_t6:A<-B,cell_median_R,-0.005969742662534111
+causal,Text key-output knockout,,KO[INSTR],libero_goal_t0_vs_t6:B<-A,cell_median_R,0.0025916870517748683
+causal,Text key-output knockout,,KO[INSTR],libero_goal_t2_vs_t5:A<-B,cell_median_R,-0.014946971105591298
+causal,Text key-output knockout,,KO[INSTR],libero_goal_t2_vs_t5:B<-A,cell_median_R,0.0016920428224465127
+causal,Text key-output knockout,,KO[INSTR],libero_goal_t9_vs_t6:A<-B,cell_median_R,0.027043739060257976
+causal,Text key-output knockout,,KO[INSTR],libero_goal_t9_vs_t6:B<-A,cell_median_R,-0.0015454014990219755
+causal,Image K/V swap layers 12–17,,KV[IMG]@12-17,libero_goal_t0_vs_t6:A<-B,cell_median_R,0.8500666250520081
+causal,Image K/V swap layers 12–17,,KV[IMG]@12-17,libero_goal_t0_vs_t6:B<-A,cell_median_R,1.0000402514015065
+causal,Image K/V swap layers 12–17,,KV[IMG]@12-17,libero_goal_t2_vs_t5:A<-B,cell_median_R,0.909672451732612
+causal,Image K/V swap layers 12–17,,KV[IMG]@12-17,libero_goal_t2_vs_t5:B<-A,cell_median_R,0.8141373846243168
+causal,Image K/V swap layers 12–17,,KV[IMG]@12-17,libero_goal_t9_vs_t6:A<-B,cell_median_R,0.6967367207948038
+causal,Image K/V swap layers 12–17,,KV[IMG]@12-17,libero_goal_t9_vs_t6:B<-A,cell_median_R,0.802271594475221

@@ -353,6 +353,125 @@ def figure_0b_layerwise_model_biology_hero() -> None:
     save(fig, "00b_layerwise_model_biology_hero")
 
 
+def figure_0c_readable_not_causal_hero() -> None:
+    """Directly contrast instruction decodability with causal leverage."""
+    stage2 = load_json("artifacts/vla_stage2/20260830-094027/libero_goal_confirm/results.json")
+    layers = np.arange(18)
+    text_probe = np.array([stage2["probes"]["resid"][f"L{layer}_INSTR"]["acc"] for layer in layers])
+    image_probe = np.array([stage2["probes"]["resid"][f"L{layer}_IMG"]["acc"] for layer in layers])
+
+    causal_specs = [
+        ("Text K/V swap\nall 18 layers", "KV[INSTR]@all", ORANGE),
+        ("Text key-output\nknockout", "KO[INSTR]", MID),
+        ("Image K/V swap\nlayers 12–17", "KV[IMG]@12-17", BLUE),
+    ]
+    causal_values: dict[str, list[tuple[str, float]]] = defaultdict(list)
+    for pair_name, pair in stage2["pairs"].items():
+        for direction_name, direction in pair.items():
+            cell = f"{pair_name}:{direction_name}"
+            for _, condition, _ in causal_specs:
+                causal_values[condition].append((cell, float(direction["conditions"][condition]["R_median"])))
+
+    fig, (ax_probe, ax_causal) = plt.subplots(
+        1,
+        2,
+        figsize=(14.8, 5.8),
+        gridspec_kw={"width_ratios": [1.65, 1.0], "wspace": 0.30},
+    )
+    claim_title(
+        fig,
+        "The instruction stays readable after text stops controlling the action",
+        "π0.5 · 10-way grouped probes on 300 Goal units · causal K/V tests on six directed prompt-pair cells.",
+    )
+
+    ax_probe.plot(layers, image_probe, color=BLUE, lw=2.7, marker="s", ms=5.2, label="image-token state")
+    ax_probe.plot(
+        layers,
+        text_probe,
+        color=ORANGE,
+        lw=2.2,
+        ls="--",
+        marker="o",
+        ms=5.4,
+        markerfacecolor=WHITE,
+        markeredgewidth=1.5,
+        label="instruction-token state",
+        zorder=4,
+    )
+    ax_probe.axhline(0.10, color=MID, lw=1.0, ls=":", label="10-way chance")
+    ax_probe.annotate(
+        "text: 1.000 through L16",
+        xy=(10, text_probe[10]),
+        xytext=(7.3, 0.77),
+        arrowprops={"arrowstyle": "-", "color": ORANGE, "lw": 1.2},
+        color=ORANGE,
+        weight="bold",
+        fontsize=10.7,
+    )
+    ax_probe.annotate(
+        "image: 0.113 → 0.993 by L1",
+        xy=(1, image_probe[1]),
+        xytext=(2.1, 0.44),
+        arrowprops={"arrowstyle": "-", "color": BLUE, "lw": 1.2},
+        color=BLUE,
+        weight="bold",
+        fontsize=10.7,
+    )
+    ax_probe.set_xlim(-0.35, 17.35)
+    ax_probe.set_ylim(0.02, 1.08)
+    ax_probe.set_xticks(layers)
+    ax_probe.set_xlabel("π0.5 prefix layer", fontsize=12.5, weight="bold", labelpad=9)
+    ax_probe.set_ylabel("Held-out 10-way probe accuracy", fontsize=12.5, weight="bold", labelpad=9)
+    ax_probe.tick_params(axis="both", labelsize=10.5)
+    ax_probe.set_title("Readable representation", loc="left")
+    ax_probe.grid(color=LIGHT, lw=0.8)
+    ax_probe.legend(frameon=False, loc="lower right", fontsize=9.5, ncol=1)
+    panel_label(ax_probe, "a")
+
+    ax_causal.axvspan(0.80, 1.05, color=PALE_BLUE, alpha=0.92, zorder=-5)
+    ax_causal.axvline(0, color=MID, lw=1.0)
+    ax_causal.axvline(1, color=BLUE, lw=1.0, ls="--", alpha=0.55)
+    y_positions = np.array([2, 1, 0])
+    for index, ((label, condition, color), y) in enumerate(zip(causal_specs, y_positions)):
+        values = np.array([value for _, value in causal_values[condition]])
+        median_value = float(np.median(values))
+        ax_causal.scatter(
+            values,
+            y + jitter(len(values), 0.085, 1800 + index),
+            s=48,
+            color=color,
+            alpha=0.45,
+            edgecolor=WHITE,
+            linewidth=0.7,
+        )
+        ax_causal.scatter(median_value, y, marker="D", s=96, color=color, edgecolor=WHITE, linewidth=1.0, zorder=4)
+        value_label = "R≈0.000" if condition == "KO[INSTR]" else f"R={median_value:.3f}"
+        ax_causal.text(median_value + 0.035, y, value_label, va="center", color=color if condition != "KO[INSTR]" else GRAY, fontsize=11.0, weight="bold")
+    ax_causal.text(0.02, 0.95, "no action movement", transform=ax_causal.transAxes, color=GRAY, fontsize=9.5, weight="bold")
+    ax_causal.text(0.98, 0.95, "donor-like action", transform=ax_causal.transAxes, ha="right", color=BLUE, fontsize=9.5, weight="bold")
+    ax_causal.set_xlim(-0.08, 1.08)
+    ax_causal.set_ylim(-0.62, 2.62)
+    ax_causal.set_yticks(y_positions, [spec[0] for spec in causal_specs])
+    ax_causal.set_xlabel("Normalized causal repair R\n0 = unchanged · 1 = donor action", fontsize=12.5, weight="bold", labelpad=9)
+    ax_causal.tick_params(axis="both", labelsize=10.5)
+    ax_causal.set_title("Causal intervention", loc="left")
+    ax_causal.grid(axis="x", color=LIGHT, lw=0.8)
+    panel_label(ax_causal, "b")
+
+    exported = []
+    for layer, value in zip(layers, text_probe):
+        exported.append({"panel": "probe", "series": "instruction_token_state", "layer": int(layer), "condition": "", "cell": "", "metric": "held_out_10way_accuracy", "value": float(value)})
+    for layer, value in zip(layers, image_probe):
+        exported.append({"panel": "probe", "series": "image_token_state", "layer": int(layer), "condition": "", "cell": "", "metric": "held_out_10way_accuracy", "value": float(value)})
+    for label, condition, _ in causal_specs:
+        for cell, value in causal_values[condition]:
+            exported.append({"panel": "causal", "series": label.replace("\n", " "), "layer": "", "condition": condition, "cell": cell, "metric": "cell_median_R", "value": value})
+    write_csv("00c_readable_not_causal_hero.csv", exported)
+
+    fig.subplots_adjust(top=0.79, left=0.075, right=0.98, bottom=0.17)
+    save(fig, "00c_readable_not_causal_hero")
+
+
 def figure_1_stimulus_intervention_behavior() -> None:
     prefill = load_jsonl("artifacts/pi05_prefill_mediation_2026-08-31/rows.jsonl")
     episodes = load_jsonl("artifacts/pi05_instruction_repair_2026-08-31/state_confirm/episodes.jsonl")
@@ -1275,6 +1394,7 @@ def main() -> None:
     style()
     figure_0_position_dose_hero()
     figure_0b_layerwise_model_biology_hero()
+    figure_0c_readable_not_causal_hero()
     figure_1_stimulus_intervention_behavior()
     figure_2_layers_attention_causality()
     figure_3_distributed_field()
@@ -1285,7 +1405,7 @@ def main() -> None:
     figure_8_action_to_behavior()
     figure_9_prompt_pairs_behavior_heatmap()
     figure_10_closed_loop_visual_comparison()
-    print("Wrote twelve claim-first figures and source CSVs to", OUT)
+    print("Wrote thirteen claim-first figures and source CSVs to", OUT)
 
 
 if __name__ == "__main__":

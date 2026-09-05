@@ -21,6 +21,18 @@ The PNG files are for Markdown and slides; PDFs are vector versions. Every quant
 | Changing only the prompt changes closed-loop behavior | simulator task success and first contact | Goal success `195/200 → 0/200` under correct→conflict; named alternative first `185/200` | 1,200 Stage-0 rollouts; 20 states × 10 tasks × 3 conditions × 2 suites |
 | The broad late-state transplant can reverse a conflicted rollout | first contact and simulator success in one visually recaptured episode | late L12–17 repair: cream cheese first, success; early L0–5 control: tomato sauce first, failure | canonical Object task 1, initial state 20; all recaptures match archived outcomes |
 
+## Headline figure: readable is not causal
+
+![Instruction identity remains readable at text positions even though text-state edits barely change the action](00c_readable_not_causal_hero.png)
+
+**What to notice:** instruction identity remains essentially perfectly readable from instruction-token residual state across the stack (`1.000` through L16; `0.9987` at L17). Yet replacing instruction-token K/V across all 18 layers moves the action only `R=0.0106`, and instruction key-output knockout is approximately null (`R=0.00007`). Late image-position K/V replacement reaches `R=0.8321` on the same six directed prompt-pair cells. Image-position probe accuracy separately jumps from `0.113` at L0 to `0.993` at L1.
+
+**Probe metric:** multinomial logistic-regression accuracy for 10-way Goal task identity, evaluated with five folds grouped by simulator initial state over 300 held-out units. The dashed reference is 10-way chance. This measures linear readability, not causal use.
+
+**Causal metric:** normalized target-axis repair `R`, where `0` means the edited action remains at the receiving instruction's action and `1` reaches the donor instruction's action. Dots are the six directed prompt-pair cell medians; diamonds are their medians. The K/V swap replaces keys and values only at the named token positions and layers. The key-output knockout zeros the instruction positions' contribution as attention keys/values without deleting the readable residual state.
+
+**Data:** [`00c_readable_not_causal_hero.csv`](00c_readable_not_causal_hero.csv); aggregate source `../artifacts/vla_stage2/20260830-094027/libero_goal_confirm/results.json`, backed by `rows.jsonl` and the archived probe arrays/metadata.
+
 ## Headline figure: staged model biology
 
 ![The instruction is readable early, transformed around layers 6–8, and causally dominant only in late image state](00b_layerwise_model_biology_hero.png)

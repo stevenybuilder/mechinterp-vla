@@ -34,6 +34,10 @@ The best research claim is therefore not “we found the instruction circuit.”
 
 This is useful model biology because it separates three things that are often collapsed: where information entered, where it can be decoded, and where the state controlling behavior currently lives.
 
+![Instruction identity remains readable at text positions even though text-state edits barely change the action](figures/00c_readable_not_causal_hero.png)
+
+The left panel uses 10-way multinomial logistic probes with five folds grouped by simulator initial state: text-position accuracy is `1.000` from layers 0–16 (`0.9987` at layer 17), while image-position accuracy rises from `0.113` at layer 0 to `0.993` at layer 1. The right panel shows the causal mismatch on the six directed prompt-pair cells. Swapping instruction-token K/V across all 18 layers has median repair `R=0.0106`, and knocking out instruction-token key outputs has `R≈0.0001`; swapping late image-position K/V reaches `R=0.8321`. Thus the readable text state is real, but it is not the state with substantial post-prefill causal leverage.
+
 ![The instruction is readable early, transformed around layers 6–8, and causally dominant only in late image state](figures/00b_layerwise_model_biology_hero.png)
 
 The panels deliberately align layer numbers while keeping the measurements separate. Probe accuracy shows that instruction identity reaches image positions by layer 1. Cumulative causal attention-message blocking changes most when layer 6 or 7 is added, which locates a transition but did not pass the compact-writer criterion. Immediate all-position image K/V swaps become dominant only at layers 12–17, and the same late transplant controls `18/20` full rollouts. Within layers 6–8, the natural attention+MLP update moves the immediate action much more than attention alone, yet a fixed L6–8 block-and-rescue mechanism fails `0/8` endpoints. Thus the figure is evidence for a staged, broad computation—not a claim that one layer contains the instruction.

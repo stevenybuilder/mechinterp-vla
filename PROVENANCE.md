@@ -110,7 +110,7 @@ The table contains 50 unique rows: two Object tasks Ã— five new initial states Ã
 
 `scripts/audit_research_numbers.py` independently parses the primary raw tables, checks row counts and hashes, and recomputes the headline values in `artifacts/numbers-audit-derived.json`. The human-readable audit is `numbers audit.md`; `Research Direction.md` is the consolidated narrative based on that ledger.
 
-`scripts/make_research_figures.py` reads the preserved raw JSONL records, canonical Stage-2 `results.json`, the derived audit JSON, and verified video metadata. It creates twelve current claim-first figures under `figures/`, with 21 adjacent current source CSVs and both PNG and PDF output. The two headline figures expose the complete 384-row position-dose experiment and align five separately measured stages of the layerwise handoff without combining their units or metrics. The rollout figure uses real frames from a canonical state-confirmation recapture whose four outcomes match the archived records. The earlier seven-figure set remains present but is explicitly marked superseded in `figures/README.md`. The current figures were visually inspected after generation. These files summarize existing evidence and do not create new experimental claims.
+`scripts/make_research_figures.py` reads the preserved raw JSONL records, canonical Stage-2 `results.json`, the derived audit JSON, and verified video metadata. It creates thirteen current claim-first figures under `figures/`, with 22 adjacent current source CSVs and both PNG and PDF output. The headline figures directly contrast probe readability with causal leverage, expose the complete 384-row position-dose experiment, and align separately measured stages of the layerwise handoff without combining their units or metrics. The rollout figure uses real frames from a canonical state-confirmation recapture whose four outcomes match the archived records. The earlier seven-figure set remains present but is explicitly marked superseded in `figures/README.md`. The current figures were visually inspected after generation. These files summarize existing evidence and do not create new experimental claims.
 
 ## Deliberately excluded
 
@@ -126,7 +126,7 @@ Those remain part of the separate robotics-performance project and must not be u
 
 ## Integrity inventory
 
-`PROVENANCE-SHA256SUMS` is the unified archive inventory. The 2026-09-05 release inventory contains 1,017 entries. It hashes every regular file in the curated project except itself, temporary files, macOS metadata, Python bytecode, cache directories, and `tmp/`. It supplements rather than rewrites the older frozen checksum receipts, some of which use historical absolute or source-root paths.
+`PROVENANCE-SHA256SUMS` is the unified archive inventory. The 2026-09-05 release inventory contains 1,020 entries. It hashes every regular file in the curated project except itself, temporary files, macOS metadata, Python bytecode, cache directories, and `tmp/`. It supplements rather than rewrites the older frozen checksum receipts, some of which use historical absolute or source-root paths.
 
 To verify from the archive root:
 
