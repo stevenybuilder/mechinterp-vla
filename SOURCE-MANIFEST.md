@@ -149,7 +149,7 @@ This complete preregistered panel contains 50 unique rows: two Object tasks, fiv
 - `scripts/audit_research_numbers.py`
 - `artifacts/numbers-audit-derived.json`
 - `scripts/make_research_figures.py`
-- `figures/` (eleven current claim-first PNG/PDF figures, 20 current source CSVs, the superseded earlier figure set, and a figure README)
+- `figures/` (twelve current claim-first PNG/PDF figures, 21 current source CSVs, the superseded earlier figure set, and a figure README)
 - `media/videos/state-confirmation/` (canonical four-way simulator recapture; MP4, WebM, GIF, poster, and metadata; every recaptured outcome matches the archived episode record)
 - `VLA Model Biology - Plain English Research Report.docx` and its reproducible builder `scripts/build_plain_english_report.py`
 

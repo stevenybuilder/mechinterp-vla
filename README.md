@@ -10,6 +10,10 @@ In the tested π0.5 checkpoint, the instruction is used while the image-and-text
 
 ![The target-relevant action shift stays small until all 512 image positions are replaced](figures/00_position_dose_hero.png)
 
+![The instruction is readable early, transformed around layers 6–8, and causally dominant only in late image state](figures/00b_layerwise_model_biology_hero.png)
+
+These are complementary headline results. The position-dose figure shows how broad the successful late intervention must be; the layerwise figure separates five different tests so that probe readability is not confused with causal control. Instruction identity is already `0.993` decodable at image positions by layer 1, causal instruction→image blocking changes most at layers 6–7, and all-position image K/V repair becomes dominant only at layers 12–17 (`R=0.832`, `18/20` closed-loop successes). The full layers-6–8 update has a real immediate-action effect (`R=0.340`) that largely disappears without its image-position MLP updates (`R=0.040`), but the fixed compact-writer test still fails `0/8` endpoints.
+
 ## Five results worth remembering
 
 | Result | Evidence | Why it matters |

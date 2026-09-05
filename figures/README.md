@@ -21,7 +21,19 @@ The PNG files are for Markdown and slides; PDFs are vector versions. Every quant
 | Changing only the prompt changes closed-loop behavior | simulator task success and first contact | Goal success `195/200 → 0/200` under correct→conflict; named alternative first `185/200` | 1,200 Stage-0 rollouts; 20 states × 10 tasks × 3 conditions × 2 suites |
 | The broad late-state transplant can reverse a conflicted rollout | first contact and simulator success in one visually recaptured episode | late L12–17 repair: cream cheese first, success; early L0–5 control: tomato sauce first, failure | canonical Object task 1, initial state 20; all recaptures match archived outcomes |
 
-## Hero figure: position-dose curve
+## Headline figure: staged model biology
+
+![The instruction is readable early, transformed around layers 6–8, and causally dominant only in late image state](00b_layerwise_model_biology_hero.png)
+
+**What to notice:** the instruction becomes linearly readable at image positions almost immediately (`0.113` at L0 to `0.993` at L1), but broad causal leverage appears much later. Two complementary cumulative attention-message block profiles change most at layers 6 and 7. All-position image K/V swaps have negligible effect at L0–5 (`R=0.001`), modest effect at L6–11 (`R=0.080`), and large effect at L12–17 (`R=0.832`). The natural full L6→8 attention+MLP update moves the immediate action `0.340` toward B, versus `0.040` for attention-only and `0.006` for equal-norm random. Yet a fixed L6–8 writer block-and-rescue passes `0/8` endpoints. Repeating the broad late repair at every replan completes `18/20` redirected rollouts, versus `0/20` for the early control.
+
+**Five distinct tests:** panel a is 10-way grouped-cross-validation probe accuracy on 300 Goal confirmation units. Panel b shows the marginal fraction of the full action effect produced by adding one layer to a cumulative instruction→image attention-message block, from both ends of the stack; this is a causal development profile, **not raw activation change**, and its preregistered classification was ambiguous because neither peak reached the localized threshold. Panel c shows normalized target-axis repair `R` for the six directed prompt-pair cells in each image K/V band. Panel d shows all 12 prompt-pair-cell medians for the matched L6→8 transformation ablation. Panel e shows each of the 20 closed-loop rollout units for live late and early repair.
+
+**Interpretation:** readability, transition, immediate control, and full behavior occur at different stages. The result rules out the simple stories “the earliest readable state is the controller” and “layers 6–8 are a complete compact writer.” It supports a broad multi-block handoff whose action-controlling state is strongest late in the prefix.
+
+**Data:** [`00b_layerwise_model_biology_hero.csv`](00b_layerwise_model_biology_hero.csv); raw/aggregate sources `../artifacts/vla_stage2/20260830-094027/libero_goal_confirm/results.json`, `../artifacts/pi05_attention_resolution_2026-09-04_v1/writer_development.json`, `../artifacts/pi05_matched_band_transform_2026-09-04_v1/rows.jsonl`, `../artifacts/pi05_writer_band_6_8_confirmation_2026-09-04_v3/summary.json`, and `../artifacts/pi05_instruction_repair_2026-08-31/state_confirm/episodes.jsonl`.
+
+## Headline figure: position-dose curve
 
 ![The target-relevant action shift stays small until all 512 image positions are replaced](00_position_dose_hero.png)
 

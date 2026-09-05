@@ -34,6 +34,10 @@ The best research claim is therefore not “we found the instruction circuit.”
 
 This is useful model biology because it separates three things that are often collapsed: where information entered, where it can be decoded, and where the state controlling behavior currently lives.
 
+![The instruction is readable early, transformed around layers 6–8, and causally dominant only in late image state](figures/00b_layerwise_model_biology_hero.png)
+
+The panels deliberately align layer numbers while keeping the measurements separate. Probe accuracy shows that instruction identity reaches image positions by layer 1. Cumulative causal attention-message blocking changes most when layer 6 or 7 is added, which locates a transition but did not pass the compact-writer criterion. Immediate all-position image K/V swaps become dominant only at layers 12–17, and the same late transplant controls `18/20` full rollouts. Within layers 6–8, the natural attention+MLP update moves the immediate action much more than attention alone, yet a fixed L6–8 block-and-rescue mechanism fails `0/8` endpoints. Thus the figure is evidence for a staged, broad computation—not a claim that one layer contains the instruction.
+
 ![Stimulus, intervention, and behavioral result](figures/01_stimulus_intervention_behavior.png)
 
 ## How many experiments did we actually run?

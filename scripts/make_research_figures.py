@@ -256,6 +256,235 @@ def figure_0_position_dose_hero() -> None:
     save(fig, "00_position_dose_hero")
 
 
+def figure_0b_layerwise_model_biology_hero() -> None:
+    """Aligned evidence for early readability, mid-stack transformation, and late control."""
+    stage2 = load_json("artifacts/vla_stage2/20260830-094027/libero_goal_confirm/results.json")
+    writer = load_json("artifacts/pi05_attention_resolution_2026-09-04_v1/writer_development.json")
+    transform_rows = load_jsonl("artifacts/pi05_matched_band_transform_2026-09-04_v1/rows.jsonl")
+    repair_rows = load_jsonl("artifacts/pi05_instruction_repair_2026-08-31/state_confirm/episodes.jsonl")
+
+    layers = np.arange(18)
+    image_probe = np.array([stage2["probes"]["resid"][f"L{layer}_IMG"]["acc"] for layer in layers])
+    prefix_effect = np.asarray(writer["prefix_profile"]["effects"], dtype=float)
+    suffix_effect = np.asarray(writer["suffix_profile"]["effects"], dtype=float)
+
+    band_specs = [
+        ("early", 0, 5, "KV[IMG]@0-5", MID),
+        ("middle", 6, 11, "KV[IMG]@6-11", ORANGE),
+        ("late", 12, 17, "KV[IMG]@12-17", BLUE),
+    ]
+    band_cells: dict[str, list[tuple[str, float]]] = defaultdict(list)
+    for pair_name, pair in stage2["pairs"].items():
+        for direction_name, direction in pair.items():
+            cell = f"{pair_name}:{direction_name}"
+            for label, _, _, condition, _ in band_specs:
+                band_cells[label].append((cell, float(direction["conditions"][condition]["R_median"])))
+
+    transform_cells = sorted({row["cell"] for row in transform_rows})
+    transform_values = {}
+    for condition in ("matched_full", "matched_attention_only", "random_norm_matched"):
+        transform_values[condition] = {
+            cell: float(np.median([
+                float(row["progress_to_B"])
+                for row in transform_rows
+                if row["cell"] == cell and row["condition"] == condition
+            ]))
+            for cell in transform_cells
+        }
+
+    fig = plt.figure(figsize=(17.2, 9.3))
+    outer = fig.add_gridspec(1, 2, width_ratios=[2.65, 1.0], wspace=0.18)
+    left = outer[0].subgridspec(3, 1, hspace=0.33)
+    right = outer[1].subgridspec(2, 1, height_ratios=[1.18, 0.82], hspace=0.48)
+    ax_probe = fig.add_subplot(left[0])
+    ax_transition = fig.add_subplot(left[1], sharex=ax_probe)
+    ax_causal = fig.add_subplot(left[2], sharex=ax_probe)
+    ax_transform = fig.add_subplot(right[0])
+    ax_rollout = fig.add_subplot(right[1])
+    claim_title(
+        fig,
+        "π0.5 reads the instruction early, transforms it mid-stack, and acts through late state",
+        "Aligned results from five distinct tests; identical layer numbers do not imply identical metrics or experimental units.",
+    )
+
+    def shade_layer_regions(ax: plt.Axes) -> None:
+        ax.axvspan(5.5, 8.5, color=PALE_ORANGE, alpha=0.82, zorder=-4)
+        ax.axvspan(11.5, 17.5, color=PALE_BLUE, alpha=0.82, zorder=-4)
+
+    # a — readability
+    shade_layer_regions(ax_probe)
+    ax_probe.plot(layers, image_probe, color=TEAL, lw=2.8, marker="o", ms=5.4, zorder=3)
+    ax_probe.axhline(0.10, color=MID, lw=1.0, ls="--")
+    ax_probe.text(17.35, 0.115, "10-way chance", ha="right", va="bottom", color=GRAY, fontsize=8.8)
+    ax_probe.scatter([0, 1], image_probe[[0, 1]], s=[72, 82], color=[ORANGE, TEAL], edgecolor=WHITE, linewidth=0.8, zorder=4)
+    ax_probe.text(0, image_probe[0] + 0.10, "0.113", color=ORANGE, ha="center", weight="bold")
+    ax_probe.text(1.18, image_probe[1] - 0.13, "0.993 by L1", color=TEAL, ha="left", weight="bold")
+    ax_probe.set_ylim(0.02, 1.08)
+    ax_probe.set_ylabel("Image-position\nprobe accuracy")
+    ax_probe.set_title("READABLE — instruction identity appears at image positions almost immediately", loc="left")
+    ax_probe.grid(axis="y", color=LIGHT, lw=0.8)
+    ax_probe.tick_params(labelbottom=False)
+    panel_label(ax_probe, "a")
+
+    # b — marginal changes in complementary cumulative message-block curves
+    shade_layer_regions(ax_transition)
+    width = 0.34
+    ax_transition.bar(layers - width / 2, prefix_effect, width, color=PURPLE, alpha=0.88, label="add one layer to blocked prefix")
+    ax_transition.bar(layers + width / 2, suffix_effect, width, color=ORANGE, alpha=0.88, label="add one layer to blocked suffix")
+    ax_transition.scatter(7 - width / 2, prefix_effect[7], marker="D", s=70, color=PURPLE, edgecolor=WHITE, linewidth=0.8, zorder=4)
+    ax_transition.scatter(6 + width / 2, suffix_effect[6], marker="D", s=70, color=ORANGE, edgecolor=WHITE, linewidth=0.8, zorder=4)
+    ax_transition.text(7 - width / 2, prefix_effect[7] + 0.035, "L7  0.435", ha="center", color=PURPLE, weight="bold", fontsize=9.3)
+    ax_transition.text(6 + width / 2, suffix_effect[6] + 0.035, "L6  0.451", ha="center", color=ORANGE, weight="bold", fontsize=9.3)
+    ax_transition.set_ylim(-0.02, 0.54)
+    ax_transition.set_ylabel("Marginal fraction of\nfull-block effect")
+    ax_transition.set_title("TRANSFORM — cumulative instruction→image blocking changes most at layers 6–7", loc="left")
+    ax_transition.legend(frameon=False, ncol=2, loc="upper right", fontsize=8.8)
+    ax_transition.grid(axis="y", color=LIGHT, lw=0.8)
+    ax_transition.tick_params(labelbottom=False)
+    ax_transition.text(
+        0.99,
+        0.06,
+        "development profile; preregistered classifier = ambiguous",
+        transform=ax_transition.transAxes,
+        ha="right",
+        color=GRAY,
+        fontsize=8.7,
+    )
+    panel_label(ax_transition, "b")
+
+    # c — causal K/V state swap by layer band
+    shade_layer_regions(ax_causal)
+    for i, (label, start, end, _, color) in enumerate(band_specs):
+        values = np.asarray([value for _, value in band_cells[label]])
+        center = (start + end) / 2
+        median_value = float(np.median(values))
+        ax_causal.bar(center, median_value, width=end - start + 0.55, color=color, alpha=0.80, zorder=1)
+        ax_causal.scatter(
+            center + jitter(len(values), 0.46, 1220 + i),
+            values,
+            s=37,
+            facecolors=WHITE,
+            edgecolors=color if label != "early" else GRAY,
+            linewidth=1.1,
+            zorder=3,
+        )
+        ax_causal.text(center, median_value + 0.06, f"R={median_value:.3f}", ha="center", color=color if label != "early" else GRAY, weight="bold")
+        band_y = 0.19 if label != "late" else 0.11
+        band_color = WHITE if label == "late" else (color if label != "early" else GRAY)
+        ax_causal.text(center, band_y, f"{label.upper()}  L{start}–{end}", ha="center", color=band_color, weight="bold", fontsize=9.0)
+    ax_causal.axhline(0, color=GRAY, lw=1.0)
+    ax_causal.axhline(1, color=BLUE, lw=1.0, ls="--", alpha=0.55)
+    ax_causal.set_ylim(-0.04, 1.08)
+    ax_causal.set_ylabel("Median target-axis\ncausal repair R")
+    ax_causal.set_xlabel("π0.5 prefix layer")
+    ax_causal.set_xticks(layers)
+    ax_causal.set_title("CONTROL — all-position image K/V swaps become dominant only in late layers", loc="left")
+    ax_causal.grid(axis="y", color=LIGHT, lw=0.8)
+    panel_label(ax_causal, "c")
+
+    # d — full layer-6→8 transformation versus ablations
+    transform_specs = [
+        ("Full attention+MLP", "matched_full", PURPLE),
+        ("Attention-only", "matched_attention_only", ORANGE),
+        ("Equal-norm random", "random_norm_matched", MID),
+    ]
+    y_positions = np.arange(len(transform_specs))[::-1]
+    for i, (label, condition, color) in enumerate(transform_specs):
+        y = y_positions[i]
+        values = np.asarray(list(transform_values[condition].values()))
+        median_value = float(np.median(values))
+        ax_transform.scatter(values, y + jitter(len(values), 0.09, 1300 + i), s=34, color=color, alpha=0.42, edgecolor=WHITE, linewidth=0.5)
+        ax_transform.scatter(median_value, y, marker="D", s=88, color=color, edgecolor=WHITE, linewidth=0.9, zorder=4)
+        ax_transform.text(median_value + 0.028, y, f"{median_value:.3f}", va="center", color=color, weight="bold")
+    ax_transform.axvline(0, color=GRAY, lw=1)
+    ax_transform.set_xlim(-0.09, 0.84)
+    ax_transform.set_ylim(-0.75, 2.75)
+    ax_transform.set_yticks(y_positions, [x[0] for x in transform_specs])
+    ax_transform.set_xlabel("Progress along clean A→B action axis")
+    ax_transform.set_title("L6–8 transforms the signal; attention alone does not", loc="left")
+    ax_transform.grid(axis="x", color=LIGHT, lw=0.8)
+    ax_transform.text(0.02, 0.13, "full > attention-only in 12/12 cells · exact sign p=0.00049", transform=ax_transform.transAxes, color=PURPLE, weight="bold", fontsize=8.9)
+    ax_transform.text(
+        0.02,
+        0.035,
+        "but fixed L6–8 writer block + rescue: 0/8 endpoints",
+        transform=ax_transform.transAxes,
+        ha="left",
+        color=ORANGE,
+        weight="bold",
+        fontsize=8.9,
+    )
+    panel_label(ax_transform, "d")
+
+    # e — full closed-loop endpoint
+    ax_rollout.set_xlim(-0.5, 13.2)
+    ax_rollout.set_ylim(-0.65, 1.65)
+    ax_rollout.axis("off")
+    ax_rollout.set_title("Late state controls full rollouts", loc="left", pad=8)
+    rollout_specs = [
+        ("late L12–17", "state_live", 1.05, BLUE, "R=0.832", "18/20 complete"),
+        ("early L0–5", "state_early", 0.10, MID, "R=0.001", "0/20 complete"),
+    ]
+    for label, condition, y, color, immediate, outcome in rollout_specs:
+        rows = [row for row in repair_rows if row["condition"] == condition]
+        successes = sum(bool(row["success"]) for row in rows)
+        for j in range(20):
+            x_point = j % 10
+            y_point = y - 0.24 * (j // 10)
+            succeeded = j < successes
+            ax_rollout.scatter(
+                x_point,
+                y_point,
+                s=74,
+                facecolor=color if succeeded else WHITE,
+                edgecolor=color if succeeded else MID,
+                linewidth=1.15,
+            )
+        ax_rollout.text(-0.45, y + 0.18, label, color=color if condition == "state_live" else GRAY, weight="bold", fontsize=10.2)
+        ax_rollout.text(
+            10.1,
+            y - 0.10,
+            f"{immediate}\n{outcome}",
+            ha="left",
+            va="center",
+            color=color if condition == "state_live" else GRAY,
+            weight="bold",
+            fontsize=9.5,
+            linespacing=1.45,
+        )
+    ax_rollout.text(0, -0.53, "same 512-position K/V transplant repeated at every replan", color=GRAY, fontsize=8.8)
+    panel_label(ax_rollout, "e")
+
+    exported = []
+    for layer, accuracy in zip(layers, image_probe):
+        exported.append({"panel": "readability", "series": "image_residual_probe_accuracy", "layer": int(layer), "band": "", "cell": "", "unit": "", "metric": "accuracy", "value": float(accuracy)})
+    for series_name, values in (("prefix_marginal_effect", prefix_effect), ("suffix_marginal_effect", suffix_effect)):
+        for layer, value in zip(layers, values):
+            exported.append({"panel": "writer_transition", "series": series_name, "layer": int(layer), "band": "", "cell": "", "unit": "", "metric": "fraction_of_endpoint_range", "value": float(value)})
+    for label, start, end, _, _ in band_specs:
+        for cell, value in band_cells[label]:
+            exported.append({"panel": "causal_bands", "series": "image_KV_swap", "layer": "", "band": f"{start}-{end}", "cell": cell, "unit": "", "metric": "cell_median_R", "value": value})
+    for condition, cells in transform_values.items():
+        for cell, value in cells.items():
+            exported.append({"panel": "layer6_8_transform", "series": condition, "layer": "", "band": "6-8", "cell": cell, "unit": "", "metric": "cell_median_progress_to_B", "value": value})
+    for row in repair_rows:
+        if row["condition"] not in {"state_live", "state_early"}:
+            continue
+        exported.append({"panel": "closed_loop", "series": row["condition"], "layer": "", "band": "12-17" if row["condition"] == "state_live" else "0-5", "cell": f"task{row['task_id']}", "unit": row["init_id"], "metric": "success", "value": int(bool(row["success"]))})
+    write_csv("00b_layerwise_model_biology_hero.csv", exported)
+
+    fig.text(
+        0.055,
+        0.018,
+        "Probe accuracy shows readability, cumulative attention-message blocks localize a transition, K/V swaps test immediate causal leverage, and rollouts test behavior. "
+        "R is target-axis progress rather than full-vector similarity; the L6–8 transition profile was development-only and did not pass the compact-writer gate.",
+        fontsize=8.8,
+        color=GRAY,
+    )
+    fig.subplots_adjust(top=0.84, left=0.075, right=0.98, bottom=0.115)
+    save(fig, "00b_layerwise_model_biology_hero")
+
+
 def figure_1_stimulus_intervention_behavior() -> None:
     prefill = load_jsonl("artifacts/pi05_prefill_mediation_2026-08-31/rows.jsonl")
     episodes = load_jsonl("artifacts/pi05_instruction_repair_2026-08-31/state_confirm/episodes.jsonl")
@@ -1192,6 +1421,7 @@ def main() -> None:
     OUT.mkdir(exist_ok=True)
     style()
     figure_0_position_dose_hero()
+    figure_0b_layerwise_model_biology_hero()
     figure_1_stimulus_intervention_behavior()
     figure_2_layers_attention_causality()
     figure_3_distributed_field()
@@ -1202,7 +1432,7 @@ def main() -> None:
     figure_8_action_to_behavior()
     figure_9_prompt_pairs_behavior_heatmap()
     figure_10_closed_loop_visual_comparison()
-    print("Wrote eleven claim-first figures and source CSVs to", OUT)
+    print("Wrote twelve claim-first figures and source CSVs to", OUT)
 
 
 if __name__ == "__main__":

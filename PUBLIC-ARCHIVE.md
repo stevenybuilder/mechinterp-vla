@@ -5,7 +5,7 @@ This GitHub repository is the publication copy of a larger local research archiv
 ## Included here
 
 - the concise README, full research map, numbers audit, and five-page plain-English report;
-- eleven claim-first figures, their vector PDFs, and the 20 CSV files plotted in them;
+- twelve claim-first figures, their vector PDFs, and the 21 CSV files plotted in them;
 - canonical findings, preregistrations, frozen configs, analysis code, intervention code, and tests;
 - all 420 raw rows, manifest, summary, and runtime log from the final matched layer-6→8 experiment;
 - all 36 episode rows from its exploratory closed-loop breadth screen, plus the separately labeled stopped-panel and smoke-test records;
