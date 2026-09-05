@@ -4,6 +4,12 @@
 .venv/
 __pycache__/
 *.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.playwright-cli/
+.gstack/
+output/
 
 # Downloaded or generated research artifacts
 artifacts/
@@ -27,6 +33,14 @@ local-notes/
 private/
 references/
 tmp/
+MATS Application Writeup - Notes.md
+mats_apps_prev/
+*Application*.md
+*.docx
+*.pages
+*.key
+FULL-ARCHIVE-SHA256SUMS
+PROVENANCE-SHA256SUMS
 
 # Working notes, drafts, and raw records — not published
 docs/internal/
@@ -48,23 +62,10 @@ artifacts/*
 !artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/episodes.jsonl
 !artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/manifest.json
 !artifacts/pi05_matched_band_rollout_screen_2026-09-04_v1/summary.json
-!artifacts/pi05_matched_band_rollout_2026-09-04_v1/
-!artifacts/pi05_matched_band_rollout_2026-09-04_v1/episodes.jsonl
-!artifacts/pi05_matched_band_rollout_2026-09-04_v1/manifest.json
-!artifacts/pi05_matched_band_rollout_smoke_2026-09-04_v1/
-!artifacts/pi05_matched_band_rollout_smoke_2026-09-04_v1/episodes.jsonl
-!artifacts/pi05_matched_band_rollout_smoke_2026-09-04_v1/manifest.json
 !artifacts/pi05_state_repair_side_effects_2026-09-04_v1/
 !artifacts/pi05_state_repair_side_effects_2026-09-04_v1/episodes.jsonl
 !artifacts/pi05_state_repair_side_effects_2026-09-04_v1/manifest.json
 !artifacts/pi05_state_repair_side_effects_2026-09-04_v1/summary.json
-!logs/
-logs/*
-!logs/pi05_matched_band_transform_2026-09-04_v1.log
-!logs/pi05_matched_band_rollout_2026-09-04_v1.log
-!logs/pi05_matched_band_rollout_screen_2026-09-04_v1.log
-!logs/pi05_matched_band_rollout_smoke_2026-09-04_v1.log
-!logs/pi05_state_repair_side_effects_2026-09-04_v1.log
 
 # Small, verified presentation media for the canonical closed-loop result.
 !media/
