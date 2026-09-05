@@ -12,7 +12,7 @@ The PNG files are for Markdown and slides; PDFs are vector versions. Every quant
 | Readable text state is nearly causally redundant after prefill | normalized repair `R`, prompt-pair-direction median | text K/V `0.0106` | six directed confirmation values |
 | Broad image-associated state controls immediate action | normalized repair `R`, prompt-pair-direction median | image K/V L12–17 `0.8321` | six directed confirmation values |
 | Broad late-state repair controls full behavior | successes and correct first touches | late `18/20`; early control `0/20` | 80 closed-loop rollouts |
-| Causal carrier is distributed over image positions | normalized donor recovery | little recovery through 256 positions; large jump at all 512 | eight directed cells × three initial states |
+| Causal carrier is distributed over image positions | normalized target-axis shift `R` (`0=clean A projection`, `1=clean B projection`) | object-centered 128: `0.043`; object-centered 256: `0.082`; random 256: `0.180`; all 512: `0.773` | eight directed cells × three initial states |
 | Low-rank geometry is specific but not sufficient | cosine fit and endpoint distance | fit > wrong `12/12`; causal target `0/12` | 12 directed cells |
 | L6–8 path is non-affine but not a confirmed action bottleneck | curvature/chord and normalized action change | curvature `0.1880`; action `0.0973`, `5/12` pass | 12 directed cells × five states |
 | Full L6–8 update transfers across initial scenes and needs MLP processing | action-axis progress, prompt-pair-cell median | other-scene full `0.2108` vs random `0.0058`; full > attention-only `12/12` | 12 directed cells × five states |
@@ -20,6 +20,20 @@ The PNG files are for Markdown and slides; PDFs are vector versions. Every quant
 | Dominant route is architecture-dependent | normalized donor recovery | π0.5: image; OpenVLA-OFT: text | π0.5 six directions; OFT seven tasks |
 | Changing only the prompt changes closed-loop behavior | simulator task success and first contact | Goal success `195/200 → 0/200` under correct→conflict; named alternative first `185/200` | 1,200 Stage-0 rollouts; 20 states × 10 tasks × 3 conditions × 2 suites |
 | The broad late-state transplant can reverse a conflicted rollout | first contact and simulator success in one visually recaptured episode | late L12–17 repair: cream cheese first, success; early L0–5 control: tomato sauce first, failure | canonical Object task 1, initial state 20; all recaptures match archived outcomes |
+
+## Hero figure: position-dose curve
+
+![The target-relevant action shift stays small until all 512 image positions are replaced](00_position_dose_hero.png)
+
+**What to notice:** edits to 128 or 256 object-centered positions barely moved the target-axis action score (`R=0.043` and `0.082`). A count-matched random 256-position edit was somewhat larger (`0.180`) but highly variable across prompt pairs. Replacing all 512 positions created the discontinuity (`0.773`). This is the cleanest evidence that the successful carrier is broad and interaction-dependent rather than concentrated at a few privileged image positions.
+
+**Stimuli:** eight directed LIBERO Goal instruction contrasts, each evaluated on three initial states. Within every A/B comparison, pixels, robot state, and action noise were held fixed.
+
+**Intervention:** replace image-position keys and values at every layer from 12 through 17. The object-centered arm starts from segmentation patches covering the target object and grows outward by grid distance; the random arm uses the same number of positions. At 512 positions the two arms are necessarily identical. Positions are transformer sequence positions, not individual neurons.
+
+**Metric:** normalized target-axis shift `R=(m_edit-m_A)/(m_B-m_A)`, where `0` has clean A's projection and `1` has clean B's projection along the target-object action axis. `R` is not full-vector similarity and can reward off-axis changes; this is why Figure 3 also reports normalized L2 distance to clean B. There, object-centered 256-position edits remain far from B (`D_B=0.92599`) while all 512 positions are much closer (`D_B=0.25636`). Bold curves show the descriptive median across 24 scene-direction rows. Hollow points show the eight prompt-pair medians after aggregating three initial states; those cells, not the 24 repeated rows, are the inferential units. The corresponding cell-aware `R` medians are `0.039`, `0.078`, `0.180`, and `0.773`, so the qualitative conclusion is unchanged.
+
+**Data:** [`00_position_dose_hero.csv`](00_position_dose_hero.csv); raw `../artifacts/pi05_mediation_2026-08-31/dose1/rows.jsonl` (`384` rows: 8 cells × 3 initial states × 2 arms × 8 doses).
 
 ## 1. Stimulus, intervention, and behavior
 

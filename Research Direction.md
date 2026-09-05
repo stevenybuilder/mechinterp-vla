@@ -104,7 +104,9 @@ Plain English: the instruction's effect becomes part of a live scene-and-motor r
 
 ### 3. The useful state is not a small object patch or a reusable linear command
 
-Patching the positions associated with the named object worked in `0/8` eligible directions. Even 256 of 512 image positions barely moved the action; replacing all 512 produced the large effect. A static correct-minus-conflict vector could make one task choose the right object `5/5` times and still complete it `0/5` times. A rank-16 Sonar-style component was more specific than all its controls but reached the desired endpoint in `0/12` joint directions.
+Patching the positions associated with the named object worked in `0/8` eligible directions. The median normalized target-axis shift was only `0.043` at 128 object-centered positions and `0.082` at 256. A count-matched random 256-position patch reached `0.180` but varied sharply between prompt pairs. Replacing all 512 positions produced the discontinuity: `0.773` along the clean A→B action axis. This axis score is not full-action similarity; the more conservative normalized distance to clean B remained `0.92599` at 256 selected positions and fell to `0.25636` only at all 512. A static correct-minus-conflict vector could make one task choose the right object `5/5` times and still complete it `0/5` times. A rank-16 Sonar-style component was more specific than all its controls but reached the desired endpoint in `0/12` joint directions.
+
+![The target-relevant action shift stays small until all 512 image positions are replaced](figures/00_position_dose_hero.png)
 
 Plain English: we could push the model in the right direction without actually restoring its computation. The successful whole-state transplant was carrying much more than a command label.
 
@@ -491,7 +493,7 @@ This is the compact map. The exact definitions, hashes, and caveats are in [`num
 | Closed-loop repair | live late repair `18/20`; early control `0/20`; conflict `0/20` | `artifacts/pi05_instruction_repair_2026-08-31/state_confirm/episodes.jsonl` |
 | Repair side effects | late repair `9/10` vs clean `10/10`; wrong-first `1/10` vs `0/10`; no non-target grasps; median paired step increase `15`; exact preserve `10/10` | `artifacts/pi05_state_repair_side_effects_2026-09-04_v1/episodes.jsonl` |
 | Mediation reset | broad carrier B-like `10/12`; reset `0/12`; dead/random `0/12` | `artifacts/pi05_mediation_2026-08-31/run2/rows.jsonl` |
-| Position dose | 256 positions `D_B=0.92599`; all 512 `0.25636` | `artifacts/pi05_mediation_2026-08-31/dose1/rows.jsonl` |
+| Position dose | target-axis shift `R`: object-centered 128 `0.043`; object-centered 256 `0.082`; random 256 `0.180`; all 512 `0.773`; normalized L2 `D_B`: object-centered 256 `0.92599`, all 512 `0.25636` | `artifacts/pi05_mediation_2026-08-31/dose1/rows.jsonl` |
 | Sonar-lite | fit beats wrong `12/12`; joint target landings `0/12` | `artifacts/pi05_sonar_lite_source_mediator_v1/` |
 | Donor-free | completed edges: repair `0/30`; correct/preserve `30/30`; run `250/400` | `artifacts/pi05_donor_free_repair_2026-09-02/confirm/episodes.jsonl` |
 | Attention writer | full route block A-like `12/12`; block-0 rescue fails `12/12` | `artifacts/pi05_attention_pathway_2026-09-04_v1/writer_screen_rows.jsonl` |

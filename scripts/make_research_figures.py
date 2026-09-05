@@ -107,6 +107,155 @@ def grouped_medians(rows: list[dict], group_keys: tuple[str, ...], value: str) -
     return result
 
 
+def figure_0_position_dose_hero() -> None:
+    """Hero figure for the strongest compression failure."""
+    dose = load_jsonl("artifacts/pi05_mediation_2026-08-31/dose1/rows.jsonl")
+    counts = [4, 8, 16, 32, 64, 128, 256, 512]
+    cell_rows = grouped_medians(dose, ("cell", "arm", "n_pos"), "R")
+    cell_lookup = {(r["cell"], r["arm"], int(r["n_pos"])): r["R"] for r in cell_rows}
+    pooled = {
+        (arm, n): float(np.median([float(r["R"]) for r in dose if r["arm"] == arm and int(r["n_pos"]) == n]))
+        for arm in ("LOC", "RAND")
+        for n in counts
+    }
+
+    fig = plt.figure(figsize=(15.5, 7.2))
+    gs = fig.add_gridspec(1, 2, width_ratios=[3.25, 1.05], wspace=0.14)
+    ax = fig.add_subplot(gs[0, 0])
+    ax_key = fig.add_subplot(gs[0, 1])
+    claim_title(
+        fig,
+        "The target-relevant action shift stays small until all 512 image positions are replaced",
+        "π0.5 · image-position K/V at layers 12–17 · 8 directed prompt-pair cells × 3 initial states; same pixels, state, and action noise within each comparison.",
+    )
+
+    x = np.arange(len(counts), dtype=float)
+    ax.axhspan(-0.04, 0.20, color="#F4F5F7", zorder=-4)
+    ax.axhspan(0.72, 1.08, color=PALE_BLUE, zorder=-4)
+    ax.axvspan(6.68, 7.32, color="#E7EEF6", alpha=0.82, zorder=-3)
+    ax.text(0.02, 0.08, "little target-axis shift", transform=ax.transAxes, color=GRAY, fontsize=10.2, weight="bold")
+    ax.text(0.02, 0.91, "same target-axis projection as instruction B", transform=ax.transAxes, color=BLUE, fontsize=10.2, weight="bold")
+
+    series = [
+        ("LOC", "object-centered positions", TEAL, "o", -0.075),
+        ("RAND", "count-matched random positions", ORANGE, "s", 0.075),
+    ]
+    for series_index, (arm, label, color, marker, offset) in enumerate(series):
+        medians = np.array([pooled[(arm, n)] for n in counts])
+        for i, n in enumerate(counts[:-1]):
+            values = [r["R"] for r in cell_rows if r["arm"] == arm and int(r["n_pos"]) == n]
+            ax.scatter(
+                np.full(len(values), x[i] + offset) + jitter(len(values), 0.025, 910 + series_index * 20 + i),
+                values,
+                s=27,
+                facecolors=WHITE,
+                edgecolors=color,
+                linewidth=1.05,
+                alpha=0.70,
+                zorder=3,
+            )
+        ax.plot(x, medians, color=color, marker=marker, lw=3.0, ms=7.3, label=label, zorder=5)
+
+    full_values = [r["R"] for r in cell_rows if r["arm"] == "LOC" and int(r["n_pos"]) == 512]
+    ax.scatter(
+        np.full(len(full_values), 7.0) + jitter(len(full_values), 0.045, 997),
+        full_values,
+        s=34,
+        facecolors=WHITE,
+        edgecolors=BLUE,
+        linewidth=1.2,
+        alpha=0.85,
+        zorder=6,
+    )
+    ax.scatter(7.0, pooled[("LOC", 512)], marker="D", s=105, color=BLUE, edgecolor=WHITE, linewidth=1.1, zorder=7)
+
+    label_box = dict(boxstyle="round,pad=0.22", fc=WHITE, ec="none", alpha=0.92)
+    ax.text(5.00, pooled[("LOC", 128)] + 0.055, "0.043", color=TEAL, ha="center", weight="bold", bbox=label_box)
+    ax.text(5.83, pooled[("LOC", 256)] + 0.030, "0.082", color=TEAL, ha="right", weight="bold", bbox=label_box)
+    ax.text(6.03, pooled[("RAND", 256)] + 0.070, "0.180", color=ORANGE, ha="center", weight="bold", bbox=label_box)
+    ax.text(6.90, pooled[("LOC", 512)] + 0.105, "0.773", color=BLUE, ha="right", fontsize=13, weight="bold", bbox=label_box)
+    ax.annotate(
+        "the discontinuity is the full field",
+        xy=(7.0, pooled[("LOC", 512)]),
+        xytext=(5.05, 0.58),
+        arrowprops=dict(arrowstyle="-|>", color=BLUE, lw=1.6, connectionstyle="arc3,rad=-0.12"),
+        color=BLUE,
+        fontsize=11.3,
+        weight="bold",
+    )
+
+    ax.axhline(0, color=MID, lw=1.0)
+    ax.axhline(1, color=BLUE, lw=1.0, ls="--", alpha=0.65)
+    ax.set_xlim(-0.42, 7.35)
+    ax.set_ylim(-0.055, 1.10)
+    ax.set_xticks(x, [str(n) for n in counts])
+    ax.set_yticks([0, 0.25, 0.50, 0.75, 1.0])
+    ax.set_xlabel("Image-token positions replaced  (of 512)", labelpad=10)
+    ax.set_ylabel("Normalized target-axis shift  R\n0 = clean A projection · 1 = clean B projection", labelpad=10)
+    ax.grid(axis="y", color=LIGHT, lw=0.9)
+    ax.legend(frameon=False, loc="upper left", bbox_to_anchor=(0.0, 0.84), fontsize=10.2, handlelength=2.7)
+    panel_label(ax, "a")
+
+    ax_key.set_xlim(0, 1)
+    ax_key.set_ylim(0, 1)
+    ax_key.axis("off")
+    panel_label(ax_key, "b")
+    ax_key.text(0.02, 0.985, "What each dose changed", va="top", fontsize=12.5, weight="bold")
+    ax_key.text(0.02, 0.92, "K and V at every one of six layers", va="top", fontsize=10.0, color=GRAY)
+    for j, layer in enumerate(range(12, 18)):
+        y = 0.855 - j * 0.032
+        ax_key.add_patch(FancyBboxPatch((0.02, y), 0.75, 0.020, boxstyle="round,pad=0.003", fc=PALE_BLUE, ec=LIGHT, lw=0.7))
+        ax_key.text(0.81, y + 0.010, f"L{layer}", va="center", fontsize=8.5, color=GRAY)
+
+    dose_specs = [
+        ("object-centered", 128, pooled[("LOC", 128)], TEAL),
+        ("object-centered", 256, pooled[("LOC", 256)], TEAL),
+        ("random", 256, pooled[("RAND", 256)], ORANGE),
+        ("all positions", 512, pooled[("LOC", 512)], BLUE),
+    ]
+    for i, (kind, n, value, color) in enumerate(dose_specs):
+        y = 0.57 - i * 0.135
+        ax_key.text(0.02, y + 0.068, f"{n}/512  {kind}", fontsize=10.2, weight="bold", color=INK)
+        ax_key.add_patch(FancyBboxPatch((0.02, y), 0.76, 0.042, boxstyle="round,pad=0.003", fc="#F1F3F6", ec="none"))
+        ax_key.add_patch(FancyBboxPatch((0.02, y), 0.76 * n / 512, 0.042, boxstyle="round,pad=0.003", fc=color, ec="none"))
+        ax_key.text(0.82, y + 0.021, f"R={value:.3f}", va="center", fontsize=10.2, color=color, weight="bold")
+    ax_key.text(
+        0.02,
+        0.055,
+        "At 512 positions, object-centered\nand random are the same intervention.",
+        fontsize=9.4,
+        color=GRAY,
+        linespacing=1.35,
+    )
+
+    exported = []
+    for row in dose:
+        arm = row["arm"]
+        n = int(row["n_pos"])
+        exported.append(
+            {
+                "cell": row["cell"],
+                "init": row["init"],
+                "arm": arm,
+                "n_pos": n,
+                "R": row["R"],
+                "cell_median_R": cell_lookup[(row["cell"], arm, n)],
+                "pooled_descriptive_median_R": pooled[(arm, n)],
+            }
+        )
+    write_csv("00_position_dose_hero.csv", exported)
+    fig.text(
+        0.055,
+        0.018,
+        "Bold curves: descriptive median over 24 scene-direction rows. Hollow points: eight directed prompt-pair medians (three initial states each). "
+        "R is target-axis progress, not full-vector similarity; the intervention edits positions, not individual neurons.",
+        fontsize=9.0,
+        color=GRAY,
+    )
+    fig.subplots_adjust(top=0.82, left=0.075, right=0.98, bottom=0.15)
+    save(fig, "00_position_dose_hero")
+
+
 def figure_1_stimulus_intervention_behavior() -> None:
     prefill = load_jsonl("artifacts/pi05_prefill_mediation_2026-08-31/rows.jsonl")
     episodes = load_jsonl("artifacts/pi05_instruction_repair_2026-08-31/state_confirm/episodes.jsonl")
@@ -1042,6 +1191,7 @@ def figure_10_closed_loop_visual_comparison() -> None:
 def main() -> None:
     OUT.mkdir(exist_ok=True)
     style()
+    figure_0_position_dose_hero()
     figure_1_stimulus_intervention_behavior()
     figure_2_layers_attention_causality()
     figure_3_distributed_field()
@@ -1052,7 +1202,7 @@ def main() -> None:
     figure_8_action_to_behavior()
     figure_9_prompt_pairs_behavior_heatmap()
     figure_10_closed_loop_visual_comparison()
-    print("Wrote ten claim-first figures and source CSVs to", OUT)
+    print("Wrote eleven claim-first figures and source CSVs to", OUT)
 
 
 if __name__ == "__main__":
