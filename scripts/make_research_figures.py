@@ -170,10 +170,11 @@ def figure_0_position_dose_hero() -> None:
     ax.set_ylim(-0.055, 1.10)
     ax.set_xticks(x, [str(n) for n in counts])
     ax.set_yticks([0, 0.25, 0.50, 0.75, 1.0])
-    ax.set_xlabel("Image-token positions replaced (of 512)", labelpad=10)
-    ax.set_ylabel("Normalized target-axis shift R\n0 = clean A · 1 = clean B", labelpad=10)
+    ax.set_xlabel("Image-token positions replaced (of 512)", labelpad=12, fontsize=14, weight="bold")
+    ax.set_ylabel("Normalized target-axis shift R\n0 = clean A · 1 = clean B", labelpad=12, fontsize=13.5, weight="bold")
+    ax.tick_params(axis="both", labelsize=12)
     ax.grid(color=LIGHT, lw=0.8)
-    ax.legend(frameon=False, loc="upper left", bbox_to_anchor=(0.0, 0.87), fontsize=10.2, handlelength=2.7)
+    ax.legend(frameon=False, loc="upper left", bbox_to_anchor=(0.0, 0.87), fontsize=11.3, handlelength=2.7)
 
     exported = []
     for row in dose:
@@ -191,15 +192,7 @@ def figure_0_position_dose_hero() -> None:
             }
         )
     write_csv("00_position_dose_hero.csv", exported)
-    fig.text(
-        0.055,
-        0.018,
-        "Lines: descriptive median over 24 scene-direction rows. Bands: interquartile range over eight directed prompt-pair medians (three initial states each). "
-        "At 512 positions the two selections are identical. R is target-axis progress, not full-vector similarity.",
-        fontsize=9.0,
-        color=GRAY,
-    )
-    fig.subplots_adjust(top=0.82, left=0.10, right=0.985, bottom=0.15)
+    fig.subplots_adjust(top=0.82, left=0.115, right=0.985, bottom=0.13)
     save(fig, "00_position_dose_hero")
 
 
@@ -1217,52 +1210,46 @@ def figure_10_closed_loop_visual_comparison() -> None:
         (
             "conflict",
             (22, 323),
-            "Conflicting prompt",
-            "\u201cpick up the tomato sauce\u2026\u201d",
-            "tomato sauce first  •  task failed",
+            "Conflict\nprompt: tomato sauce",
+            "FAIL  ·  tomato sauce first",
             "#B33A3A",
         ),
         (
             "correct",
             (334, 635),
-            "Correct prompt",
-            "\u201cpick up the cream cheese\u2026\u201d",
-            "cream cheese first  •  task complete",
+            "Correct\nprompt: cream cheese",
+            "SUCCESS  ·  cream cheese first",
             TEAL,
         ),
         (
             "state_live",
             (646, 947),
-            "Late-state repair",
-            "external prompt still names tomato sauce",
-            "cream cheese first  •  task complete",
+            "Late repair\nprompt: tomato sauce",
+            "SUCCESS  ·  cream cheese first",
             BLUE,
         ),
         (
             "state_early",
             (958, 1259),
-            "Early-layer control",
-            "same transplant at layers 0–5",
-            "tomato sauce first  •  task failed",
+            "Early control\nprompt: tomato sauce",
+            "FAIL  ·  tomato sauce first",
             ORANGE,
         ),
     ]
 
-    fig, axes = plt.subplots(1, 4, figsize=(16.0, 5.5))
+    fig, axes = plt.subplots(1, 4, figsize=(15.6, 4.8))
     claim_title(
         fig,
-        "The same scene: prompt conflict fails, late-state repair succeeds",
-        "π0.5, LIBERO Object task 1, initial state 20; independent closed-loop runs share the registered scene and noise-seed rule.",
+        "Late-state repair redirects the robot",
+        "Same LIBERO scene; the repaired run still receives the tomato-sauce prompt.",
     )
     exported = []
-    for i, (condition, (x0, x1), title, context, outcome, color) in enumerate(specs):
+    for i, (condition, (x0, x1), title, outcome, color) in enumerate(specs):
         ax = axes[i]
         ax.imshow(poster[156:457, x0:x1])
         ax.axis("off")
-        ax.set_title(title, loc="left", pad=8, color=color, fontsize=12.3, weight="bold")
-        ax.text(0, -0.06, context, transform=ax.transAxes, va="top", fontsize=9.2, color=GRAY)
-        ax.text(0, -0.13, outcome, transform=ax.transAxes, va="top", fontsize=9.3, color=color, weight="bold")
-        panel_label(ax, "abcd"[i])
+        ax.set_title(title, loc="left", pad=8, color=color, fontsize=11.6, weight="bold", linespacing=1.25)
+        ax.text(0, -0.07, outcome, transform=ax.transAxes, va="top", fontsize=9.7, color=color, weight="bold")
         saved = panel_by_condition[condition]["saved_record"]
         exported.append(
             {
@@ -1278,17 +1265,8 @@ def figure_10_closed_loop_visual_comparison() -> None:
                 "reproduction_check": panel_by_condition[condition]["reproduction_check"],
             }
         )
-    fig.text(
-        0.5,
-        0.028,
-        "At every replan, the repair copies only all 512 image-position K/V entries from the same-observation correct-prompt donor. "
-        "No donor action or stored trajectory is copied. All four recaptures match the archived outcomes.",
-        ha="center",
-        fontsize=9.0,
-        color=GRAY,
-    )
     write_csv("10_closed_loop_visual_conditions.csv", exported)
-    fig.subplots_adjust(top=0.80, left=0.045, right=0.98, bottom=0.17, wspace=0.075)
+    fig.subplots_adjust(top=0.74, left=0.04, right=0.985, bottom=0.12, wspace=0.075)
     save(fig, "10_closed_loop_visual_comparison")
 
 
